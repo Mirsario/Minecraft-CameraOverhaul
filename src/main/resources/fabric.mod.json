@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 1,
+  "id": "cameraoverhaul",
+  "version": "${version}",
+  "name": "Camera Overhaul",
+  "description": "Makes gameplay more satisfying through the use of various camera tilting. Compatible with everything.\nConfigurable through '.minecraft/config/cameraoverhaul.json'.",
+  "license": "MIT",
+  "icon": "assets/cameraoverhaul/icon.png",
+  "environment": "*",
+  
+  "custom": {
+    "modmenu:clientsideOnly": true
+  },
+
+  "authors": [
+    "Mirsario"
+  ],
+
+  "contact": {
+	  "homepage": "https://curseforge.com/minecraft/mc-mods/cameraoverhaul",
+	  "sources": "https://github.com/Mirsario/Minecraft-CameraOverhaul",
+	  "issues": "https://github.com/Mirsario/Minecraft-CameraOverhaul/issues",
+	  "email": "me@mirsar.io"
+  },
+
+  "entrypoints": {
+	"client": [ "mirsario.cameraoverhaul.fabric.FabricClientModInitializer" ]
+  },
+  
+  "mixins": [
+    "cameraoverhaul.mixins.json"
+  ],
+
+  "depends": {
+    "fabricloader": ">=0.4.0"
+  }
+}
