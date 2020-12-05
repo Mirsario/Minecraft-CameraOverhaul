@@ -6,11 +6,7 @@
   "description": "Makes gameplay more satisfying through the use of various camera tilting. Compatible with everything.\nConfigurable through '.minecraft/config/cameraoverhaul.json'.",
   "license": "MIT",
   "icon": "assets/cameraoverhaul/icon.png",
-  "environment": "*",
-  
-  "custom": {
-    "modmenu:clientsideOnly": true
-  },
+  "environment": "client",
 
   "authors": [
     "Mirsario"
