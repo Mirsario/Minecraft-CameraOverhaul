@@ -6,16 +6,16 @@ import java.nio.file.*;
 
 public final class Configuration
 {
-    private static Gson gson = new GsonBuilder().setPrettyPrinting().create();
+	private static Gson gson = new GsonBuilder().setPrettyPrinting().create();
 
 	public static <T extends BaseConfigData> T LoadConfig(Class<T> tClass, String configName, int configVersion)
 	{
 		T configData = null;
 		
-        try {
+		try {
 			Path configDir;
 			
-            configDir = Paths.get("", "config", configName + ".json");
+			configDir = Paths.get("", "config", configName + ".json");
 			
 			boolean saveConfig = false;
 
@@ -24,7 +24,7 @@ public final class Configuration
 				configData = gson.fromJson(fileReader, tClass);
 				
 				//Save the config on first runs of new versions.
-                if(configData.configVersion < configVersion) {
+				if(configData.configVersion < configVersion) {
 					saveConfig = true;
 				}
 			} else {
@@ -48,10 +48,10 @@ public final class Configuration
 				writer.write(gson.toJson(configData));
 				writer.close();
 			}
-        } catch(Exception e) {
-            e.printStackTrace();
+		} catch(Exception e) {
+			e.printStackTrace();
 		}
 		
-        return configData;
-    }
+		return configData;
+	}
 }
