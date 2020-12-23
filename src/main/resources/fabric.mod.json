@@ -34,7 +34,6 @@
 
   "depends": {
     "fabricloader": ">=0.4.0",
-    "fabric-resource-loader-v0": ">=0.3.1",
     "cloth-config2": ">=4.8.3"
   }
 }
