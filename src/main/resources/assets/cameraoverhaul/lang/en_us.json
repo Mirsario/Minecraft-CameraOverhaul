@@ -1,0 +1,14 @@
+{
+	"cameraoverhaul.config.title": "CameraOverhaul Settings",
+	"cameraoverhaul.config.category.general": "General",
+	"cameraoverhaul.config.enabled.name": "Enable the mod's effects",
+	"cameraoverhaul.config.enabled.tooltip": "",
+	"cameraoverhaul.config.strafingrollfactor.name": "strafingrollfactor",
+	"cameraoverhaul.config.strafingrollfactor.tooltip": "",
+	"cameraoverhaul.config.yawdeltarollfactor.name": "yawdeltarollfactor",
+	"cameraoverhaul.config.yawdeltarollfactor.tooltip": "",
+	"cameraoverhaul.config.verticalvelocitypitchfactor.name": "verticalvelocitypitchfactor",
+	"cameraoverhaul.config.verticalvelocitypitchfactor.tooltip": "",
+	"cameraoverhaul.config.forwardvelocitypitchfactor.name": "forwardvelocitypitchfactor",
+	"cameraoverhaul.config.forwardvelocitypitchfactor.tooltip": ""
+}

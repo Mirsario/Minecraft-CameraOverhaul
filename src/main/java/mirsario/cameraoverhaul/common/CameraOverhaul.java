@@ -12,12 +12,14 @@ public class CameraOverhaul
 
 	public static CameraOverhaul instance;
 	
+	public static String configFileName = "cameraoverhaul";
+	
 	public CameraSystem cameraSystem;
 	public ConfigData config;
 
 	public void onInitializeClient()
 	{
-		config = Configuration.LoadConfig(ConfigData.class, "cameraoverhaul", ConfigData.ConfigVersion);
+		config = Configuration.LoadConfig(ConfigData.class, configFileName, ConfigData.ConfigVersion);
 
 		cameraSystem = new CameraSystem();
 	}

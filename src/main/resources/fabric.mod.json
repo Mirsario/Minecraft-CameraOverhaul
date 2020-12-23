@@ -20,7 +20,8 @@
   },
 
   "entrypoints": {
-	"client": [ "mirsario.cameraoverhaul.fabric.FabricClientModInitializer" ]
+	"client": [ "mirsario.cameraoverhaul.fabric.FabricClientModInitializer" ],
+	"modmenu": [ "mirsario.cameraoverhaul.fabric.ModMenuConfigIntegration" ]
   },
   
   "mixins": [
@@ -28,6 +29,8 @@
   ],
 
   "depends": {
-    "fabricloader": ">=0.4.0"
+    "fabricloader": ">=0.4.0",
+    "fabric-resource-loader-v0": ">=0.3.1",
+    "cloth-config2": ">=4.8.3"
   }
 }
