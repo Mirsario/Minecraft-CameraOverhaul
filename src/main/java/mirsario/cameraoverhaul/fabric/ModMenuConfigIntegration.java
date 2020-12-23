@@ -42,34 +42,34 @@ public class ModMenuConfigIntegration implements ModMenuApi {
 		
 		// strafingRollFactor
 		general.addEntry(entryBuilder
-					.startFloatField(new TranslatableText("cameraoverhaul.config.strafingrollfactor.name"), config.strafingRollFactor)
-					.setDefaultValue(1.0F)
+					.startIntSlider(new TranslatableText("cameraoverhaul.config.strafingrollfactor.name"), (int) (config.strafingRollFactor*100), 0, 1000)
+					.setDefaultValue(100)
 					.setTooltip(new TranslatableText("cameraoverhaul.config.strafingrollfactor.tooltip"))
-					.setSaveConsumer(newValue -> config.strafingRollFactor = newValue)
+					.setSaveConsumer(newValue -> config.strafingRollFactor = newValue/100F)
 					.build());
 		
 		// yawDeltaRollFactor
 		general.addEntry(entryBuilder
-				.startFloatField(new TranslatableText("cameraoverhaul.config.yawdeltarollfactor.name"), config.yawDeltaRollFactor)
-					.setDefaultValue(1.0F)
+				.startIntSlider(new TranslatableText("cameraoverhaul.config.yawdeltarollfactor.name"), (int) (config.yawDeltaRollFactor*100F), 0, 1000)
+					.setDefaultValue(100)
 					.setTooltip(new TranslatableText("cameraoverhaul.config.yawdeltarollfactor.tooltip"))
-					.setSaveConsumer(newValue -> config.yawDeltaRollFactor = newValue)
+					.setSaveConsumer(newValue -> config.yawDeltaRollFactor = newValue/100F)
 					.build());
 		
 		// verticalVelocityPitchFactor
 		general.addEntry(entryBuilder
-				.startFloatField(new TranslatableText("cameraoverhaul.config.verticalvelocitypitchfactor.name"), config.verticalVelocityPitchFactor)
-					.setDefaultValue(1.0F)
+				.startIntSlider(new TranslatableText("cameraoverhaul.config.verticalvelocitypitchfactor.name"), (int) (config.verticalVelocityPitchFactor*100), 0, 1000)
+					.setDefaultValue(100)
 					.setTooltip(new TranslatableText("cameraoverhaul.config.verticalvelocitypitchfactor.tooltip"))
-					.setSaveConsumer(newValue -> config.verticalVelocityPitchFactor = newValue)
+					.setSaveConsumer(newValue -> config.verticalVelocityPitchFactor = newValue/100F)
 					.build());
 		
 		// forwardVelocityPitchFactor
 		general.addEntry(entryBuilder
-				.startFloatField(new TranslatableText("cameraoverhaul.config.forwardvelocitypitchfactor.name"), config.forwardVelocityPitchFactor)
-					.setDefaultValue(1.0F)
+				.startIntSlider(new TranslatableText("cameraoverhaul.config.forwardvelocitypitchfactor.name"), (int) (config.forwardVelocityPitchFactor*100), 0, 1000)
+					.setDefaultValue(100)
 					.setTooltip(new TranslatableText("cameraoverhaul.config.forwardvelocitypitchfactor.tooltip"))
-					.setSaveConsumer(newValue -> config.forwardVelocityPitchFactor = newValue)
+					.setSaveConsumer(newValue -> config.forwardVelocityPitchFactor = newValue/100F)
 					.build());
 		
 		return builder;
