@@ -1,18 +1,19 @@
 package mirsario.cameraoverhaul.fabric;
 
-import io.github.prospector.modmenu.api.ConfigScreenFactory;
-import io.github.prospector.modmenu.api.ModMenuApi;
-import me.shedaniel.clothconfig2.api.ConfigBuilder;
-import me.shedaniel.clothconfig2.api.ConfigCategory;
-import me.shedaniel.clothconfig2.api.ConfigEntryBuilder;
-import mirsario.cameraoverhaul.common.CameraOverhaul;
-import mirsario.cameraoverhaul.common.configuration.ConfigData;
-import mirsario.cameraoverhaul.core.configuration.Configuration;
-import net.minecraft.client.MinecraftClient;
-import net.minecraft.text.TranslatableText;
+import java.util.function.*;
+import io.github.prospector.modmenu.api.*;
+import me.shedaniel.clothconfig2.api.*;
+import me.shedaniel.clothconfig2.gui.entries.*;
+import mirsario.cameraoverhaul.common.*;
+import mirsario.cameraoverhaul.common.configuration.*;
+import mirsario.cameraoverhaul.core.configuration.*;
+import net.minecraft.client.*;
+import net.minecraft.text.*;
 
 public class ModMenuConfigIntegration implements ModMenuApi
 {
+	private static final String ConfigEntriesPrefix = "cameraoverhaul.config";
+
 	@Override
 	public ConfigScreenFactory<?> getModConfigScreenFactory()
 	{
@@ -35,51 +36,36 @@ public class ModMenuConfigIntegration implements ModMenuApi
 		ConfigCategory general = builder.getOrCreateCategory(new TranslatableText("cameraoverhaul.config.category.general"));
 		ConfigEntryBuilder entryBuilder = builder.entryBuilder();
 		
-		// Enabled
-		general.addEntry(entryBuilder
-			.startBooleanToggle(new TranslatableText("cameraoverhaul.config.enabled.name"), config.enabled)
-			.setDefaultValue(true)
-			.setTooltip(new TranslatableText("cameraoverhaul.config.enabled.tooltip"))
-			.setSaveConsumer(newValue -> config.enabled = newValue)
-			.build()
-		);
-		
-		// strafingRollFactor
-		general.addEntry(entryBuilder
-			.startIntSlider(new TranslatableText("cameraoverhaul.config.strafingrollfactor.name"), (int) (config.strafingRollFactor*100), 0, 1000)
-			.setDefaultValue(100)
-			.setTooltip(new TranslatableText("cameraoverhaul.config.strafingrollfactor.tooltip"))
-			.setSaveConsumer(newValue -> config.strafingRollFactor = newValue / 100f)
-			.build()
-		);
-		
-		// yawDeltaRollFactor
-		general.addEntry(entryBuilder
-			.startIntSlider(new TranslatableText("cameraoverhaul.config.yawdeltarollfactor.name"), (int) (config.yawDeltaRollFactor*100F), 0, 1000)
-			.setDefaultValue(100)
-			.setTooltip(new TranslatableText("cameraoverhaul.config.yawdeltarollfactor.tooltip"))
-			.setSaveConsumer(newValue -> config.yawDeltaRollFactor = newValue / 100f)
-			.build()
-		);
-		
-		// verticalVelocityPitchFactor
-		general.addEntry(entryBuilder
-			.startIntSlider(new TranslatableText("cameraoverhaul.config.verticalvelocitypitchfactor.name"), (int) (config.verticalVelocityPitchFactor*100), 0, 1000)
-			.setDefaultValue(100)
-			.setTooltip(new TranslatableText("cameraoverhaul.config.verticalvelocitypitchfactor.tooltip"))
-			.setSaveConsumer(newValue -> config.verticalVelocityPitchFactor = newValue / 100f)
-			.build()
-		);
-		
-		// forwardVelocityPitchFactor
-		general.addEntry(entryBuilder
-			.startIntSlider(new TranslatableText("cameraoverhaul.config.forwardvelocitypitchfactor.name"), (int) (config.forwardVelocityPitchFactor*100), 0, 1000)
-			.setDefaultValue(100)
-			.setTooltip(new TranslatableText("cameraoverhaul.config.forwardvelocitypitchfactor.tooltip"))
-			.setSaveConsumer(newValue -> config.forwardVelocityPitchFactor = newValue / 100f)
-			.build()
-		);
+		//Entries
+		general.addEntry(CreateBooleanEntry(entryBuilder, "enabled", true, config.enabled, value -> config.enabled = value));
+		general.addEntry(CreateFloatFactorEntry(entryBuilder, "strafingRollFactor", 1.0f, config.strafingRollFactor, value -> config.strafingRollFactor = value));
+		general.addEntry(CreateFloatFactorEntry(entryBuilder, "yawDeltaRollFactor", 1.0f, config.yawDeltaRollFactor, value -> config.yawDeltaRollFactor = value));
+		general.addEntry(CreateFloatFactorEntry(entryBuilder, "verticalVelocityPitchFactor", 1.0f, config.verticalVelocityPitchFactor, value -> config.verticalVelocityPitchFactor = value));
+		general.addEntry(CreateFloatFactorEntry(entryBuilder, "forwardVelocityPitchFactor", 1.0f, config.forwardVelocityPitchFactor, value -> config.forwardVelocityPitchFactor = value));
 		
 		return builder;
+	}
+	//Entry Helpers
+	public static BooleanListEntry CreateBooleanEntry(ConfigEntryBuilder entryBuilder, String entryName, Boolean defaultValue, Boolean value, Function<Boolean, Boolean> setter)
+	{
+		String lowerCaseName = entryName.toLowerCase();
+		String baseTranslationPath = ConfigEntriesPrefix + "." + lowerCaseName;
+
+		return entryBuilder.startBooleanToggle(new TranslatableText(baseTranslationPath + ".name"), value)
+			.setDefaultValue(defaultValue)
+			.setTooltip(new TranslatableText(baseTranslationPath + ".tooltip"))
+			.setSaveConsumer(newValue -> setter.apply(newValue))
+			.build();
+	}
+	public static FloatListEntry CreateFloatFactorEntry(ConfigEntryBuilder entryBuilder, String entryName, float defaultValue, float value, Function<Float, Float> setter)
+	{
+		String lowerCaseName = entryName.toLowerCase();
+		String baseTranslationPath = ConfigEntriesPrefix + "." + lowerCaseName;
+
+		return entryBuilder.startFloatField(new TranslatableText(baseTranslationPath + ".name"), value)
+			.setDefaultValue(defaultValue)
+			.setTooltip(new TranslatableText(baseTranslationPath + ".tooltip"))
+			.setSaveConsumer(newValue -> setter.apply(newValue))
+			.build();
 	}
 }
