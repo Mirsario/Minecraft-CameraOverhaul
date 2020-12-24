@@ -1,16 +1,10 @@
 package mirsario.cameraoverhaul.core.configuration;
 
-import mirsario.cameraoverhaul.common.CameraOverhaul;
-import net.fabricmc.loader.api.FabricLoader;
-
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
+import mirsario.cameraoverhaul.common.*;
+import net.fabricmc.loader.api.*;
+import java.io.*;
+import java.nio.file.*;
+import com.google.gson.*;
 
 public final class Configuration
 {
@@ -21,7 +15,7 @@ public final class Configuration
 	public static <T extends BaseConfigData> T LoadConfig(Class<T> tClass, String configName, int configVersion)
 	{
 		T configData = null;
-		Path configFile = configPath.resolve(configName+".json");
+		Path configFile = configPath.resolve(configName + ".json");
 		boolean saveConfig = false;
 		
 		try {
