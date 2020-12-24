@@ -1,0 +1,14 @@
+{
+	"cameraoverhaul.config.title": "CameraOverhaul Settings",
+	"cameraoverhaul.config.category.general": "General",
+	"cameraoverhaul.config.enabled.name": "Enable the mod's effects",
+	"cameraoverhaul.config.enabled.tooltip": "Toggles all of the mod's features.",
+	"cameraoverhaul.config.strafingrollfactor.name": "Strafing Roll Factor",
+	"cameraoverhaul.config.strafingrollfactor.tooltip": "Controls the strength of the camera roll rotation caused by strafing, or sideway horizontal velocity.",
+	"cameraoverhaul.config.yawdeltarollfactor.name": "Mouselook Roll Factor",
+	"cameraoverhaul.config.yawdeltarollfactor.tooltip": "Controls the strength of the camera roll rotation caused by turning around horizontally.",
+	"cameraoverhaul.config.verticalvelocitypitchfactor.name": "Vertical Velocity Pitch Factor",
+	"cameraoverhaul.config.verticalvelocitypitchfactor.tooltip": "Controls the strength of the camera pitch rotation offset caused by vertical velocity.",
+	"cameraoverhaul.config.forwardvelocitypitchfactor.name": "Forward Velocity Pitch Factor",
+	"cameraoverhaul.config.forwardvelocitypitchfactor.tooltip": "Controls the strength of the camera pitch rotation offset caused by moving forward or backwards."
+}

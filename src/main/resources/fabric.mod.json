@@ -3,13 +3,17 @@
   "id": "cameraoverhaul",
   "version": "${version}",
   "name": "Camera Overhaul",
-  "description": "Makes gameplay more satisfying through the use of various camera tilting. Compatible with everything.\nConfigurable through '.minecraft/config/cameraoverhaul.json'.",
+  "description": "Makes gameplay more satisfying through the use of various camera tilting. Compatible with everything.\nConfigurable through the gear button in the top right of ModMenu or through the '.minecraft/config/cameraoverhaul.json' file for finer control.",
   "license": "MIT",
   "icon": "assets/cameraoverhaul/icon.png",
   "environment": "client",
 
   "authors": [
     "Mirsario"
+  ],
+
+  "contributors": [
+    "altrisi"
   ],
 
   "contact": {
@@ -20,7 +24,8 @@
   },
 
   "entrypoints": {
-	"client": [ "mirsario.cameraoverhaul.fabric.FabricClientModInitializer" ]
+	"client": [ "mirsario.cameraoverhaul.fabric.FabricClientModInitializer" ],
+	"modmenu": [ "mirsario.cameraoverhaul.fabric.ModMenuConfigIntegration" ]
   },
   
   "mixins": [
@@ -28,6 +33,7 @@
   ],
 
   "depends": {
-    "fabricloader": ">=0.4.0"
+    "fabricloader": ">=0.4.0",
+    "cloth-config2": ">=4.8.3"
   }
 }
