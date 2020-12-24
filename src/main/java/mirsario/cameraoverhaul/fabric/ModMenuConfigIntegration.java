@@ -15,6 +15,12 @@ public class ModMenuConfigIntegration implements ModMenuApi
 	private static final String ConfigEntriesPrefix = "cameraoverhaul.config";
 
 	@Override
+	public String getModId()
+	{
+		return CameraOverhaul.Id;
+	}
+
+	@Override
 	public ConfigScreenFactory<?> getModConfigScreenFactory()
 	{
 		return screen -> GetConfigBuilder().build();
@@ -30,7 +36,7 @@ public class ModMenuConfigIntegration implements ModMenuApi
 			.setTitle(new TranslatableText("cameraoverhaul.config.title"))
 			.transparentBackground()
 			.setSavingRunnable(() -> {
-				Configuration.SaveConfig(CameraOverhaul.instance.config, CameraOverhaul.configFileName, ConfigData.ConfigVersion);
+				Configuration.SaveConfig(CameraOverhaul.instance.config, CameraOverhaul.Id, ConfigData.ConfigVersion);
 			});
 		
 		ConfigCategory general = builder.getOrCreateCategory(new TranslatableText("cameraoverhaul.config.category.general"));
