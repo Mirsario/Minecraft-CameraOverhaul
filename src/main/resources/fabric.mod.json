@@ -1,39 +1,39 @@
 {
-  "schemaVersion": 1,
-  "id": "cameraoverhaul",
-  "version": "${version}",
-  "name": "Camera Overhaul",
-  "description": "Makes gameplay more satisfying through the use of various camera tilting. Compatible with everything.\nConfigurable through the gear button in the top right of ModMenu or through the '.minecraft/config/cameraoverhaul.json' file for finer control.",
-  "license": "MIT",
-  "icon": "assets/cameraoverhaul/icon.png",
-  "environment": "client",
+	"schemaVersion": 1,
+	"id": "cameraoverhaul",
+	"version": "${version}",
+	"name": "Camera Overhaul",
+	"description": "Makes gameplay more satisfying through the use of various camera tilting. Compatible with everything.\nConfigurable through the gear button in the top right of ModMenu or through the '.minecraft/config/cameraoverhaul.json' file for finer control.",
+	"license": "MIT",
+	"icon": "assets/cameraoverhaul/icon.png",
+	"environment": "client",
 
-  "authors": [
-    "Mirsario"
-  ],
+	"authors": [
+		"Mirsario"
+	],
 
-  "contributors": [
-    "altrisi"
-  ],
+	"contributors": [
+		"altrisi"
+	],
 
-  "contact": {
-	  "homepage": "https://curseforge.com/minecraft/mc-mods/cameraoverhaul",
-	  "sources": "https://github.com/Mirsario/Minecraft-CameraOverhaul",
-	  "issues": "https://github.com/Mirsario/Minecraft-CameraOverhaul/issues",
-	  "email": "me@mirsar.io"
-  },
+	"contact": {
+		"homepage": "https://curseforge.com/minecraft/mc-mods/cameraoverhaul",
+		"sources": "https://github.com/Mirsario/Minecraft-CameraOverhaul",
+		"issues": "https://github.com/Mirsario/Minecraft-CameraOverhaul/issues",
+		"email": "me@mirsar.io"
+	},
 
-  "entrypoints": {
+	"entrypoints": {
 	"client": [ "mirsario.cameraoverhaul.fabric.FabricClientModInitializer" ],
 	"modmenu": [ "mirsario.cameraoverhaul.fabric.ModMenuConfigIntegration" ]
-  },
-  
-  "mixins": [
-    "cameraoverhaul.mixins.json"
-  ],
+	},
+	
+	"mixins": [
+		"cameraoverhaul.mixins.json"
+	],
 
-  "depends": {
-    "fabricloader": ">=0.4.0",
-    "cloth-config2": ">=4.8.3"
-  }
+	"depends": {
+		"fabricloader": ">=0.4.0",
+		"cloth-config2": ">=4.8.3"
+	}
 }
