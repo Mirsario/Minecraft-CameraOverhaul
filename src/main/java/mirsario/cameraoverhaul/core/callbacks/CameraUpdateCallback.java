@@ -9,12 +9,10 @@ public interface CameraUpdateCallback
 	Event<CameraUpdateCallback> EVENT = EventHelper.CreateEvent(CameraUpdateCallback.class,
 		(listeners) -> (camera, transform, deltaTime) -> {
 			for(CameraUpdateCallback listener : listeners) {
-				transform = listener.OnCameraUpdate(camera, transform, deltaTime);
+				listener.OnCameraUpdate(camera, transform, deltaTime);
 			}
-
-			return transform;
 		}
 	);
 	
-	Transform OnCameraUpdate(Camera camera, Transform cameraTransform, float deltaTime);
+	void OnCameraUpdate(Camera camera, Transform cameraTransform, float deltaTime);
 }
