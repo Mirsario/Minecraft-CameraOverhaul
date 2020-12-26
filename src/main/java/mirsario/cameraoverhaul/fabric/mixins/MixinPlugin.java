@@ -3,18 +3,19 @@ package mirsario.cameraoverhaul.fabric.mixins;
 import org.objectweb.asm.tree.*;
 import org.spongepowered.asm.mixin.extensibility.*;
 import mirsario.cameraoverhaul.common.*;
-import net.fabricmc.loader.api.*;
-
 import java.util.*;
+import net.fabricmc.loader.api.*;
+import net.fabricmc.loader.api.metadata.*;
+import net.fabricmc.loader.util.version.VersionPredicateParser;
 
 public class MixinPlugin implements IMixinConfigPlugin
 {
 	public static String BaseMixinPath = "mirsario.cameraoverhaul.fabric.mixins.";
 
-    @Override
-    public boolean shouldApplyMixin(String targetClassName, String mixinClassName)
-    {
-        if(!mixinClassName.startsWith(BaseMixinPath)) {
+	@Override
+	public boolean shouldApplyMixin(String targetClassName, String mixinClassName)
+	{
+		if (!mixinClassName.startsWith(BaseMixinPath)) {
 			return true;
 		}
 
@@ -22,26 +23,26 @@ public class MixinPlugin implements IMixinConfigPlugin
 
 		boolean isLegacy;
 
-        if(relativeName.startsWith("legacy.")) {
+		if (relativeName.startsWith("legacy.")) {
 			isLegacy = true;
-		} else if(relativeName.startsWith("modern.")) {
+		} else if (relativeName.startsWith("modern.")) {
 			isLegacy = false;
 		} else {
 			return true;
 		}
 
-		boolean result;
+		ModMetadata metadata = FabricLoader.getInstance().getModContainer("minecraft").get().getMetadata();
+		boolean legacyGameVersion;
 
 		try {
-			MappingResolver resolver = FabricLoader.getInstance().getMappingResolver();
+			legacyGameVersion = VersionPredicateParser.matches(metadata.getVersion(), "<1.15");
+		} catch (VersionParsingException e) {
+			e.printStackTrace();
 
-			Class.forName(resolver.mapClassName("intermediary", "net.minecraft.class_4587"));
+			legacyGameVersion = true;
+		}
 
-			result = !isLegacy;
-		}
-		catch(ClassNotFoundException e) {
-			result = isLegacy;
-		}
+		boolean result = legacyGameVersion == isLegacy;
 
 		CameraOverhaul.Logger.info((result ? "Using" : "Skipping") + " " + (isLegacy ? "legacy" : "modern") + " mixin '" + mixinClassName + "'.");
 
@@ -70,5 +71,5 @@ public class MixinPlugin implements IMixinConfigPlugin
     public List<String> getMixins()
     {
         return null;
-    }
+	}
 }
