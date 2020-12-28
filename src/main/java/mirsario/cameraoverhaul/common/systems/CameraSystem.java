@@ -52,8 +52,6 @@ public final class CameraSystem implements CameraUpdateCallback, ModifyCameraTra
 		StrafingRollOffset(cameraTransform, offsetTransform, velocity, relativeXZVelocity, deltaTime, config.strafingRollFactor);
 
 		prevCameraYaw = cameraTransform.eulerRot.y;
-
-		CameraOverhaul.Logger.info("Updating...");
 	}
 
 	@Override
