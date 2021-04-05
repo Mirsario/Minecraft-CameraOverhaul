@@ -19,6 +19,7 @@ public final class CameraSystem implements CameraUpdateCallback, ModifyCameraTra
 	private static double yawDeltaRollTargetOffset;
 	private static double lerpSpeed = 1d;
 	private static Transform offsetTransform = new Transform();
+	public static boolean isFlying = false;
 
 	public CameraSystem()
 	{
@@ -44,12 +45,27 @@ public final class CameraSystem implements CameraUpdateCallback, ModifyCameraTra
 		Vec3d velocity = camera.getFocusedEntity().getVelocity();
 		Vec2f relativeXZVelocity = Vec2fUtils.Rotate(new Vec2f((float)velocity.x, (float)velocity.z), 360f - (float)cameraTransform.eulerRot.y);
 
-		//X
-		VerticalVelocityPitchOffset(cameraTransform, offsetTransform, velocity, relativeXZVelocity, deltaTime, config.verticalVelocityPitchFactor);
-		ForwardVelocityPitchOffset(cameraTransform, offsetTransform, velocity, relativeXZVelocity, deltaTime, config.forwardVelocityPitchFactor);
-		//Z
-		YawDeltaRollOffset(cameraTransform, offsetTransform, velocity, relativeXZVelocity, deltaTime, config.yawDeltaRollFactor);
-		StrafingRollOffset(cameraTransform, offsetTransform, velocity, relativeXZVelocity, deltaTime, config.strafingRollFactor);
+		if (config.onlyEnableWhenFlying) {
+			if (isFlying) {
+				//X
+				VerticalVelocityPitchOffset(cameraTransform, offsetTransform, velocity, relativeXZVelocity, deltaTime, config.verticalVelocityPitchFactor);
+				ForwardVelocityPitchOffset(cameraTransform, offsetTransform, velocity, relativeXZVelocity, deltaTime, config.forwardVelocityPitchFactor);
+				//Z
+				YawDeltaRollOffset(cameraTransform, offsetTransform, velocity, relativeXZVelocity, deltaTime, config.yawDeltaRollFactor);
+				StrafingRollOffset(cameraTransform, offsetTransform, velocity, relativeXZVelocity, deltaTime, config.strafingRollFactor);
+			}
+			else {
+				yawDeltaRollTargetOffset = MathUtils.Lerp(yawDeltaRollTargetOffset, 0d, deltaTime * 0.35d);
+			}
+		}
+		else {
+			//X
+			VerticalVelocityPitchOffset(cameraTransform, offsetTransform, velocity, relativeXZVelocity, deltaTime, config.verticalVelocityPitchFactor);
+			ForwardVelocityPitchOffset(cameraTransform, offsetTransform, velocity, relativeXZVelocity, deltaTime, config.forwardVelocityPitchFactor);
+			//Z
+			YawDeltaRollOffset(cameraTransform, offsetTransform, velocity, relativeXZVelocity, deltaTime, config.yawDeltaRollFactor);
+			StrafingRollOffset(cameraTransform, offsetTransform, velocity, relativeXZVelocity, deltaTime, config.strafingRollFactor);
+		}
 
 		prevCameraYaw = cameraTransform.eulerRot.y;
 	}
