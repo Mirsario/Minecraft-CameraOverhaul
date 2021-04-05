@@ -44,11 +44,12 @@ public class ModMenuConfigIntegration implements ModMenuApi
 		
 		//Entries
 		general.addEntry(CreateBooleanEntry(entryBuilder, "enabled", true, config.enabled, value -> config.enabled = value));
+		general.addEntry(CreateBooleanEntry(entryBuilder, "onlyEnableWhenFlying", true, config.onlyEnableWhenFlying, value -> config.onlyEnableWhenFlying = value));
 		general.addEntry(CreateFloatFactorEntry(entryBuilder, "strafingRollFactor", 1.0f, config.strafingRollFactor, value -> config.strafingRollFactor = value));
 		general.addEntry(CreateFloatFactorEntry(entryBuilder, "yawDeltaRollFactor", 1.0f, config.yawDeltaRollFactor, value -> config.yawDeltaRollFactor = value));
 		general.addEntry(CreateFloatFactorEntry(entryBuilder, "verticalVelocityPitchFactor", 1.0f, config.verticalVelocityPitchFactor, value -> config.verticalVelocityPitchFactor = value));
 		general.addEntry(CreateFloatFactorEntry(entryBuilder, "forwardVelocityPitchFactor", 1.0f, config.forwardVelocityPitchFactor, value -> config.forwardVelocityPitchFactor = value));
-		
+
 		return builder;
 	}
 	//Entry Helpers
