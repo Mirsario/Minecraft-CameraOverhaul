@@ -19,6 +19,8 @@ public final class CameraSystem implements CameraUpdateCallback, ModifyCameraTra
 	private static double yawDeltaRollTargetOffset;
 	private static double lerpSpeed = 1d;
 	private static Transform offsetTransform = new Transform();
+	private static boolean isFlying = false;
+	private static boolean isSwimming = false;
 
 	public CameraSystem()
 	{
@@ -41,6 +43,10 @@ public final class CameraSystem implements CameraUpdateCallback, ModifyCameraTra
 			return;
 		}
 
+		float strafingRollFactorToUse = config.strafingRollFactor;
+		if(isFlying) strafingRollFactorToUse = config.strafingRollFactorWhenFlying;
+		if(isSwimming) strafingRollFactorToUse = config.strafingRollFactorWhenSwimming;
+
 		Vec3d velocity = camera.getFocusedEntity().getVelocity();
 		Vec2f relativeXZVelocity = Vec2fUtils.Rotate(new Vec2f((float)velocity.x, (float)velocity.z), 360f - (float)cameraTransform.eulerRot.y);
 
@@ -49,7 +55,7 @@ public final class CameraSystem implements CameraUpdateCallback, ModifyCameraTra
 		ForwardVelocityPitchOffset(cameraTransform, offsetTransform, velocity, relativeXZVelocity, deltaTime, config.forwardVelocityPitchFactor);
 		//Z
 		YawDeltaRollOffset(cameraTransform, offsetTransform, velocity, relativeXZVelocity, deltaTime, config.yawDeltaRollFactor);
-		StrafingRollOffset(cameraTransform, offsetTransform, velocity, relativeXZVelocity, deltaTime, config.strafingRollFactor);
+		StrafingRollOffset(cameraTransform, offsetTransform, velocity, relativeXZVelocity, deltaTime, strafingRollFactorToUse);
 
 		prevCameraYaw = cameraTransform.eulerRot.y;
 	}
@@ -110,5 +116,13 @@ public final class CameraSystem implements CameraUpdateCallback, ModifyCameraTra
 		prevStrafingRollOffset = strafingRollOffset = MathUtils.Lerp(prevStrafingRollOffset, strafingRollOffset, (double)deltaTime * lerpSpeed);
 		
 		outputTransform.eulerRot = outputTransform.eulerRot.add(0d, 0d, strafingRollOffset * intensity);
+	}
+
+	public static void setIsFlying(boolean flying) {
+		isFlying = flying;
+	}
+
+	public static void setIsSwimming(boolean swimming) {
+		isSwimming = swimming;
 	}
 }

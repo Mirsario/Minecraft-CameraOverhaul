@@ -1,7 +1,9 @@
 package mirsario.cameraoverhaul.fabric.mixins.modern;
 
+import mirsario.cameraoverhaul.common.systems.CameraSystem;
 import net.minecraft.client.render.*;
 import net.minecraft.entity.*;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.*;
 import org.spongepowered.asm.mixin.*;
@@ -23,6 +25,10 @@ public abstract class CameraMixin
 	private void OnCameraUpdate(BlockView area, Entity focusedEntity, boolean thirdPerson, boolean inverseView, float tickDelta, CallbackInfo ci)
 	{
 		Transform cameraTransform = new Transform(getPos(), new Vec3d(getPitch(), getYaw(), 0d));
+
+		PlayerEntity playerEntity = (PlayerEntity) focusedEntity;
+		CameraSystem.setIsFlying(playerEntity.isFallFlying());
+		CameraSystem.setIsSwimming(playerEntity.isSwimming());
 
 		CameraUpdateCallback.EVENT.Invoker().OnCameraUpdate((Camera)(Object)this, cameraTransform, tickDelta);
 
