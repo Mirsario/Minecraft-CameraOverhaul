@@ -28,6 +28,6 @@ public abstract class GameRendererMixin
 
 		cameraTransform = ModifyCameraTransformCallback.EVENT.Invoker().ModifyCameraTransform(camera, cameraTransform);
 
-		matrix.multiply(Vector3f.POSITIVE_Z.getDegreesQuaternion((float)cameraTransform.eulerRot.z));
+		matrix.multiply(Vec3f.POSITIVE_Z.getDegreesQuaternion((float)cameraTransform.eulerRot.z));
 	}
 }

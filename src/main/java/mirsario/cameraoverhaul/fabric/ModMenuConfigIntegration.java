@@ -1,7 +1,9 @@
 package mirsario.cameraoverhaul.fabric;
 
 import java.util.function.*;
-import io.github.prospector.modmenu.api.*;
+
+import com.terraformersmc.modmenu.api.ConfigScreenFactory;
+import com.terraformersmc.modmenu.api.ModMenuApi;
 import me.shedaniel.clothconfig2.api.*;
 import me.shedaniel.clothconfig2.gui.entries.*;
 import mirsario.cameraoverhaul.common.*;
@@ -13,12 +15,6 @@ import net.minecraft.text.*;
 public class ModMenuConfigIntegration implements ModMenuApi
 {
 	private static final String ConfigEntriesPrefix = "cameraoverhaul.config";
-
-	@Override
-	public String getModId()
-	{
-		return CameraOverhaul.Id;
-	}
 
 	@Override
 	public ConfigScreenFactory<?> getModConfigScreenFactory()
