@@ -3,6 +3,7 @@ package mirsario.cameraoverhaul.fabric.mixins.legacy;
 import net.fabricmc.api.*;
 import net.minecraft.client.render.*;
 import net.minecraft.entity.*;
+import net.minecraft.entity.player.*;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.*;
 import org.lwjgl.opengl.GL11;
@@ -12,6 +13,7 @@ import org.spongepowered.asm.mixin.injection.callback.*;
 
 import mirsario.cameraoverhaul.core.callbacks.*;
 import mirsario.cameraoverhaul.core.structures.*;
+import mirsario.cameraoverhaul.common.systems.*;
 
 //Legacy mixin, to be used in versions prior to 1.15.
 
@@ -27,6 +29,11 @@ public abstract class LegacyCameraMixin
 	@Inject(method = "update", at = @At("RETURN"))
 	private void OnCameraUpdate(BlockView area, Entity focusedEntity, boolean thirdPerson, boolean inverseView, float tickDelta, CallbackInfo ci)
 	{
+		PlayerEntity playerEntity = (PlayerEntity)focusedEntity;
+		
+		CameraSystem.SetIsFlying(playerEntity.isFallFlying());
+		CameraSystem.SetIsSwimming(playerEntity.isSwimming());
+		
 		Transform cameraTransform = new Transform(getPos(), new Vec3d(getPitch(), getYaw(), 0d));
 
 		//Undo multiplications.
