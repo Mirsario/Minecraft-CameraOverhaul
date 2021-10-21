@@ -3,6 +3,7 @@
 	"cameraoverhaul.config.category.general": "General",
 	"cameraoverhaul.config.enabled.name": "Enable the mod's effects",
 	"cameraoverhaul.config.enabled.tooltip": "Toggles all of the mod's features.",
+
 	"cameraoverhaul.config.strafingrollfactor.name": "Strafing Roll Factor",
 	"cameraoverhaul.config.strafingrollfactor.tooltip": "Controls the strength of the camera roll rotation caused by strafing, or sideway horizontal velocity.",
 	"cameraoverhaul.config.strafingrollfactorwhenflying.name": "Strafing Roll Factor When Elytra Flying",
@@ -11,8 +12,16 @@
 	"cameraoverhaul.config.strafingrollfactorwhenswimming.tooltip": "Controls the strength of the camera roll rotation when swimming",
 	"cameraoverhaul.config.yawdeltarollfactor.name": "Mouselook Roll Factor",
 	"cameraoverhaul.config.yawdeltarollfactor.tooltip": "Controls the strength of the camera roll rotation caused by turning around horizontally.",
+
 	"cameraoverhaul.config.verticalvelocitypitchfactor.name": "Vertical Velocity Pitch Factor",
 	"cameraoverhaul.config.verticalvelocitypitchfactor.tooltip": "Controls the strength of the camera pitch rotation offset caused by vertical velocity.",
 	"cameraoverhaul.config.forwardvelocitypitchfactor.name": "Forward Velocity Pitch Factor",
-	"cameraoverhaul.config.forwardvelocitypitchfactor.tooltip": "Controls the strength of the camera pitch rotation offset caused by moving forward or backwards."
+	"cameraoverhaul.config.forwardvelocitypitchfactor.tooltip": "Controls the strength of the camera pitch rotation offset caused by moving forward or backwards.",
+	
+	"cameraoverhaul.config.horizontalvelocityinterpolationspeed.name": "Horizontal Velocity Interpolation Speed",
+	"cameraoverhaul.config.horizontalvelocityinterpolationspeed.tooltip": "Controls the smoothness of camera pitch & roll rotations caused by moving horizontally.",
+	"cameraoverhaul.config.verticalvelocityinterpolationspeed.name": "Vertical Velocity Interpolation Speed",
+	"cameraoverhaul.config.verticalvelocityinterpolationspeed.tooltip": "Controls the smoothness of camera pitch rotations caused by moving vertically.",
+	"cameraoverhaul.config.yawdeltainterpolationspeed.name": "Mouselook Roll Interpolation Speed",
+	"cameraoverhaul.config.yawdeltainterpolationspeed.tooltip": "Controls the smoothness of camera roll rotations caused by turning around horizontally."
 }

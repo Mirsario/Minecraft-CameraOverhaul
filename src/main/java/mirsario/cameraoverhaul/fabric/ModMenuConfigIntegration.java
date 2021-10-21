@@ -40,12 +40,19 @@ public class ModMenuConfigIntegration implements ModMenuApi
 		
 		//Entries
 		general.addEntry(CreateBooleanEntry(entryBuilder, "enabled", true, config.enabled, value -> config.enabled = value));
+		// Roll factors
 		general.addEntry(CreateFloatFactorEntry(entryBuilder, "strafingRollFactor", 1.0f, config.strafingRollFactor, value -> config.strafingRollFactor = value));
 		general.addEntry(CreateFloatFactorEntry(entryBuilder, "strafingRollFactorWhenFlying", -1.0f, config.strafingRollFactorWhenFlying, value -> config.strafingRollFactorWhenFlying = value));
 		general.addEntry(CreateFloatFactorEntry(entryBuilder, "strafingRollFactorWhenSwimming", -1.0f, config.strafingRollFactorWhenSwimming, value -> config.strafingRollFactorWhenSwimming = value));
 		general.addEntry(CreateFloatFactorEntry(entryBuilder, "yawDeltaRollFactor", 1.0f, config.yawDeltaRollFactor, value -> config.yawDeltaRollFactor = value));
+		// Pitch factors
 		general.addEntry(CreateFloatFactorEntry(entryBuilder, "verticalVelocityPitchFactor", 1.0f, config.verticalVelocityPitchFactor, value -> config.verticalVelocityPitchFactor = value));
 		general.addEntry(CreateFloatFactorEntry(entryBuilder, "forwardVelocityPitchFactor", 1.0f, config.forwardVelocityPitchFactor, value -> config.forwardVelocityPitchFactor = value));
+		
+		// Interpolation factors
+		general.addEntry(CreateFloatFactorEntry(entryBuilder, "horizontalVelocityInterpolationSpeed", 0.25f, config.horizontalVelocityInterpolationSpeed, value -> config.horizontalVelocityInterpolationSpeed = value));
+		general.addEntry(CreateFloatFactorEntry(entryBuilder, "verticalVelocityInterpolationSpeed", 0.75f, config.verticalVelocityInterpolationSpeed, value -> config.verticalVelocityInterpolationSpeed = value));
+		general.addEntry(CreateFloatFactorEntry(entryBuilder, "yawDeltaInterpolationSpeed", 1.0f, config.yawDeltaInterpolationSpeed, value -> config.yawDeltaInterpolationSpeed = value));
 		
 		return builder;
 	}
