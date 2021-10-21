@@ -1,17 +1,22 @@
 plugins {
-    id "fabric-loom" version "0.8-SNAPSHOT"
+	id 'fabric-loom' version '0.9-SNAPSHOT'
 	id 'maven-publish'
 }
 
-sourceCompatibility = JavaVersion.VERSION_16
-targetCompatibility = JavaVersion.VERSION_16
+sourceCompatibility = JavaVersion.VERSION_1_8
+targetCompatibility = JavaVersion.VERSION_1_8
 
 archivesBaseName = project.archives_base_name
 version = project.mod_version
 group = project.maven_group
 
 repositories {
-    maven { url "https://maven.shedaniel.me/" }
+	maven {
+		url = "https://maven.terraformersmc.com/releases"
+	}
+	maven {
+		url "https://maven.shedaniel.me/"
+	}
 }
 
 dependencies {
@@ -36,7 +41,7 @@ dependencies {
 	//include fabricApi.module("fabric-resource-loader-v0", project.fabric_version)
 	
 	// ModMenu API, to add the Config Screen to it
-	modImplementation "io.github.prospector:modmenu:${project.modmenu_version}"
+	modImplementation "com.terraformersmc:modmenu:${project.modmenu_version}"
 }
 
 processResources {
@@ -52,9 +57,6 @@ processResources {
 // see http://yodaconditions.net/blog/fix-for-java-file-encoding-problems-with-gradle.html
 tasks.withType(JavaCompile) {
 	options.encoding = "UTF-8"
-
-	// Minecraft 1.17 (21w19a) upwards uses Java 16.
-	it.options.release = 16
 }
 
 // Loom will automatically attach sourcesJar to a RemapSourcesJar task and to the "build" task

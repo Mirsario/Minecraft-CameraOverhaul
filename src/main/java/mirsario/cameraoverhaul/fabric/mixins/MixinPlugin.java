@@ -6,7 +6,6 @@ import mirsario.cameraoverhaul.common.*;
 import java.util.*;
 import net.fabricmc.loader.api.*;
 import net.fabricmc.loader.api.metadata.*;
-import net.fabricmc.loader.util.version.VersionPredicateParser;
 
 public class MixinPlugin implements IMixinConfigPlugin
 {
