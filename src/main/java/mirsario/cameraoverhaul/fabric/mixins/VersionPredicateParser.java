@@ -23,12 +23,14 @@ import net.fabricmc.loader.api.VersionParsingException;
 import net.fabricmc.loader.util.version.SemanticVersionImpl;
 import net.fabricmc.loader.util.version.SemanticVersionPredicateParser;
 
-public class VersionPredicateParser<E extends Version> {
-    static boolean matches(Version version, String s) throws VersionParsingException {
-        if (version instanceof SemanticVersionImpl) {
-            return SemanticVersionPredicateParser.create(s).test((SemanticVersionImpl) version);
-        } else {
-            throw new VersionParsingException("Unknown version type!");
-        }
-    }
+public class VersionPredicateParser<E extends Version>
+{
+	static boolean matches(Version version, String s) throws VersionParsingException
+	{
+		if (version instanceof SemanticVersionImpl) {
+			return SemanticVersionPredicateParser.create(s).test((SemanticVersionImpl) version);
+		} else {
+			throw new VersionParsingException("Unknown version type!");
+		}
+	}
 }
