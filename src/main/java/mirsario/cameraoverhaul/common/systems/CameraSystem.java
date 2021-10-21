@@ -1,6 +1,8 @@
 package mirsario.cameraoverhaul.common.systems;
 
 import net.minecraft.client.render.*;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.player.*;
 import net.minecraft.util.math.*;
 import mirsario.cameraoverhaul.common.*;
 import mirsario.cameraoverhaul.common.configuration.*;
@@ -29,8 +31,19 @@ public final class CameraSystem implements CameraUpdateCallback, ModifyCameraTra
 	}
 
 	@Override
-	public void OnCameraUpdate(Camera camera, Transform cameraTransform, float deltaTime)
+	public void OnCameraUpdate(Entity focusedEntity, Camera camera, Transform cameraTransform, float deltaTime)
 	{
+		boolean isFlying = false;
+		boolean isSwimming = false;
+		
+		// Update entity info
+		if (focusedEntity instanceof PlayerEntity) {
+			PlayerEntity playerEntity = (PlayerEntity)focusedEntity;
+			
+			isFlying = playerEntity.isFallFlying();
+			isSwimming = playerEntity.isSwimming();
+		}
+		
 		//Reset the offset transform
 		offsetTransform.position = new Vec3d(0d, 0d, 0d);
 		offsetTransform.eulerRot = new Vec3d(0d, 0d, 0d);
@@ -41,6 +54,14 @@ public final class CameraSystem implements CameraUpdateCallback, ModifyCameraTra
 			return;
 		}
 
+		float strafingRollFactorToUse = config.strafingRollFactor;
+		
+		if(isFlying) {
+			strafingRollFactorToUse = config.strafingRollFactorWhenFlying;
+		} else if(isSwimming) {
+			strafingRollFactorToUse = config.strafingRollFactorWhenSwimming;
+		}
+
 		Vec3d velocity = camera.getFocusedEntity().getVelocity();
 		Vec2f relativeXZVelocity = Vec2fUtils.Rotate(new Vec2f((float)velocity.x, (float)velocity.z), 360f - (float)cameraTransform.eulerRot.y);
 
@@ -49,7 +70,7 @@ public final class CameraSystem implements CameraUpdateCallback, ModifyCameraTra
 		ForwardVelocityPitchOffset(cameraTransform, offsetTransform, velocity, relativeXZVelocity, deltaTime, config.forwardVelocityPitchFactor);
 		//Z
 		YawDeltaRollOffset(cameraTransform, offsetTransform, velocity, relativeXZVelocity, deltaTime, config.yawDeltaRollFactor);
-		StrafingRollOffset(cameraTransform, offsetTransform, velocity, relativeXZVelocity, deltaTime, config.strafingRollFactor);
+		StrafingRollOffset(cameraTransform, offsetTransform, velocity, relativeXZVelocity, deltaTime, strafingRollFactorToUse);
 
 		prevCameraYaw = cameraTransform.eulerRot.y;
 	}

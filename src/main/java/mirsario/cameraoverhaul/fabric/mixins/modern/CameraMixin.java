@@ -2,7 +2,8 @@ package mirsario.cameraoverhaul.fabric.mixins.modern;
 
 import net.minecraft.client.render.*;
 import net.minecraft.entity.*;
-import net.minecraft.util.math.Vec3d;
+import net.minecraft.entity.player.*;
+import net.minecraft.util.math.*;
 import net.minecraft.world.*;
 import org.spongepowered.asm.mixin.*;
 import org.spongepowered.asm.mixin.injection.*;
@@ -10,6 +11,7 @@ import org.spongepowered.asm.mixin.injection.callback.*;
 
 import mirsario.cameraoverhaul.core.callbacks.*;
 import mirsario.cameraoverhaul.core.structures.*;
+import mirsario.cameraoverhaul.common.systems.*;
 
 @Mixin(Camera.class)
 public abstract class CameraMixin
@@ -24,7 +26,7 @@ public abstract class CameraMixin
 	{
 		Transform cameraTransform = new Transform(getPos(), new Vec3d(getPitch(), getYaw(), 0d));
 
-		CameraUpdateCallback.EVENT.Invoker().OnCameraUpdate((Camera)(Object)this, cameraTransform, tickDelta);
+		CameraUpdateCallback.EVENT.Invoker().OnCameraUpdate(focusedEntity, (Camera)(Object)this, cameraTransform, tickDelta);
 
 		cameraTransform = ModifyCameraTransformCallback.EVENT.Invoker().ModifyCameraTransform((Camera)(Object)this, cameraTransform);
 

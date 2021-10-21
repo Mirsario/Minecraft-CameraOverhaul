@@ -3,6 +3,7 @@ package mirsario.cameraoverhaul.fabric.mixins.legacy;
 import net.fabricmc.api.*;
 import net.minecraft.client.render.*;
 import net.minecraft.entity.*;
+import net.minecraft.entity.player.*;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.*;
 import org.lwjgl.opengl.GL11;
@@ -12,6 +13,7 @@ import org.spongepowered.asm.mixin.injection.callback.*;
 
 import mirsario.cameraoverhaul.core.callbacks.*;
 import mirsario.cameraoverhaul.core.structures.*;
+import mirsario.cameraoverhaul.common.systems.*;
 
 //Legacy mixin, to be used in versions prior to 1.15.
 
@@ -33,7 +35,7 @@ public abstract class LegacyCameraMixin
 		GL11.glRotatef((float)cameraTransform.eulerRot.y + 180.0f, 0f, -1f, 0f);
 		GL11.glRotatef((float)cameraTransform.eulerRot.x, -1f, 0f, 0f);
 
-		CameraUpdateCallback.EVENT.Invoker().OnCameraUpdate((Camera)(Object)this, cameraTransform, tickDelta);
+		CameraUpdateCallback.EVENT.Invoker().OnCameraUpdate(focusedEntity, (Camera)(Object)this, cameraTransform, tickDelta);
 
 		cameraTransform = ModifyCameraTransformCallback.EVENT.Invoker().ModifyCameraTransform((Camera)(Object)this, cameraTransform);
 
