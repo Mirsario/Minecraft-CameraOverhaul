@@ -44,8 +44,12 @@ public final class CameraSystem implements CameraUpdateCallback, ModifyCameraTra
 		}
 
 		float strafingRollFactorToUse = config.strafingRollFactor;
-		if(isFlying) strafingRollFactorToUse = config.strafingRollFactorWhenFlying;
-		if(isSwimming) strafingRollFactorToUse = config.strafingRollFactorWhenSwimming;
+		
+		if(isFlying) {
+			strafingRollFactorToUse = config.strafingRollFactorWhenFlying;
+		} else if(isSwimming) {
+			strafingRollFactorToUse = config.strafingRollFactorWhenSwimming;
+		}
 
 		Vec3d velocity = camera.getFocusedEntity().getVelocity();
 		Vec2f relativeXZVelocity = Vec2fUtils.Rotate(new Vec2f((float)velocity.x, (float)velocity.z), 360f - (float)cameraTransform.eulerRot.y);
@@ -118,11 +122,13 @@ public final class CameraSystem implements CameraUpdateCallback, ModifyCameraTra
 		outputTransform.eulerRot = outputTransform.eulerRot.add(0d, 0d, strafingRollOffset * intensity);
 	}
 
-	public static void setIsFlying(boolean flying) {
+	public static void SetIsFlying(boolean flying)
+	{
 		isFlying = flying;
 	}
 
-	public static void setIsSwimming(boolean swimming) {
+	public static void SetIsSwimming(boolean swimming)
+	{
 		isSwimming = swimming;
 	}
 }
