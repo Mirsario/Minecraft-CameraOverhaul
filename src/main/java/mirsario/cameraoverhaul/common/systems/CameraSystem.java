@@ -1,6 +1,8 @@
 package mirsario.cameraoverhaul.common.systems;
 
 import net.minecraft.client.render.*;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.player.*;
 import net.minecraft.util.math.*;
 import mirsario.cameraoverhaul.common.*;
 import mirsario.cameraoverhaul.common.configuration.*;
@@ -19,8 +21,6 @@ public final class CameraSystem implements CameraUpdateCallback, ModifyCameraTra
 	private static double yawDeltaRollTargetOffset;
 	private static double lerpSpeed = 1d;
 	private static Transform offsetTransform = new Transform();
-	private static boolean isFlying = false;
-	private static boolean isSwimming = false;
 
 	public CameraSystem()
 	{
@@ -31,8 +31,19 @@ public final class CameraSystem implements CameraUpdateCallback, ModifyCameraTra
 	}
 
 	@Override
-	public void OnCameraUpdate(Camera camera, Transform cameraTransform, float deltaTime)
+	public void OnCameraUpdate(Entity focusedEntity, Camera camera, Transform cameraTransform, float deltaTime)
 	{
+		boolean isFlying = false;
+		boolean isSwimming = false;
+		
+		// Update entity info
+		if (focusedEntity instanceof PlayerEntity) {
+			PlayerEntity playerEntity = (PlayerEntity)focusedEntity;
+			
+			isFlying = playerEntity.isFallFlying();
+			isSwimming = playerEntity.isSwimming();
+		}
+		
 		//Reset the offset transform
 		offsetTransform.position = new Vec3d(0d, 0d, 0d);
 		offsetTransform.eulerRot = new Vec3d(0d, 0d, 0d);
@@ -120,15 +131,5 @@ public final class CameraSystem implements CameraUpdateCallback, ModifyCameraTra
 		prevStrafingRollOffset = strafingRollOffset = MathUtils.Lerp(prevStrafingRollOffset, strafingRollOffset, (double)deltaTime * lerpSpeed);
 		
 		outputTransform.eulerRot = outputTransform.eulerRot.add(0d, 0d, strafingRollOffset * intensity);
-	}
-
-	public static void SetIsFlying(boolean flying)
-	{
-		isFlying = flying;
-	}
-
-	public static void SetIsSwimming(boolean swimming)
-	{
-		isSwimming = swimming;
 	}
 }

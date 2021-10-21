@@ -24,14 +24,9 @@ public abstract class CameraMixin
 	@Inject(method = "update", at = @At("RETURN"))
 	private void OnCameraUpdate(BlockView area, Entity focusedEntity, boolean thirdPerson, boolean inverseView, float tickDelta, CallbackInfo ci)
 	{
-		PlayerEntity playerEntity = (PlayerEntity)focusedEntity;
-		
-		CameraSystem.SetIsFlying(playerEntity.isFallFlying());
-		CameraSystem.SetIsSwimming(playerEntity.isSwimming());
-		
 		Transform cameraTransform = new Transform(getPos(), new Vec3d(getPitch(), getYaw(), 0d));
 
-		CameraUpdateCallback.EVENT.Invoker().OnCameraUpdate((Camera)(Object)this, cameraTransform, tickDelta);
+		CameraUpdateCallback.EVENT.Invoker().OnCameraUpdate(focusedEntity, (Camera)(Object)this, cameraTransform, tickDelta);
 
 		cameraTransform = ModifyCameraTransformCallback.EVENT.Invoker().ModifyCameraTransform((Camera)(Object)this, cameraTransform);
 
