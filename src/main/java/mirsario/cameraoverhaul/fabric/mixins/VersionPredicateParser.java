@@ -16,12 +16,9 @@
 
 package mirsario.cameraoverhaul.fabric.mixins;
 
-import java.util.function.Predicate;
-
-import net.fabricmc.loader.api.Version;
-import net.fabricmc.loader.api.VersionParsingException;
-import net.fabricmc.loader.util.version.SemanticVersionImpl;
-import net.fabricmc.loader.util.version.SemanticVersionPredicateParser;
+import net.fabricmc.loader.api.*;
+import net.fabricmc.loader.util.version.*;
+import net.fabricmc.loader.util.version.VersionParsingException;
 
 public class VersionPredicateParser<E extends Version>
 {

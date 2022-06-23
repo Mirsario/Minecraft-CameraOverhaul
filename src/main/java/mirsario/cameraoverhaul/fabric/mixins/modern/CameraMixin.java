@@ -2,16 +2,13 @@ package mirsario.cameraoverhaul.fabric.mixins.modern;
 
 import net.minecraft.client.render.*;
 import net.minecraft.entity.*;
-import net.minecraft.entity.player.*;
 import net.minecraft.util.math.*;
 import net.minecraft.world.*;
 import org.spongepowered.asm.mixin.*;
 import org.spongepowered.asm.mixin.injection.*;
 import org.spongepowered.asm.mixin.injection.callback.*;
-
 import mirsario.cameraoverhaul.core.callbacks.*;
 import mirsario.cameraoverhaul.core.structures.*;
-import mirsario.cameraoverhaul.common.systems.*;
 
 @Mixin(Camera.class)
 public abstract class CameraMixin

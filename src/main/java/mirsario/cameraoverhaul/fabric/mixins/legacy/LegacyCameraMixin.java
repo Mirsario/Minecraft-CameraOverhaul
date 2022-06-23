@@ -3,17 +3,14 @@ package mirsario.cameraoverhaul.fabric.mixins.legacy;
 import net.fabricmc.api.*;
 import net.minecraft.client.render.*;
 import net.minecraft.entity.*;
-import net.minecraft.entity.player.*;
-import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.math.*;
 import net.minecraft.world.*;
-import org.lwjgl.opengl.GL11;
+import org.lwjgl.opengl.*;
 import org.spongepowered.asm.mixin.*;
 import org.spongepowered.asm.mixin.injection.*;
 import org.spongepowered.asm.mixin.injection.callback.*;
-
 import mirsario.cameraoverhaul.core.callbacks.*;
 import mirsario.cameraoverhaul.core.structures.*;
-import mirsario.cameraoverhaul.common.systems.*;
 
 //Legacy mixin, to be used in versions prior to 1.15.
 

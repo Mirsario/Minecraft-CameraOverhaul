@@ -35,7 +35,7 @@ public class MixinPlugin implements IMixinConfigPlugin
 
 		try {
 			legacyGameVersion = VersionPredicateParser.matches(metadata.getVersion(), "<1.15");
-		} catch (VersionParsingException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 
 			legacyGameVersion = true;

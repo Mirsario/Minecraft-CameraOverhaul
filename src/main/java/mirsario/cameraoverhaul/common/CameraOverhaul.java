@@ -1,10 +1,9 @@
 package mirsario.cameraoverhaul.common;
 
 import org.apache.logging.log4j.*;
-
-import mirsario.cameraoverhaul.common.configuration.ConfigData;
+import mirsario.cameraoverhaul.core.configuration.*;
+import mirsario.cameraoverhaul.common.configuration.*;
 import mirsario.cameraoverhaul.common.systems.*;
-import mirsario.cameraoverhaul.core.configuration.Configuration;
 
 public class CameraOverhaul
 {
