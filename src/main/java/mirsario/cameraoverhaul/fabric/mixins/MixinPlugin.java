@@ -3,9 +3,8 @@ package mirsario.cameraoverhaul.fabric.mixins;
 import org.objectweb.asm.tree.*;
 import org.spongepowered.asm.mixin.extensibility.*;
 import mirsario.cameraoverhaul.common.*;
+import mirsario.cameraoverhaul.fabric.*;
 import java.util.*;
-import net.fabricmc.loader.api.*;
-import net.fabricmc.loader.api.metadata.*;
 
 public class MixinPlugin implements IMixinConfigPlugin
 {
@@ -30,17 +29,7 @@ public class MixinPlugin implements IMixinConfigPlugin
 			return true;
 		}
 
-		ModMetadata metadata = FabricLoader.getInstance().getModContainer("minecraft").get().getMetadata();
-		boolean legacyGameVersion;
-
-		try {
-			legacyGameVersion = VersionUtils.Matches(metadata.getVersion(), "<1.15");
-		} catch (Exception e) {
-			e.printStackTrace();
-
-			legacyGameVersion = true;
-		}
-
+		boolean legacyGameVersion = VersionUtils.MinecraftVersionMatches("<1.15");
 		boolean result = legacyGameVersion == isLegacy;
 
 		CameraOverhaul.Logger.info((result ? "Using" : "Skipping") + " " + (isLegacy ? "legacy" : "modern") + " mixin '" + mixinClassName + "'.");
