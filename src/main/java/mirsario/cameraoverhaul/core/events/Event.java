@@ -21,6 +21,7 @@ public class Event<T>
 		Update();
 	}
 
+	@SuppressWarnings("unchecked")
 	public void Register(T listener)
 	{
 		if(listener == null) {
@@ -38,6 +39,7 @@ public class Event<T>
 		Update();
 	}
 
+	@SuppressWarnings("unchecked")
 	public void Update()
 	{
 		if(handlers == null) {
