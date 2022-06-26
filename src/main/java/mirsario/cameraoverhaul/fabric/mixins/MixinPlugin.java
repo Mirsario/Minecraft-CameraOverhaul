@@ -34,7 +34,7 @@ public class MixinPlugin implements IMixinConfigPlugin
 		boolean legacyGameVersion;
 
 		try {
-			legacyGameVersion = VersionPredicateParser.matches(metadata.getVersion(), "<1.15");
+			legacyGameVersion = VersionUtils.Matches(metadata.getVersion(), "<1.15");
 		} catch (Exception e) {
 			e.printStackTrace();
 
