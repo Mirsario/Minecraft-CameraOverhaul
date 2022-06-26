@@ -43,7 +43,7 @@ public final class CameraSystem implements CameraUpdateCallback, ModifyCameraTra
 			isSwimming = playerEntity.isSwimming();
 		}
 		
-		//Reset the offset transform
+		// Reset the offset transform
 		offsetTransform.position = new Vec3d(0d, 0d, 0d);
 		offsetTransform.eulerRot = new Vec3d(0d, 0d, 0d);
 
@@ -64,10 +64,10 @@ public final class CameraSystem implements CameraUpdateCallback, ModifyCameraTra
 		Vec3d velocity = camera.getFocusedEntity().getVelocity();
 		Vec2f relativeXZVelocity = Vec2fUtils.Rotate(new Vec2f((float)velocity.x, (float)velocity.z), 360f - (float)cameraTransform.eulerRot.y);
 
-		//X
+		// X
 		VerticalVelocityPitchOffset(cameraTransform, offsetTransform, velocity, relativeXZVelocity, deltaTime, config.verticalVelocityPitchFactor, config.verticalVelocityInterpolationSpeed);
 		ForwardVelocityPitchOffset(cameraTransform, offsetTransform, velocity, relativeXZVelocity, deltaTime, config.forwardVelocityPitchFactor, config.horizontalVelocityInterpolationSpeed);
-		//Z
+		// Z
 		YawDeltaRollOffset(cameraTransform, offsetTransform, velocity, relativeXZVelocity, deltaTime, config.yawDeltaRollFactor, config.yawDeltaInterpolationSpeed);
 		StrafingRollOffset(cameraTransform, offsetTransform, velocity, relativeXZVelocity, deltaTime, strafingRollFactorToUse, config.horizontalVelocityInterpolationSpeed);
 

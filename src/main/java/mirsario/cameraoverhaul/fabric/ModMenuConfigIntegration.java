@@ -20,7 +20,7 @@ public class ModMenuConfigIntegration implements ModMenuApi
 		return screen -> GetConfigBuilder().build();
 	}
 	
-	@SuppressWarnings("resource") //MinecraftClient.getInstance() isn't a resource
+	@SuppressWarnings("resource") // MinecraftClient.getInstance() isn't a resource
 	public static ConfigBuilder GetConfigBuilder()
 	{
 		ConfigData config = CameraOverhaul.instance.config;
@@ -36,7 +36,7 @@ public class ModMenuConfigIntegration implements ModMenuApi
 		ConfigCategory general = builder.getOrCreateCategory(new TranslatableText("cameraoverhaul.config.category.general"));
 		ConfigEntryBuilder entryBuilder = builder.entryBuilder();
 		
-		//Entries
+		// Entries
 		general.addEntry(CreateBooleanEntry(entryBuilder, "enabled", true, config.enabled, value -> config.enabled = value));
 		// Roll factors
 		general.addEntry(CreateFloatFactorEntry(entryBuilder, "strafingRollFactor", 1.0f, config.strafingRollFactor, value -> config.strafingRollFactor = value));
@@ -54,7 +54,9 @@ public class ModMenuConfigIntegration implements ModMenuApi
 		
 		return builder;
 	}
-	//Entry Helpers
+
+	// Entry Helpers
+
 	public static BooleanListEntry CreateBooleanEntry(ConfigEntryBuilder entryBuilder, String entryName, Boolean defaultValue, Boolean value, Function<Boolean, Boolean> setter)
 	{
 		String lowerCaseName = entryName.toLowerCase();
@@ -66,6 +68,7 @@ public class ModMenuConfigIntegration implements ModMenuApi
 			.setSaveConsumer(newValue -> setter.apply(newValue))
 			.build();
 	}
+
 	public static FloatListEntry CreateFloatFactorEntry(ConfigEntryBuilder entryBuilder, String entryName, float defaultValue, float value, Function<Float, Float> setter)
 	{
 		String lowerCaseName = entryName.toLowerCase();

@@ -18,7 +18,7 @@ public abstract class GameRendererMixin
 
 	@Inject(method = "renderWorld", at = @At(
 		value = "INVOKE",
-		//Inject before the call to Camera.update()
+		// Inject before the call to Camera.update()
 		target = "Lnet/minecraft/client/render/Camera;update(Lnet/minecraft/world/BlockView;Lnet/minecraft/entity/Entity;ZZF)V",
 		shift = At.Shift.BEFORE
 	))

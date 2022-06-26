@@ -26,8 +26,8 @@
 	},
 
 	"entrypoints": {
-	"client": [ "mirsario.cameraoverhaul.fabric.FabricClientModInitializer" ],
-	"modmenu": [ "mirsario.cameraoverhaul.fabric.ModMenuConfigIntegration" ]
+		"client": [ "mirsario.cameraoverhaul.fabric.FabricClientModInitializer" ],
+		"modmenu": [ "mirsario.cameraoverhaul.fabric.ModMenuConfigIntegration" ]
 	},
 	
 	"mixins": [

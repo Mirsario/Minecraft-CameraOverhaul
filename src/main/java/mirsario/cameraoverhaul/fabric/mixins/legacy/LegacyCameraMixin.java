@@ -12,7 +12,7 @@ import org.spongepowered.asm.mixin.injection.callback.*;
 import mirsario.cameraoverhaul.core.callbacks.*;
 import mirsario.cameraoverhaul.core.structures.*;
 
-//Legacy mixin, to be used in versions prior to 1.15.
+// Legacy mixin, to be used in versions prior to 1.15.
 
 @Mixin(Camera.class)
 @Environment(EnvType.CLIENT)
@@ -28,7 +28,7 @@ public abstract class LegacyCameraMixin
 	{
 		Transform cameraTransform = new Transform(getPos(), new Vec3d(getPitch(), getYaw(), 0d));
 
-		//Undo multiplications.
+		// Undo multiplications.
 		GL11.glRotatef((float)cameraTransform.eulerRot.y + 180.0f, 0f, -1f, 0f);
 		GL11.glRotatef((float)cameraTransform.eulerRot.x, -1f, 0f, 0f);
 
@@ -38,7 +38,7 @@ public abstract class LegacyCameraMixin
 
 		setRotation((float)cameraTransform.eulerRot.y, (float)cameraTransform.eulerRot.x);
 
-		//And now redo them.
+		// And now redo them.
 		GL11.glRotatef((float)cameraTransform.eulerRot.z, 0f, 0f, 1f);
 		GL11.glRotatef((float)cameraTransform.eulerRot.x, 1f, 0f, 0f);
 		GL11.glRotatef((float)cameraTransform.eulerRot.y + 180f, 0f, 1f, 0f);

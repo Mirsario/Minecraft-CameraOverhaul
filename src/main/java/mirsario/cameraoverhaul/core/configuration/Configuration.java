@@ -26,7 +26,7 @@ public final class Configuration
 				configData = gson.fromJson(fileReader, tClass);
 				fileReader.close();
 				
-				//Save the config on first runs of new versions.
+				// Save the config on first runs of new versions.
 				if(configData.configVersion < configVersion) {
 					saveConfig = true;
 				}
