@@ -8,7 +8,7 @@ import mirsario.cameraoverhaul.common.*;
 import mirsario.cameraoverhaul.common.configuration.*;
 import mirsario.cameraoverhaul.core.configuration.*;
 import net.minecraft.client.*;
-import net.minecraft.text.*;
+import net.minecraft.text.Text;
 
 public class ModMenuConfigIntegration implements ModMenuApi
 {
@@ -27,13 +27,13 @@ public class ModMenuConfigIntegration implements ModMenuApi
 		
 		ConfigBuilder builder = ConfigBuilder.create()
 			.setParentScreen(MinecraftClient.getInstance().currentScreen)
-			.setTitle(new TranslatableText("cameraoverhaul.config.title"))
+			.setTitle(Text.translatable("cameraoverhaul.config.title"))
 			.transparentBackground()
 			.setSavingRunnable(() -> {
 				Configuration.SaveConfig(CameraOverhaul.instance.config, CameraOverhaul.Id, ConfigData.ConfigVersion);
 			});
 		
-		ConfigCategory general = builder.getOrCreateCategory(new TranslatableText("cameraoverhaul.config.category.general"));
+		ConfigCategory general = builder.getOrCreateCategory(Text.translatable("cameraoverhaul.config.category.general"));
 		ConfigEntryBuilder entryBuilder = builder.entryBuilder();
 		
 		// Entries
@@ -62,9 +62,9 @@ public class ModMenuConfigIntegration implements ModMenuApi
 		String lowerCaseName = entryName.toLowerCase();
 		String baseTranslationPath = ConfigEntriesPrefix + "." + lowerCaseName;
 
-		return entryBuilder.startBooleanToggle(new TranslatableText(baseTranslationPath + ".name"), value)
+		return entryBuilder.startBooleanToggle(Text.translatable(baseTranslationPath + ".name"), value)
 			.setDefaultValue(defaultValue)
-			.setTooltip(new TranslatableText(baseTranslationPath + ".tooltip"))
+			.setTooltip(Text.translatable(baseTranslationPath + ".tooltip"))
 			.setSaveConsumer(newValue -> setter.apply(newValue))
 			.build();
 	}
@@ -74,9 +74,9 @@ public class ModMenuConfigIntegration implements ModMenuApi
 		String lowerCaseName = entryName.toLowerCase();
 		String baseTranslationPath = ConfigEntriesPrefix + "." + lowerCaseName;
 
-		return entryBuilder.startFloatField(new TranslatableText(baseTranslationPath + ".name"), value)
+		return entryBuilder.startFloatField(Text.translatable(baseTranslationPath + ".name"), value)
 			.setDefaultValue(defaultValue)
-			.setTooltip(new TranslatableText(baseTranslationPath + ".tooltip"))
+			.setTooltip(Text.translatable(baseTranslationPath + ".tooltip"))
 			.setSaveConsumer(newValue -> setter.apply(newValue))
 			.build();
 	}
