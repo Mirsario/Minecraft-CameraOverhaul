@@ -1,1 +1,1 @@
-gradlew build
+gradlew.bat build || pause

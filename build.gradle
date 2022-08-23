@@ -33,7 +33,7 @@ dependencies {
 		exclude(group: "net.fabricmc.fabric-api")
 		exclude(group: "net.fabricmc") // Prevent preparing two loader versions in cache. Not needed
 	}
-	include "me.shedaniel.cloth:cloth-config-fabric:${project.cloth_config_version}"
+	// include "me.shedaniel.cloth:cloth-config-fabric:${project.cloth_config_version}"
 	
 	// Fabric Resource Loader (needed for localization, which Cloth Config needs)
 	// Actually not needed, because this is only used with ModMenu, and ModMenu includes it

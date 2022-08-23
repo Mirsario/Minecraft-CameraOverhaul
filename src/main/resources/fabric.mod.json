@@ -35,7 +35,11 @@
 	],
 
 	"depends": {
-		"fabricloader": ">=0.4.0",
-		"cloth-config2": ">=4.8.3"
+		"fabricloader": ">=0.4.0"
+	},
+	
+	"recommends": {
+		"cloth-config2": ">=4.8.3",
+		"modmenu": ">=1.0.0",
 	}
 }
