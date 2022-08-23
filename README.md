@@ -13,7 +13,8 @@
 ## ⚙️ Can I turn off X and only keep Y?
 You can use [Mod Menu](https://modrinth.com/mod/modmenu) (or an alternative of your choosing) to configure the mod in-game.
 
-You can also manually find the configuration file with intensity scaling for all features at `.minecraft/config/cameraoverhaul.json`.
+You can also manually find the configuration file with intensity scaling for all features at<br/>
+`.minecraft/config/cameraoverhaul.json`.
 
 Set any factor to `0.0` to turn its feature off.<br/>
 Negative numbers are also usually legal, allowing inverting effects, if that's your thing.
