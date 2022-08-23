@@ -40,6 +40,6 @@
 	
 	"recommends": {
 		"cloth-config2": ">=4.8.3",
-		"modmenu": ">=1.0.0",
+		"modmenu": ">=1.0.0"
 	}
 }
