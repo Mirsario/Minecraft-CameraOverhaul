@@ -43,7 +43,7 @@ public final class TextUtils
 		} catch (Exception firstException) {
 			// <1.19
 			try {
-				Constructor<?> translatableTextConstructor = TranslatableText.class.getConstructor(String.class);
+				Constructor<?> translatableTextConstructor = Text.class.getConstructor(String.class);
 				
 				function = (text) -> {
 					try {
