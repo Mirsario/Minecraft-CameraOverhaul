@@ -3,6 +3,7 @@ package mirsario.cameraoverhaul.fabric.mixins.modern;
 import net.minecraft.client.render.*;
 import net.minecraft.client.util.math.*;
 import net.minecraft.util.math.*;
+import org.joml.Vector3f;
 import org.spongepowered.asm.mixin.*;
 import org.spongepowered.asm.mixin.injection.*;
 import org.spongepowered.asm.mixin.injection.callback.*;
@@ -28,6 +29,6 @@ public abstract class GameRendererMixin
 
 		cameraTransform = ModifyCameraTransformCallback.EVENT.Invoker().ModifyCameraTransform(camera, cameraTransform);
 
-		matrix.multiply(Vec3f.POSITIVE_Z.getDegreesQuaternion((float)cameraTransform.eulerRot.z));
+		matrix.multiply(RotationAxis.POSITIVE_Z.rotationDegrees((float)cameraTransform.eulerRot.z));
 	}
 }
