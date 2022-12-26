@@ -7,7 +7,7 @@
 - **Available** at [Modrinth](https://modrinth.com/mod/cameraoverhaul) & [CurseForge](https://www.curseforge.com/minecraft/mc-mods/cameraoverhaul);
 - **Made** for [Fabric](https://fabricmc.net) & [Quilt](https://quiltmc.org);
 - **Requires** [Cloth Config API](https://modrinth.com/mod/cloth-config);
-- **Supports** Minecraft versions from `1.14` to `1.19.2` and up, releases are version-agnostic;
+- **Supports** Minecraft versions from `1.14` to `1.19.3` and up, releases are version-agnostic;
 - Works best at high framerates - [Sodium](https://modrinth.com/mod/sodium), [Starlight](https://modrinth.com/mod/starlight), [Lithium](https://modrinth.com/mod/lithium), and other [optimization mods](https://modrinth.com/mods?f=categories%3A%27optimization%27) are **recommended**.
 
 ## ⚙️ Can I turn off X and only keep Y?
