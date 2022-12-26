@@ -8,6 +8,7 @@ import org.spongepowered.asm.mixin.injection.*;
 import org.spongepowered.asm.mixin.injection.callback.*;
 import mirsario.cameraoverhaul.core.callbacks.*;
 import mirsario.cameraoverhaul.core.structures.*;
+import mirsario.cameraoverhaul.fabric.abstractions.*;
 
 @Mixin(GameRenderer.class)
 public abstract class GameRendererMixin
@@ -28,6 +29,7 @@ public abstract class GameRendererMixin
 
 		cameraTransform = ModifyCameraTransformCallback.EVENT.Invoker().ModifyCameraTransform(camera, cameraTransform);
 
-		matrix.multiply(Vec3f.POSITIVE_Z.getDegreesQuaternion((float)cameraTransform.eulerRot.z));
+		//matrix.multiply(Vec3f.POSITIVE_Z.getDegreesQuaternion((float)cameraTransform.eulerRot.z));
+		MathAbstractions.RotateMatrixByAxis(matrix, 0f, 0f, 1f, (float)cameraTransform.eulerRot.z);
 	}
 }

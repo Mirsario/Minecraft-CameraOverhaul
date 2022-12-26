@@ -7,6 +7,7 @@ import me.shedaniel.clothconfig2.gui.entries.*;
 import mirsario.cameraoverhaul.common.*;
 import mirsario.cameraoverhaul.common.configuration.*;
 import mirsario.cameraoverhaul.core.configuration.*;
+import mirsario.cameraoverhaul.fabric.abstractions.*;
 import net.minecraft.client.*;
 
 public class ModMenuConfigIntegration implements ModMenuApi
@@ -26,11 +27,11 @@ public class ModMenuConfigIntegration implements ModMenuApi
 		
 		ConfigBuilder builder = ConfigBuilder.create()
 			.setParentScreen(MinecraftClient.getInstance().currentScreen)
-			.setTitle(TextUtils.CreateTranslatableText("cameraoverhaul.config.title"))
+			.setTitle(TextAbstractions.CreateText("cameraoverhaul.config.title"))
 			.transparentBackground()
 			.setSavingRunnable(() -> Configuration.SaveConfig(CameraOverhaul.instance.config, CameraOverhaul.Id, ConfigData.ConfigVersion));
 		
-		ConfigCategory general = builder.getOrCreateCategory(TextUtils.CreateTranslatableText("cameraoverhaul.config.category.general"));
+		ConfigCategory general = builder.getOrCreateCategory(TextAbstractions.CreateText("cameraoverhaul.config.category.general"));
 		ConfigEntryBuilder entryBuilder = builder.entryBuilder();
 		
 		// Entries
@@ -59,9 +60,9 @@ public class ModMenuConfigIntegration implements ModMenuApi
 		String lowerCaseName = entryName.toLowerCase();
 		String baseTranslationPath = configEntriesPrefix + "." + lowerCaseName;
 
-		return entryBuilder.startBooleanToggle(TextUtils.CreateTranslatableText(baseTranslationPath + ".name"), value)
+		return entryBuilder.startBooleanToggle(TextAbstractions.CreateText(baseTranslationPath + ".name"), value)
 			.setDefaultValue(defaultValue)
-			.setTooltip(TextUtils.CreateTranslatableText(baseTranslationPath + ".tooltip"))
+			.setTooltip(TextAbstractions.CreateText(baseTranslationPath + ".tooltip"))
 			.setSaveConsumer(newValue -> setter.apply(newValue))
 			.build();
 	}
@@ -71,9 +72,9 @@ public class ModMenuConfigIntegration implements ModMenuApi
 		String lowerCaseName = entryName.toLowerCase();
 		String baseTranslationPath = configEntriesPrefix + "." + lowerCaseName;
 
-		return entryBuilder.startFloatField(TextUtils.CreateTranslatableText(baseTranslationPath + ".name"), value)
+		return entryBuilder.startFloatField(TextAbstractions.CreateText(baseTranslationPath + ".name"), value)
 			.setDefaultValue(defaultValue)
-			.setTooltip(TextUtils.CreateTranslatableText(baseTranslationPath + ".tooltip"))
+			.setTooltip(TextAbstractions.CreateText(baseTranslationPath + ".tooltip"))
 			.setSaveConsumer(newValue -> setter.apply(newValue))
 			.build();
 	}
