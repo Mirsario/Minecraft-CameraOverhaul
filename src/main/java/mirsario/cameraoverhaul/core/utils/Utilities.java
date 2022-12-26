@@ -19,7 +19,7 @@ public final class Utilities
 			}
 
 			if (result != null) {
-				CameraOverhaul.Logger.info("Using implementation #" + i + " for abstraction '" + methodName + "'.");
+				CameraOverhaul.Logger.info("CameraOverhaul: Using implementation #" + i + " for abstraction '" + methodName + "'.");
 				return result;
 			}
 		}

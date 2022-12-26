@@ -26,7 +26,7 @@ public final class CameraSystem implements CameraUpdateCallback, ModifyCameraTra
 		CameraUpdateCallback.EVENT.Register(this);
 		ModifyCameraTransformCallback.EVENT.Register(this);
 
-		CameraOverhaul.Logger.info("CameraOverhaul - CameraSystem is ready.");
+		CameraOverhaul.Logger.info("CameraOverhaul: CameraSystem is ready.");
 	}
 
 	@Override

@@ -32,7 +32,7 @@ public class MixinPlugin implements IMixinConfigPlugin
 		boolean legacyGameVersion = VersionUtils.MinecraftVersionMatches("<1.15");
 		boolean result = legacyGameVersion == isLegacy;
 
-		CameraOverhaul.Logger.info((result ? "Using" : "Skipping") + " " + (isLegacy ? "legacy" : "modern") + " mixin '" + mixinClassName + "'.");
+		CameraOverhaul.Logger.info("CameraOverhaul: " + (result ? "Using" : "Skipping") + " " + (isLegacy ? "legacy" : "modern") + " mixin '" + mixinClassName + "'.");
 
 		return result;
     }
