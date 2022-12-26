@@ -18,10 +18,12 @@
 	"cameraoverhaul.config.forwardvelocitypitchfactor.name": "Forward Velocity Pitch Factor",
 	"cameraoverhaul.config.forwardvelocitypitchfactor.tooltip": "Controls the strength of the camera pitch rotation offset caused by moving forward or backwards.",
 	
-	"cameraoverhaul.config.horizontalvelocityinterpolationspeed.name": "Horizontal Velocity Interpolation Speed",
-	"cameraoverhaul.config.horizontalvelocityinterpolationspeed.tooltip": "Controls the smoothness of camera pitch & roll rotations caused by moving horizontally.",
-	"cameraoverhaul.config.verticalvelocityinterpolationspeed.name": "Vertical Velocity Interpolation Speed",
-	"cameraoverhaul.config.verticalvelocityinterpolationspeed.tooltip": "Controls the smoothness of camera pitch rotations caused by moving vertically.",
-	"cameraoverhaul.config.yawdeltainterpolationspeed.name": "Mouselook Roll Interpolation Speed",
-	"cameraoverhaul.config.yawdeltainterpolationspeed.tooltip": "Controls the smoothness of camera roll rotations caused by turning around horizontally."
+	"cameraoverhaul.config.horizontalvelocitysmoothingfactor.name": "Horizontal Velocity Smoothing Factor",
+	"cameraoverhaul.config.horizontalvelocitysmoothingfactor.tooltip": "Controls the smoothness of camera pitch & roll rotations caused by moving horizontally.",
+	"cameraoverhaul.config.verticalvelocitysmoothingfactor.name": "Vertical Velocity Smoothing Factor",
+	"cameraoverhaul.config.verticalvelocitysmoothingfactor.tooltip": "Controls the smoothness of camera pitch rotations caused by moving vertically.",
+	"cameraoverhaul.config.yawdeltasmoothingfactor.name": "Mouselook Roll Smoothing Factor",
+	"cameraoverhaul.config.yawdeltasmoothingfactor.tooltip": "Controls the smoothness of camera roll rotations caused by turning around horizontally.",
+	"cameraoverhaul.config.yawdeltadecayfactor.name": "Mouselook Roll Decay Factor",
+	"cameraoverhaul.config.yawdeltadecayfactor.tooltip": "Controls the smoothness of the decay of camera roll rotations caused by turning around horizontally."
 }

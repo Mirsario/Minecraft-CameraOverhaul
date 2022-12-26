@@ -14,6 +14,9 @@
 
 # 1.4.0
 - Added compatibility with Minecraft `1.19.3`+.
+- Replaced all use of linear interpolation with a framerate-independent damping algorithm. Effects will no longer reduce in intensity on higher framerates, and will react to lagspikes slightly better.
+- New default settings are a bit more balanced and friendlier to the average player.
+- Mouselook roll's rotation target decay is now a separate setting.
 - Improved logging clarity.
 
 # 1.3.1

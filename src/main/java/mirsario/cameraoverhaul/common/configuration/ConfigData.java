@@ -15,8 +15,9 @@ public class ConfigData extends BaseConfigData
 	// Pitch factors
 	public float verticalVelocityPitchFactor = 1.0f;
 	public float forwardVelocityPitchFactor = 1.0f;
-	// Interpolation speeds
-	public float horizontalVelocityInterpolationSpeed = 0.25f;
-	public float verticalVelocityInterpolationSpeed = 0.75f;
-	public float yawDeltaInterpolationSpeed = 1.0f;
+	// Smoothing factors
+	public float horizontalVelocitySmoothingFactor = 0.8f;
+	public float verticalVelocitySmoothingFactor = 0.8f;
+	public float yawDeltaSmoothingFactor = 0.8f;
+	public float yawDeltaDecayFactor = 0.5f;
 }

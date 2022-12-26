@@ -7,6 +7,7 @@ import me.shedaniel.clothconfig2.gui.entries.*;
 import mirsario.cameraoverhaul.common.*;
 import mirsario.cameraoverhaul.common.configuration.*;
 import mirsario.cameraoverhaul.core.configuration.*;
+import mirsario.cameraoverhaul.core.utils.MathUtils;
 import mirsario.cameraoverhaul.fabric.abstractions.*;
 import net.minecraft.client.*;
 
@@ -45,12 +46,18 @@ public class ModMenuConfigIntegration implements ModMenuApi
 		general.addEntry(CreateFloatFactorEntry(entryBuilder, "verticalVelocityPitchFactor", 1.0f, config.verticalVelocityPitchFactor, value -> config.verticalVelocityPitchFactor = value));
 		general.addEntry(CreateFloatFactorEntry(entryBuilder, "forwardVelocityPitchFactor", 1.0f, config.forwardVelocityPitchFactor, value -> config.forwardVelocityPitchFactor = value));
 		
-		// Interpolation factors
-		general.addEntry(CreateFloatFactorEntry(entryBuilder, "horizontalVelocityInterpolationSpeed", 0.25f, config.horizontalVelocityInterpolationSpeed, value -> config.horizontalVelocityInterpolationSpeed = value));
-		general.addEntry(CreateFloatFactorEntry(entryBuilder, "verticalVelocityInterpolationSpeed", 0.75f, config.verticalVelocityInterpolationSpeed, value -> config.verticalVelocityInterpolationSpeed = value));
-		general.addEntry(CreateFloatFactorEntry(entryBuilder, "yawDeltaInterpolationSpeed", 1.0f, config.yawDeltaInterpolationSpeed, value -> config.yawDeltaInterpolationSpeed = value));
+		// Smoothing factors
+		general.addEntry(CreateFloatFactorEntry(entryBuilder, "horizontalVelocitySmoothingFactor", 0.8f, ClampSmoothness(config.horizontalVelocitySmoothingFactor), value -> config.horizontalVelocitySmoothingFactor = ClampSmoothness(value)));
+		general.addEntry(CreateFloatFactorEntry(entryBuilder, "verticalVelocitySmoothingFactor", 0.8f, ClampSmoothness(config.verticalVelocitySmoothingFactor), value -> config.verticalVelocitySmoothingFactor = ClampSmoothness(value)));
+		general.addEntry(CreateFloatFactorEntry(entryBuilder, "yawDeltaSmoothingFactor", 0.8f, ClampSmoothness(config.yawDeltaSmoothingFactor), value -> config.yawDeltaSmoothingFactor = ClampSmoothness(value)));
+		general.addEntry(CreateFloatFactorEntry(entryBuilder, "yawDeltaDecayFactor", 0.5f, ClampSmoothness(config.yawDeltaDecayFactor), value -> config.yawDeltaDecayFactor = ClampSmoothness(value)));
 		
 		return builder;
+	}
+
+	private static float ClampSmoothness(float value)
+	{
+		return MathUtils.Clamp(value, 0f, 0.999f);
 	}
 
 	// Entry Helpers

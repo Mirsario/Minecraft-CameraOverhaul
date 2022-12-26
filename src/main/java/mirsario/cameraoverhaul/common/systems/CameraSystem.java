@@ -65,11 +65,11 @@ public final class CameraSystem implements CameraUpdateCallback, ModifyCameraTra
 		Vec2f relativeXZVelocity = Vec2fUtils.Rotate(new Vec2f((float)velocity.x, (float)velocity.z), 360f - (float)cameraTransform.eulerRot.y);
 
 		// X
-		VerticalVelocityPitchOffset(cameraTransform, offsetTransform, velocity, relativeXZVelocity, deltaTime, config.verticalVelocityPitchFactor, config.verticalVelocityInterpolationSpeed);
-		ForwardVelocityPitchOffset(cameraTransform, offsetTransform, velocity, relativeXZVelocity, deltaTime, config.forwardVelocityPitchFactor, config.horizontalVelocityInterpolationSpeed);
+		VerticalVelocityPitchOffset(cameraTransform, offsetTransform, velocity, relativeXZVelocity, deltaTime, config.verticalVelocityPitchFactor, config.verticalVelocitySmoothingFactor);
+		ForwardVelocityPitchOffset(cameraTransform, offsetTransform, velocity, relativeXZVelocity, deltaTime, config.forwardVelocityPitchFactor, config.horizontalVelocitySmoothingFactor);
 		// Z
-		YawDeltaRollOffset(cameraTransform, offsetTransform, velocity, relativeXZVelocity, deltaTime, config.yawDeltaRollFactor, config.yawDeltaInterpolationSpeed);
-		StrafingRollOffset(cameraTransform, offsetTransform, velocity, relativeXZVelocity, deltaTime, strafingRollFactorToUse, config.horizontalVelocityInterpolationSpeed);
+		YawDeltaRollOffset(cameraTransform, offsetTransform, velocity, relativeXZVelocity, deltaTime, config.yawDeltaRollFactor * 1.25f, config.yawDeltaSmoothingFactor, config.yawDeltaDecayFactor);
+		StrafingRollOffset(cameraTransform, offsetTransform, velocity, relativeXZVelocity, deltaTime, strafingRollFactorToUse, config.horizontalVelocitySmoothingFactor);
 
 		prevCameraYaw = cameraTransform.eulerRot.y;
 	}
@@ -83,7 +83,7 @@ public final class CameraSystem implements CameraUpdateCallback, ModifyCameraTra
 		);
 	}
 
-	private void VerticalVelocityPitchOffset(Transform inputTransform, Transform outputTransform, Vec3d velocity, Vec2f relativeXZVelocity, double deltaTime, float intensity, float lerpSpeed)
+	private void VerticalVelocityPitchOffset(Transform inputTransform, Transform outputTransform, Vec3d velocity, Vec2f relativeXZVelocity, double deltaTime, float intensity, float smoothing)
 	{
 		double verticalVelocityPitchOffset = velocity.y * 2.75d;
 
@@ -91,21 +91,21 @@ public final class CameraSystem implements CameraUpdateCallback, ModifyCameraTra
 			verticalVelocityPitchOffset *= 2.25d;
 		}
 
-		prevVerticalVelocityPitchOffset = verticalVelocityPitchOffset = MathUtils.Lerp(prevVerticalVelocityPitchOffset, verticalVelocityPitchOffset, deltaTime * lerpSpeed);
+		prevVerticalVelocityPitchOffset = verticalVelocityPitchOffset = MathUtils.Damp(prevVerticalVelocityPitchOffset, verticalVelocityPitchOffset, smoothing, deltaTime);
 		
 		outputTransform.eulerRot = outputTransform.eulerRot.add(verticalVelocityPitchOffset * intensity, 0d, 0d);
 	}
 
-	private void ForwardVelocityPitchOffset(Transform inputTransform, Transform outputTransform, Vec3d velocity, Vec2f relativeXZVelocity, double deltaTime, float intensity, float lerpSpeed)
+	private void ForwardVelocityPitchOffset(Transform inputTransform, Transform outputTransform, Vec3d velocity, Vec2f relativeXZVelocity, double deltaTime, float intensity, float smoothing)
 	{
 		double forwardVelocityPitchOffset = relativeXZVelocity.y * 5d;
 
-		prevForwardVelocityPitchOffset = forwardVelocityPitchOffset = MathUtils.Lerp(prevForwardVelocityPitchOffset, forwardVelocityPitchOffset, deltaTime * lerpSpeed);
+		prevForwardVelocityPitchOffset = forwardVelocityPitchOffset = MathUtils.Damp(prevForwardVelocityPitchOffset, forwardVelocityPitchOffset, smoothing, deltaTime);
 		
 		outputTransform.eulerRot = outputTransform.eulerRot.add(forwardVelocityPitchOffset * intensity, 0d, 0d);
 	}
 
-	private void YawDeltaRollOffset(Transform inputTransform, Transform outputTransform, Vec3d velocity, Vec2f relativeXZVelocity, double deltaTime, float intensity, float lerpSpeed)
+	private void YawDeltaRollOffset(Transform inputTransform, Transform outputTransform, Vec3d velocity, Vec2f relativeXZVelocity, double deltaTime, float intensity, float offsetSmoothing, float decaySmoothing)
 	{
 		double yawDelta = prevCameraYaw - inputTransform.eulerRot.y;
 
@@ -116,18 +116,18 @@ public final class CameraSystem implements CameraUpdateCallback, ModifyCameraTra
 		}
 
 		yawDeltaRollTargetOffset += yawDelta * 0.07d;
-		yawDeltaRollOffset = MathUtils.Lerp(yawDeltaRollOffset, yawDeltaRollTargetOffset, (double)deltaTime * lerpSpeed * 10d);
+		yawDeltaRollOffset = MathUtils.Damp(yawDeltaRollOffset, yawDeltaRollTargetOffset, offsetSmoothing, deltaTime);
 
 		outputTransform.eulerRot = outputTransform.eulerRot.add(0d, 0d, yawDeltaRollOffset * intensity);
 		
-		yawDeltaRollTargetOffset = MathUtils.Lerp(yawDeltaRollTargetOffset, 0d, deltaTime * 0.35d);
+		yawDeltaRollTargetOffset = MathUtils.Damp(yawDeltaRollTargetOffset, 0d, decaySmoothing, deltaTime);
 	}
 
-	private void StrafingRollOffset(Transform inputTransform, Transform outputTransform, Vec3d velocity, Vec2f relativeXZVelocity, double deltaTime, float intensity, float lerpSpeed)
+	private void StrafingRollOffset(Transform inputTransform, Transform outputTransform, Vec3d velocity, Vec2f relativeXZVelocity, double deltaTime, float intensity, float smoothing)
 	{
 		double strafingRollOffset = -relativeXZVelocity.x * 15d;
 		
-		prevStrafingRollOffset = strafingRollOffset = MathUtils.Lerp(prevStrafingRollOffset, strafingRollOffset, (double)deltaTime * lerpSpeed);
+		prevStrafingRollOffset = strafingRollOffset = MathUtils.Damp(prevStrafingRollOffset, strafingRollOffset, smoothing, deltaTime);
 		
 		outputTransform.eulerRot = outputTransform.eulerRot.add(0d, 0d, strafingRollOffset * intensity);
 	}
