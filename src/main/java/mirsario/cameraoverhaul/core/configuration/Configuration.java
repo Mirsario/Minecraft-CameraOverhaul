@@ -21,13 +21,13 @@ public final class Configuration
 		try {
 			Files.createDirectories(configPath);
 
-			if(Files.exists(configFile)) {
+			if (Files.exists(configFile)) {
 				BufferedReader fileReader = Files.newBufferedReader(configFile);
 				configData = gson.fromJson(fileReader, tClass);
 				fileReader.close();
 				
 				// Save the config on first runs of new versions.
-				if(configData.configVersion < configVersion) {
+				if (configData.configVersion < configVersion) {
 					saveConfig = true;
 				}
 			} else {
@@ -38,7 +38,7 @@ public final class Configuration
 			CameraOverhaul.Logger.error("Error when initializing config", e);
 		}
 		
-		if(saveConfig) {
+		if (saveConfig) {
 			SaveConfig(configData, configName, configVersion);
 		}
 		

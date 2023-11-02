@@ -49,15 +49,15 @@ public final class CameraSystem implements CameraUpdateCallback, ModifyCameraTra
 
 		ConfigData config = CameraOverhaul.instance.config;
 
-		if(!config.enabled) {
+		if (!config.enabled) {
 			return;
 		}
 
 		float strafingRollFactorToUse = config.strafingRollFactor;
 		
-		if(isFlying) {
+		if (isFlying) {
 			strafingRollFactorToUse = config.strafingRollFactorWhenFlying;
-		} else if(isSwimming) {
+		} else if (isSwimming) {
 			strafingRollFactorToUse = config.strafingRollFactorWhenSwimming;
 		}
 
@@ -85,33 +85,34 @@ public final class CameraSystem implements CameraUpdateCallback, ModifyCameraTra
 
 	private void VerticalVelocityPitchOffset(Transform inputTransform, Transform outputTransform, Vec3d velocity, Vec2f relativeXZVelocity, double deltaTime, float intensity, float smoothing)
 	{
-		double verticalVelocityPitchOffset = velocity.y * 2.75d;
+		double targetVerticalVelocityPitchOffset = velocity.y * 2.75 * (velocity.y < 0f ? 2.25 : 2.0);
 
-		if(velocity.y < 0f) {
-			verticalVelocityPitchOffset *= 2.25d;
+		if (velocity.y < 0f) {
+			targetVerticalVelocityPitchOffset *= 2.25d;
 		}
 
-		prevVerticalVelocityPitchOffset = verticalVelocityPitchOffset = MathUtils.Damp(prevVerticalVelocityPitchOffset, verticalVelocityPitchOffset, smoothing, deltaTime);
+		double currentVerticalVelocityPitchOffset = MathUtils.Damp(prevVerticalVelocityPitchOffset, targetVerticalVelocityPitchOffset, smoothing, deltaTime);
 		
-		outputTransform.eulerRot = outputTransform.eulerRot.add(verticalVelocityPitchOffset * intensity, 0d, 0d);
+		outputTransform.eulerRot = outputTransform.eulerRot.add(currentVerticalVelocityPitchOffset * intensity, 0d, 0d);
+		prevVerticalVelocityPitchOffset = currentVerticalVelocityPitchOffset;
 	}
 
 	private void ForwardVelocityPitchOffset(Transform inputTransform, Transform outputTransform, Vec3d velocity, Vec2f relativeXZVelocity, double deltaTime, float intensity, float smoothing)
 	{
-		double forwardVelocityPitchOffset = relativeXZVelocity.y * 5d;
-
-		prevForwardVelocityPitchOffset = forwardVelocityPitchOffset = MathUtils.Damp(prevForwardVelocityPitchOffset, forwardVelocityPitchOffset, smoothing, deltaTime);
+		double targetForwardVelocityPitchOffset = relativeXZVelocity.y * 5d;
+		double currentForwardVelocityPitchOffset = MathUtils.Damp(prevForwardVelocityPitchOffset, targetForwardVelocityPitchOffset, smoothing, deltaTime);
 		
-		outputTransform.eulerRot = outputTransform.eulerRot.add(forwardVelocityPitchOffset * intensity, 0d, 0d);
+		outputTransform.eulerRot = outputTransform.eulerRot.add(currentForwardVelocityPitchOffset * intensity, 0d, 0d);
+		prevForwardVelocityPitchOffset = currentForwardVelocityPitchOffset;
 	}
 
 	private void YawDeltaRollOffset(Transform inputTransform, Transform outputTransform, Vec3d velocity, Vec2f relativeXZVelocity, double deltaTime, float intensity, float offsetSmoothing, float decaySmoothing)
 	{
 		double yawDelta = prevCameraYaw - inputTransform.eulerRot.y;
 
-		if(yawDelta > 180) {
+		if (yawDelta > 180) {
 			yawDelta = 360 - yawDelta;
-		} else if(yawDelta < -180) {
+		} else if (yawDelta < -180) {
 			yawDelta = -360 - yawDelta;
 		}
 

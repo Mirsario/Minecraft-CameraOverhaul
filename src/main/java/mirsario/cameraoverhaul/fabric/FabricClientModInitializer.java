@@ -8,7 +8,7 @@ public class FabricClientModInitializer implements ClientModInitializer
 	@Override
 	public void onInitializeClient()
 	{
-		if(CameraOverhaul.instance == null) {
+		if (CameraOverhaul.instance == null) {
 			CameraOverhaul.instance = new CameraOverhaul();
 		}
 

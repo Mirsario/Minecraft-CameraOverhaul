@@ -24,11 +24,11 @@ public class Event<T>
 	@SuppressWarnings("unchecked")
 	public void Register(T listener)
 	{
-		if(listener == null) {
+		if (listener == null) {
 			throw new NullPointerException("Tried to register a null listener!");
 		}
 
-		if(handlers == null) {
+		if (handlers == null) {
 			handlers = (T[])Array.newInstance(type, 1);
 			handlers[0] = listener;
 		} else {
@@ -42,13 +42,13 @@ public class Event<T>
 	@SuppressWarnings("unchecked")
 	public void Update()
 	{
-		if(handlers == null) {
-			if(dummyInvoker != null) {
+		if (handlers == null) {
+			if (dummyInvoker != null) {
 				invoker = dummyInvoker;
 			} else {
 				invoker = invokerFactory.apply((T[])Array.newInstance(type, 0));
 			}
-		} else if(handlers.length == 1) {
+		} else if (handlers.length == 1) {
 			invoker = handlers[0];
 		} else {
 			invoker = invokerFactory.apply(handlers);

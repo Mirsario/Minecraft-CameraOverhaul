@@ -25,6 +25,6 @@ All code of this repository is provided under [the MIT License](https://github.c
 ## ❤️ Contributors
 Thank you to the following contributors for helping improve the mod for everyone!
 
-<a href="https://github.com/Mirsario/TerrariaOverhaul/graphs/contributors">
-  <img src="https://contrib.rocks/image?repo=Mirsario/Minecraft-CameraOverhaul&max=900&columns=20" />
+<a href="https://github.com/Mirsario/Minecraft-CameraOverhaul/graphs/contributors">
+	<img src="https://contrib.rocks/image?repo=Mirsario/Minecraft-CameraOverhaul&max=900&columns=20" />
 </a>

@@ -5,7 +5,7 @@ import mirsario.cameraoverhaul.core.configuration.*;
 import mirsario.cameraoverhaul.common.configuration.*;
 import mirsario.cameraoverhaul.common.systems.*;
 
-public class CameraOverhaul
+public final class CameraOverhaul
 {
 	public static final Logger Logger = LogManager.getLogger("CameraOverhaul");
 

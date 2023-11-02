@@ -12,6 +12,7 @@ public class Transform
 		this.position = new Vec3d(0d, 0d, 0d);
 		this.eulerRot = new Vec3d(0d, 0d, 0d);
 	}
+
 	public Transform(Vec3d position, Vec3d eulerRot)
 	{
 		this.position = position;
