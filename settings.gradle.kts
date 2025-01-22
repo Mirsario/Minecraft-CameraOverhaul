@@ -6,8 +6,14 @@ pluginManagement {
 		// Stonecutter
 		maven("https://maven.kikugie.dev/releases")
 		maven("https://maven.kikugie.dev/snapshots")
+		// Architectury
+		maven("https://maven.architectury.dev")
 		// Fabric
 		maven("https://maven.fabricmc.net")
+		// Forge
+		maven("https://maven.minecraftforge.net")
+		// NeoForge
+		maven("https://maven.neoforged.net/releases")
 	}
 }
 
@@ -26,6 +32,9 @@ stonecutter {
 		vers("fabric-1.19", "1.19")
 		vers("fabric-1.19.3", "1.19.3")
 		vers("fabric-1.20.6", "1.20.6")
+		//vers("forge-1.20.1", "1.20.1")
+		//vers("neoforge-1.20.6", "1.20.6")
+
 		vcsVersion = "fabric-1.20.6"
 	}
 

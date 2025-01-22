@@ -3,8 +3,21 @@
 // See LICENSE.md for details.
 
 plugins {
-	id("fabric-loom") version "1.8-SNAPSHOT"
+	id("dev.architectury.loom")
+	id("architectury-plugin")
 }
+
+repositories {
+	// Libraries
+	maven("https://maven.shedaniel.me") // ClothConfig
+	maven("https://maven.terraformersmc.com") // ModMenu
+	maven("https://maven.nucleoid.xyz") // Placeholder API (ModMenu depencency)
+}
+
+val minecraft = stonecutter.current.version
+val loader = loom.platform.get().name.lowercase()
+val mcType: String = property("mc.type").toString()
+val mcVersion: String = property("mc.version").toString()
 
 base {
 	group = property("maven_group")!!
@@ -12,20 +25,33 @@ base {
 	archivesName.set(property("archives_base_name").toString())
 }
 
-repositories {
-	maven("https://maven.shedaniel.me")
-	maven("https://maven.terraformersmc.com/releases")
+// Set architectury platform.
+architectury.common("fabric");
+//	architectury.common(stonecutter.tree.branches.mapNotNull {
+//		if (stonecutter.current.project !in it) null else it.property("loader.id").toString()
+//	})
+
+// Configure Java.
+java {
+	val java = if (stonecutter.eval(mcVersion, ">=1.20.5")) JavaVersion.VERSION_21 else JavaVersion.VERSION_17
+	sourceCompatibility = java
+	targetCompatibility = java
 }
 
-val mcVersion = property("mc.version").toString()
-val clothConfigVersion = property("mods.clothconfig.ref").toString()
-val clothConfigMajor: Int = if (clothConfigVersion != "[VERSIONED]") clothConfigVersion.split(".")[0].toInt() else 0
+// Setup preprocessor.
+stonecutter {
+	const("FABRIC_LOADER", loader == "fabric")
+	const("FORGE_LOADER", loader == "forge")
+	const("MC_RELEASE", mcType == "release")
+	const("MC_BETA", mcType == "beta")
+	const("MC_ALPHA", mcType == "alpha")
+	const("false", false)
+}
 
 // To change any versions see the gradle.properties files under root and "/versions/*/"
 dependencies {
 	minecraft("com.mojang:minecraft:${mcVersion}")
 	mappings(loom.officialMojangMappings())
-	modImplementation("net.fabricmc:fabric-loader:${property("deps.fabric_loader")}")
 
 	// Common libraries
 	implementation("io.hotmoka:toml4j:0.7.3") { include(this) }
@@ -33,37 +59,49 @@ dependencies {
 		implementation("org.joml:joml:1.10.5") { include(this) }
 	}
 
-	// Cloth Config
-	modApi("me.shedaniel.cloth:${if (clothConfigMajor <= 2) "config-2" else "cloth-config-fabric"}:${clothConfigVersion}") {
-		// Prevent preparing two loader versions in cache. Not needed.
-		exclude(group = "net.fabricmc")
-		exclude(group = "net.fabricmc.fabric-api")
+	if (loader == "fabric") {
+		modImplementation("net.fabricmc:fabric-loader:${property("deps.fabric_loader")}")
+
+		// Cloth Config
+		val clothConfigVersion: String = property("mods.clothconfig.ref").toString()
+		val clothConfigMajor: Int = if (clothConfigVersion != "[VERSIONED]") clothConfigVersion.split(".")[0].toInt() else 0
+		modApi("me.shedaniel.cloth:${if (clothConfigMajor <= 2) "config-2" else "cloth-config-fabric"}:${clothConfigVersion}") {
+			// Prevent preparing two loader versions in cache. Not needed.
+			exclude(group = "net.fabricmc")
+			exclude(group = "net.fabricmc.fabric-api")
+		}
+		// ModMenu API
+		modImplementation("com.terraformersmc:modmenu:${property("mods.modmenu.ref")}")
 	}
-	// ModMenu API, to add the Config Screen to it
-	modImplementation("com.terraformersmc:modmenu:${property("mods.modmenu.ref")}")
 }
 
-val javaVersion = if (stonecutter.eval(mcVersion, ">=1.20.6")) JavaVersion.VERSION_21 else JavaVersion.VERSION_17
-tasks.withType<JavaCompile> {
-	sourceCompatibility = javaVersion.toString()
-	targetCompatibility = javaVersion.toString()
+loom {
+	//accessWidenerPath = rootProject.file("src/main/resources/template.accesswidener")
+
+	decompilers {
+		get("vineflower").apply { // Adds names to lambdas - useful for mixins
+			options.put("mark-corresponding-synthetics", "1")
+		}
+	}
+	//	if (loader == "forge") {
+	//		forge.mixinConfigs(
+	//			"template-common.mixins.json",
+	//			"template-forge.mixins.json",
+	//		)
+	//	}
 }
 
 tasks.processResources {
 	filesMatching("fabric.mod.json") {
 		expand(mapOf(
+			"mod_id" to project.property("mod.id"),
+			"mod_name" to project.property("mod.name"),
+			"mod_description" to project.property("mod.description"),
 			"mod_version" to project.property("mod.version"),
 			"mc_version_range" to project.property("mc.version_range"),
 			"mods_clothconfig_range" to project.property("mods.clothconfig.range"),
 			"mods_modmenu_range" to project.property("mods.modmenu.range")
 		))
-	}
-}
-
-loom {
-	runConfigs.all {
-		ideConfigGenerated(true) // Run configurations are not created for subprojects by default
-		runDir("../../run") // Use a shared run folder and create separate worlds
 	}
 }
 
@@ -73,3 +111,8 @@ val copyJars = tasks.register<Copy>("copyJars") {
 	into("../../out/")
 }
 tasks.getByName("build").finalizedBy(copyJars)
+
+tasks.build {
+	group = "hidden"
+	description = "Run 'buildAllVersions' instead!"
+}
