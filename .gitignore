@@ -21,6 +21,6 @@
 **/.classpath
 **/.project
 
-# fabric
-
+# Modding
+.architectury-transformer/
 */run/

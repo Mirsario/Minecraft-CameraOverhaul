@@ -2,14 +2,13 @@
 // Released under the GNU General Public License 3.0.
 // See LICENSE.md for details.
 
-//? if FABRIC_LOADER && MC_RELEASE {
-package mirsario.cameraoverhaul.fabric;
+//? if FABRIC && MC_RELEASE {
+package mirsario.cameraoverhaul.configuration;
 
 import java.lang.reflect.*;
 import me.shedaniel.clothconfig2.api.*;
 import mirsario.cameraoverhaul.*;
 import mirsario.cameraoverhaul.abstractions.*;
-import mirsario.cameraoverhaul.configuration.*;
 import net.minecraft.client.*;
 
 // Beyond annoying.

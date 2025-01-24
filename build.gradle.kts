@@ -8,28 +8,34 @@ plugins {
 }
 
 repositories {
+	// NeoForge
+	maven("https://maven.neoforged.net/releases")
 	// Libraries
 	maven("https://maven.shedaniel.me") // ClothConfig
 	maven("https://maven.terraformersmc.com") // ModMenu
-	maven("https://maven.nucleoid.xyz") // Placeholder API (ModMenu depencency)
+	maven("https://maven.nucleoid.xyz") // Placeholder API (ModMenu dependency)
 }
 
+// Set architectury platforms.
+architectury.common(stonecutter.tree.branches.mapNotNull {
+	if (stonecutter.current.project in it) it.project.findProperty("loom.platform")?.toString() else null
+})
+
 val minecraft = stonecutter.current.version
-val loader = loom.platform.get().name.lowercase()
-val mcType: String = property("mc.type").toString()
-val mcVersion: String = property("mc.version").toString()
+//val loader = loom.platform.get().name.lowercase()
+val loader = property("loader.id").toString()
+val mcType = property("mc.type").toString()
+val mcVersion = property("mc.version").toString()
+val isFabric = loader == "fabric"
+val isForge = loader == "forge"
+val isNeoForge = loader == "neoforge"
+val isForgeLike = isForge || isNeoForge
 
 base {
 	group = property("maven_group")!!
 	version = "v${property("mod.version")}-${property("loader.id")}+mc${property("mc.displayed_range")}"
 	archivesName.set(property("archives_base_name").toString())
 }
-
-// Set architectury platform.
-architectury.common("fabric");
-//	architectury.common(stonecutter.tree.branches.mapNotNull {
-//		if (stonecutter.current.project !in it) null else it.property("loader.id").toString()
-//	})
 
 // Configure Java.
 java {
@@ -40,8 +46,11 @@ java {
 
 // Setup preprocessor.
 stonecutter {
-	const("FABRIC_LOADER", loader == "fabric")
-	const("FORGE_LOADER", loader == "forge")
+	const("FABRIC", isFabric)
+	const("FORGE", isForge)
+	const("NEOFORGE", isNeoForge)
+	const("FORGE_LIKE", isForgeLike)
+
 	const("MC_RELEASE", mcType == "release")
 	const("MC_BETA", mcType == "beta")
 	const("MC_ALPHA", mcType == "alpha")
@@ -73,6 +82,10 @@ dependencies {
 		// ModMenu API
 		modImplementation("com.terraformersmc:modmenu:${property("mods.modmenu.ref")}")
 	}
+	if (loader == "neoforge") {
+		// String invocation means that the function resolution is delayed to the buildscript's runtime.
+		"neoForge"("net.neoforged:neoforge:${property("deps.neoforge_loader")}")
+	}
 }
 
 loom {
@@ -92,17 +105,28 @@ loom {
 }
 
 tasks.processResources {
-	filesMatching("fabric.mod.json") {
-		expand(mapOf(
+	fun expandLoaderFile(include: Boolean, pattern: String, properties: () -> Map<String, Any?>) = filesMatching(pattern) {
+		if (!include) exclude() else expand(properties().plus(mapOf(
 			"mod_id" to project.property("mod.id"),
 			"mod_name" to project.property("mod.name"),
 			"mod_description" to project.property("mod.description"),
 			"mod_version" to project.property("mod.version"),
+			"mod_author" to project.property("mod.author"),
 			"mc_version_range" to project.property("mc.version_range"),
-			"mods_clothconfig_range" to project.property("mods.clothconfig.range"),
-			"mods_modmenu_range" to project.property("mods.modmenu.range")
-		))
+			"contact_homepage" to project.property("contact.homepage"),
+			"contact_sources" to project.property("contact.sources"),
+			"contact_issues" to project.property("contact.issues"),
+			"contact_email" to project.property("contact.email"),
+		)))
 	}
+
+	expandLoaderFile(isFabric, "fabric.mod.json", { mapOf(
+		"mods_clothconfig_range" to project.property("mods.clothconfig.range"),
+		"mods_modmenu_range" to project.property("mods.modmenu.range"),
+	)})
+	expandLoaderFile(isForge, "META-INF/mods.toml", { mapOf() })
+	expandLoaderFile(isNeoForge, "META-INF/neoforge.mods.toml", { mapOf() })
+	expandLoaderFile(isForgeLike, "pack.mcmeta", { mapOf() })
 }
 
 // Copy produced jars into /out/

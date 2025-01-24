@@ -19,19 +19,19 @@
 	],
 
 	"contact": {
-		"homepage": "https://modrinth.com/mod/cameraoverhaul",
-		"sources": "https://github.com/Mirsario/Minecraft-CameraOverhaul",
-		"issues": "https://github.com/Mirsario/Minecraft-CameraOverhaul/issues",
-		"email": "me@mirsar.io"
+		"homepage": "${contact_homepage}",
+		"sources": "${contact_sources}",
+		"issues": "${contact_issues}",
+		"email": "${contact_email}"
 	},
 
 	"entrypoints": {
 		"client": [ "mirsario.cameraoverhaul.fabric.FabricClientModInitializer" ],
-		"modmenu": [ "mirsario.cameraoverhaul.fabric.ModMenuConfigIntegration" ]
+		"modmenu": [ "mirsario.cameraoverhaul.configuration.ModMenuConfigIntegration" ]
 	},
 	
 	"mixins": [
-		"cameraoverhaul.mixins.json"
+		"${mod_id}.mixins.json"
 	],
 
 	"depends": {

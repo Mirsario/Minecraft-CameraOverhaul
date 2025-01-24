@@ -10,10 +10,13 @@ import java.lang.reflect.*;
 import java.nio.file.*;
 import mirsario.cameraoverhaul.*;
 import mirsario.cameraoverhaul.abstractions.*;
-import net.fabricmc.loader.api.*;
 
 public final class Configuration {
-	private static final Path CONFIG_DIR = FabricLoader.getInstance().getConfigDir();
+	//? if FABRIC
+	private static final Path CONFIG_DIR = net.fabricmc.loader.api.FabricLoader.getInstance().getConfigDir();
+	//? if FORGE_LIKE
+	/*private static final Path CONFIG_DIR = net.neoforged.fml.loading.FMLPaths.CONFIGDIR.get();*/
+
 	private static final Path CONFIG_PATH = CONFIG_DIR.resolve(CameraOverhaul.MOD_ID + ".toml");
 	private static final String CONFIG_ENTRIES_PREFIX = "cameraoverhaul.config";
 	private static final Toml TOML = new Toml();
