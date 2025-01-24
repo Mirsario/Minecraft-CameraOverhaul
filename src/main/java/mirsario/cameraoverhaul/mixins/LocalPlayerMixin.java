@@ -2,7 +2,6 @@
 // Released under the GNU General Public License 3.0.
 // See LICENSE.md for details.
 
-//? if FABRIC {
 package mirsario.cameraoverhaul.mixins;
 
 import mirsario.cameraoverhaul.*;
@@ -34,4 +33,3 @@ public abstract class LocalPlayerMixin {
 		CameraOverhaul.camera.notifyOfPlayerAction();
 	}
 }
-//?}

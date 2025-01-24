@@ -2,7 +2,6 @@
 // Released under the GNU General Public License 3.0.
 // See LICENSE.md for details.
 
-//? if FABRIC {
 package mirsario.cameraoverhaul.mixins;
 
 import org.objectweb.asm.tree.*;
@@ -60,4 +59,3 @@ public class MixinPlugin implements IMixinConfigPlugin {
 		return list;
 	}
 }
-//?}

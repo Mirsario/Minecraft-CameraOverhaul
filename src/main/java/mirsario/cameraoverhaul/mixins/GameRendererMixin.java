@@ -2,7 +2,7 @@
 // Released under the GNU General Public License 3.0.
 // See LICENSE.md for details.
 
-//? if (FABRIC && >=1.15) {
+//? if >=1.15 {
 package mirsario.cameraoverhaul.mixins;
 
 import mirsario.cameraoverhaul.*;
