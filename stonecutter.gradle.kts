@@ -4,7 +4,7 @@ plugins {
 	id("architectury-plugin") version "3.4-SNAPSHOT" apply false
 }
 
-stonecutter active "fabric-1.20.6" /* [SC] DO NOT EDIT */
+stonecutter active "fabric-1.21.2" /* [SC] DO NOT EDIT */
 
 stonecutter registerChiseled tasks.register("buildAllVersions", stonecutter.chiseled) {
 	group = "_project"
