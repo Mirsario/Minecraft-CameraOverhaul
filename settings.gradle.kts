@@ -27,9 +27,9 @@ stonecutter {
 
 	shared {
 		vers("fabric-1.14.4", "1.14.4")
-		vers("fabric-1.15", "1.15")
-		vers("fabric-1.17", "1.17")
-		vers("fabric-1.19", "1.19")
+		vers("fabric-1.15.0", "1.15")
+		vers("fabric-1.17.0", "1.17")
+		vers("fabric-1.19.0", "1.19")
 		vers("fabric-1.19.3", "1.19.3")
 		vers("fabric-1.20.6", "1.20.6")
 		vers("fabric-1.21.2", "1.21.2")
