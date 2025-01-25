@@ -14,7 +14,9 @@ import mirsario.cameraoverhaul.abstractions.*;
 public final class Configuration {
 	//? if FABRIC
 	private static final Path CONFIG_DIR = net.fabricmc.loader.api.FabricLoader.getInstance().getConfigDir();
-	//? if FORGE_LIKE
+	//? if FORGE
+	/*private static final Path CONFIG_DIR = net.minecraftforge.fml.loading.FMLPaths.CONFIGDIR.get();*/
+	//? if NEOFORGE
 	/*private static final Path CONFIG_DIR = net.neoforged.fml.loading.FMLPaths.CONFIGDIR.get();*/
 
 	private static final Path CONFIG_PATH = CONFIG_DIR.resolve(CameraOverhaul.MOD_ID + ".toml");

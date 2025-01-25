@@ -14,3 +14,8 @@ logoBlur = false
 
 [[mixins]]
 config = "${mod_id}.mixins.json"
+
+[["dependencies.${mod_id}"]]
+modId = "minecraft"
+mandatory = true
+versionRange = "${mc_version_range}"

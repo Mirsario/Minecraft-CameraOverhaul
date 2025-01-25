@@ -33,6 +33,9 @@ stonecutter {
 		vers("fabric-1.19.3", "1.19.3")
 		vers("fabric-1.20.6", "1.20.6")
 		vers("fabric-1.21.2", "1.21.2")
+		vers("forge-1.17.1", "1.17")
+		vers("forge-1.19.0", "1.19")
+		vers("forge-1.19.3", "1.19.3")
 		vers("neoforge-1.20.6", "1.20.6")
 		vers("neoforge-1.21.2", "1.21.2")
 

@@ -82,26 +82,25 @@ dependencies {
 		// ModMenu API
 		modImplementation("com.terraformersmc:modmenu:${property("mods.modmenu.ref")}")
 	}
+	// Note: String invocation means that the function resolution is delayed to the buildscript's runtime.
+	if (loader == "forge") {
+		"forge"("net.minecraftforge:forge:${property("deps.forge_loader")}")
 	if (loader == "neoforge") {
-		// String invocation means that the function resolution is delayed to the buildscript's runtime.
 		"neoForge"("net.neoforged:neoforge:${property("deps.neoforge_loader")}")
 	}
 }
 
 loom {
-	//accessWidenerPath = rootProject.file("src/main/resources/template.accesswidener")
+	//accessWidenerPath = rootProject.file("src/main/resources/${project.property("mod.id")}.accesswidener")
 
 	decompilers {
 		get("vineflower").apply { // Adds names to lambdas - useful for mixins
 			options.put("mark-corresponding-synthetics", "1")
 		}
 	}
-	//	if (loader == "forge") {
-	//		forge.mixinConfigs(
-	//			"template-common.mixins.json",
-	//			"template-forge.mixins.json",
-	//		)
-	//	}
+	if (loader == "forge") {
+		forge.mixinConfigs("${project.property("mod.id")}.mixins.json")
+	}
 }
 
 tasks.processResources {
