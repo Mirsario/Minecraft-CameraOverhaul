@@ -5,7 +5,7 @@
 	"version": "${mod_version}",
 	"description": "${mod_description}",
 	"license": "GPL-3.0-or-later",
-	"icon": "assets/cameraoverhaul/icon.png",
+	"icon": "icon.png",
 	"environment": "client",
 
 	"authors": [

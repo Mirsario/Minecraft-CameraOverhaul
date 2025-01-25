@@ -1,7 +1,7 @@
 modLoader = "javafml"
 loaderVersion = "*"
-license = "GPLv3"
-issueTrackerURL = "https://github.com/Mirsario/Minecraft-CameraOverhaul/issues"
+license = "GNU General Public License 3.0, https://www.gnu.org/licenses/gpl-3.0.en.html"
+issueTrackerURL = "${contact_issues}"
 
 [[mods]]
 modId = "${mod_id}"
@@ -9,13 +9,18 @@ version = "${mod_version}"
 displayName = "${mod_name}"
 authors = "${mod_author}"
 description = "${mod_description}"
-logoFile = "assets/${mod_id}/icon.png"
+logoFile = "icon.png"
 logoBlur = false
 
 [[mixins]]
 config = "${mod_id}.mixins.json"
 
-[["dependencies.${mod_id}"]]
+[[dependencies.${mod_id}]]
 modId = "minecraft"
-mandatory = true
 versionRange = "${mc_version_range}"
+mandatory = true
+
+[[dependencies.${mod_id}]]
+modId = "cloth_config"
+versionRange = "${mods_clothconfig_range}"
+mandatory = true

@@ -68,23 +68,25 @@ dependencies {
 		implementation("org.joml:joml:1.10.5") { include(this) }
 	}
 
+	// Cloth Config
+	val clothConfigVersion: String = property("mods.clothconfig.ref").toString()
+	val clothConfigMajor: Int = if (clothConfigVersion != "[VERSIONED]") clothConfigVersion.split(".")[0].toInt() else 0
+	modApi("me.shedaniel.cloth:${if (clothConfigMajor <= 2) "config-2" else "cloth-config-${loader}"}:${clothConfigVersion}") {
+		// Prevent preparing two loader versions in cache. Not needed.
+		exclude(group = "net.fabricmc")
+		exclude(group = "net.fabricmc.fabric-api")
+	}
+
 	if (loader == "fabric") {
 		modImplementation("net.fabricmc:fabric-loader:${property("deps.fabric_loader")}")
 
-		// Cloth Config
-		val clothConfigVersion: String = property("mods.clothconfig.ref").toString()
-		val clothConfigMajor: Int = if (clothConfigVersion != "[VERSIONED]") clothConfigVersion.split(".")[0].toInt() else 0
-		modApi("me.shedaniel.cloth:${if (clothConfigMajor <= 2) "config-2" else "cloth-config-fabric"}:${clothConfigVersion}") {
-			// Prevent preparing two loader versions in cache. Not needed.
-			exclude(group = "net.fabricmc")
-			exclude(group = "net.fabricmc.fabric-api")
-		}
 		// ModMenu API
 		modImplementation("com.terraformersmc:modmenu:${property("mods.modmenu.ref")}")
 	}
 	// Note: String invocation means that the function resolution is delayed to the buildscript's runtime.
 	if (loader == "forge") {
 		"forge"("net.minecraftforge:forge:${property("deps.forge_loader")}")
+	}
 	if (loader == "neoforge") {
 		"neoForge"("net.neoforged:neoforge:${property("deps.neoforge_loader")}")
 	}
@@ -116,11 +118,11 @@ tasks.processResources {
 			"contact_sources" to project.property("contact.sources"),
 			"contact_issues" to project.property("contact.issues"),
 			"contact_email" to project.property("contact.email"),
+			"mods_clothconfig_range" to project.property("mods.clothconfig.range"),
 		)))
 	}
 
 	expandLoaderFile(isFabric, "fabric.mod.json", { mapOf(
-		"mods_clothconfig_range" to project.property("mods.clothconfig.range"),
 		"mods_modmenu_range" to project.property("mods.modmenu.range"),
 	)})
 	expandLoaderFile(isForge, "META-INF/mods.toml", { mapOf() })
