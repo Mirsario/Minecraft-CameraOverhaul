@@ -7,7 +7,11 @@ plugins {
 
 stonecutter active "fabric-1.21.2" /* [SC] DO NOT EDIT */
 
-stonecutter registerChiseled tasks.register("buildAllVersions", stonecutter.chiseled) {
+stonecutter registerChiseled tasks.register("buildAll", stonecutter.chiseled) {
 	group = "_project"
 	ofTask("build")
+}
+stonecutter registerChiseled tasks.register("cleanAll", stonecutter.chiseled) {
+	group = "_project"
+	ofTask("clean")
 }
