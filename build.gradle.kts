@@ -5,6 +5,7 @@
 plugins {
 	id("dev.architectury.loom")
 	id("architectury-plugin")
+	id("com.github.johnrengelman.shadow")
 }
 
 repositories {
@@ -30,6 +31,7 @@ val isFabric = loader == "fabric"
 val isForge = loader == "forge"
 val isNeoForge = loader == "neoforge"
 val isForgeLike = isForge || isNeoForge
+val shadowLibs = isForge && stonecutter.eval(mcVersion, "<1.19")
 
 base {
 	group = property("maven_group")!!
@@ -57,15 +59,34 @@ stonecutter {
 	const("false", false)
 }
 
+// Prepare Shadow to inline libraries right into our JAR on legacy Forge.
+val shade: Configuration by configurations.creating {
+	isCanBeConsumed = false
+	isCanBeResolved = true
+	isTransitive = false
+}
+if (shadowLibs) {
+	tasks.shadowJar {
+		configurations = listOf(shade)
+		archiveClassifier = "dev-shadow"
+		minimize()
+	}
+	tasks.remapJar {
+		input = tasks.shadowJar.get().archiveFile
+		archiveClassifier = null
+		dependsOn(tasks.shadowJar)
+	}
+}
+
 // To change any versions see the gradle.properties files under root and "/versions/*/"
 dependencies {
 	minecraft("com.mojang:minecraft:${mcVersion}")
 	mappings(loom.officialMojangMappings())
 
 	// Common libraries
-	implementation("io.hotmoka:toml4j:0.7.3") { include(this) }
+	implementation("io.hotmoka:toml4j:0.7.3") { if (shadowLibs) shade(this) else include(this) }
 	if (stonecutter.eval(mcVersion, "<1.19.3")) {
-		implementation("org.joml:joml:1.10.5") { include(this) }
+		implementation("org.joml:joml:1.10.5") { if (shadowLibs) shade(this) else include(this) }
 	}
 
 	// Cloth Config
