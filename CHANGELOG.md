@@ -17,7 +17,9 @@
 | [1.0.0](#100)                         | `2020-11-30` |
 
 # Work In Progress
-Nothing yet!
+
+**Localization:**
+- German localization by `@Lucanoria` ([PR #70](<https://github.com/Mirsario/Minecraft-CameraOverhaul/pull/70>)).
 
 # 2.0.0
 The mod has been rewritten for easier maintenance & scaling. Single-JAR version agnosticism based on 'reflection spam' has been sacrificed in favor of classic separate JARs tied to specific MC version ranges, but still produced out of a single codebase using preprocessors. An effort will still be made to support as many versions of Minecraft as possible, out of one codebase.
