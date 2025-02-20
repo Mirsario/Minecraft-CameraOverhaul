@@ -19,6 +19,9 @@
 
 # Work In Progress
 
+**Fixes:**
+- Made the Fabric-specific `ModMenu` dependency just a suggestion instead.
+
 **Localization:**
 - German localization by `@Lucanoria` ([PR #70](<https://github.com/Mirsario/Minecraft-CameraOverhaul/pull/70>)).
 - Mexican Spanish localization by `@TheLegendofSaram` ([PR #76](<https://github.com/Mirsario/Minecraft-CameraOverhaul/pull/76>)).

@@ -30,12 +30,13 @@
 
 	"depends": {
 		"minecraft": "${mc_version_range}",
-		"cloth-config2": "${mods_clothconfig_range}",
-		"modmenu": "${mods_modmenu_range}"
+		"cloth-config2": "${mods_clothconfig_range}"
 	},
-	
 	"recommends": {
 		"fabricloader": ">=0.4.0"
+	},
+	"suggests": {
+		"modmenu": "${mods_modmenu_range}"
 	},
 
 	"custom": {
