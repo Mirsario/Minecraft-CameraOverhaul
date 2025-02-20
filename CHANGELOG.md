@@ -22,6 +22,7 @@
 **Localization:**
 - German localization by `@Lucanoria` ([PR #70](<https://github.com/Mirsario/Minecraft-CameraOverhaul/pull/70>)).
 - Mexican Spanish localization by `@TheLegendofSaram` ([PR #76](<https://github.com/Mirsario/Minecraft-CameraOverhaul/pull/76>)).
+- Russian localization updates by `@mpustovoi` ([PR #77](<https://github.com/Mirsario/Minecraft-CameraOverhaul/pull/77>)).
 
 # 2.0.1
 Hotfix for a 'InvocationTargetException: null' 1.18.x Forge crash.
