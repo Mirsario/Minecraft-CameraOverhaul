@@ -1,4 +1,5 @@
 # Gradle
+/local.properties
 **/.gradle/
 **/build/
 **/out/

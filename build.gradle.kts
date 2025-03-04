@@ -2,10 +2,14 @@
 // Released under the GNU General Public License 3.0
 // See LICENSE.md for details.
 
+import org.gradle.internal.declarativedsl.parsing.parse
+import java.util.*
+
 plugins {
 	id("dev.architectury.loom")
 	id("architectury-plugin")
 	id("com.github.johnrengelman.shadow")
+	id("me.modmuss50.mod-publish-plugin")
 }
 
 // Utilities.
@@ -26,6 +30,7 @@ architectury.common(stonecutter.tree.branches.mapNotNull {
 	if (stonecutter.current.project in it) it.project.optional("loom.platform") else null
 })
 
+// Common
 val minecraft = stonecutter.current.version
 val loader = loom.platform.get().name.lowercase()
 val mcType = required("mc.type")
@@ -35,14 +40,29 @@ val isForge = loader == "forge"
 val isNeoForge = loader == "neoforge"
 val isForgeLike = isForge || isNeoForge
 val shadowLibs = isForge && stonecutter.eval(mcVersion, "<1.19")
+val isPrimaryBuild = isFabric && optional("mc.latest") == "true" // Dumb. Better somehow ask Stonecutter if we're in a chiseled context.
+// Versions & Targets
+val versionNumbers = required("mod.version")
+val targetsLatest = optional("mc.latest") == "true"
+val actualTargets = required("mc.targets").trim().split(' ')
+val displayTargets = actualTargets.map { if (it.count { c -> c == '.' } == 1) "${it}.0" else it }
+val actualVersion = "${versionNumbers}-${loader}+mc.${displayTargets.first()}-${if (targetsLatest) "plus" else displayTargets.last()}"
+val displayVersion = "v${versionNumbers}-${loader}+mc[${displayTargets.first()}-${if (targetsLatest) "plus" else displayTargets.last()}]"
+val targetsRange = ">=${actualTargets.first()}" + (if (targetsLatest) "" else " <=${actualTargets.last()}")
+// Changelog
+fun parseChangelog(full: String, version: String)
+	= Regex("(?:#\\s+${version.replace(".", "\\.")}\\s*)(\\S[\\s\\S]*?)(?:\\s*(?:# |$))", RegexOption.IGNORE_CASE).find(full)?.groupValues?.get(1)
+val fullChangelog = rootProject.file("CHANGELOG.md").readText()
+val versionChangelog = parseChangelog(fullChangelog, versionNumbers) ?: parseChangelog(fullChangelog, "work in progress") ?: ""
 
 base {
 	group = required("maven_group")
-	version = "v${required("mod.version")}-${loader}+mc[${required("mc.displayed_range")}]"
+	version = displayVersion
 	archivesName.set(required("archives_base_name"))
 }
 
 // Configure Java.
+tasks.withType<JavaCompile> { options.encoding = "UTF-8" }
 java {
 	val java = if (stonecutter.eval(mcVersion, ">=1.20.5")) JavaVersion.VERSION_21 else JavaVersion.VERSION_17
 	sourceCompatibility = java
@@ -134,13 +154,12 @@ tasks.processResources {
 	fun fancyList(str: String) = str.lines().joinToString("\n") { "- ${it.trim()}" }
 	fun jsonList(str: String) = str.lines().joinToString(", ") { "\"${it.trim()}\"" }
 
-	val version = "${required("mod.version")}-${loader}+mc.${required("mc.displayed_range")}"
     var properties = mapOf(
 		"mod_id" to required("mod.id"),
 		"mod_name" to required("mod.name"),
 		"mod_description" to required("mod.description"),
 		"mod_description_esc" to required("mod.description").replace("\n", "\\n"),
-		"mod_version" to version,
+		"mod_version" to actualVersion,
 		"mod_authors" to plainList(required("mod.authors")),
 		"mod_authors_list" to fancyList(required("mod.authors")),
 		"mod_authors_jarray" to jsonList(required("mod.authors")),
@@ -148,7 +167,7 @@ tasks.processResources {
 		"mod_contributors_list" to fancyList(required("mod.contributors")),
 		"mod_contributors_jarray" to jsonList(required("mod.contributors")),
 		"mod_forgeupdatecheckurl" to required("mod.forgeupdatecheckurl"),
-		"mc_version_range" to required("mc.version_range"),
+		"mc_version_range" to targetsRange,
 		// Contact (Mod)
 		"contact_homepage" to required("contact.homepage"),
 		"contact_sources" to required("contact.sources"),
@@ -184,6 +203,78 @@ val copyJars = tasks.register<Copy>("copyJars") {
 }
 tasks.getByName("build").finalizedBy(copyJars)
 
+// Publishing
+val localProperties = Properties()
+val localPropertiesFile = rootProject.file("local.properties")
+if (localPropertiesFile.exists()) {
+	localProperties.load(localPropertiesFile.inputStream())
+}
+publishMods {
+	modLoaders.add(loader)
+	if (loader == "fabric") modLoaders.add("quilt")
+	if (loader == "forge" && stonecutter.eval(actualTargets.max(), ">=1.20.2")) modLoaders.add("neoforge")
+
+	val isDryRun = optional("publish.enabled")?.trim()?.lowercase() == "false"
+	file = project.tasks.remapJar.get().archiveFile
+	dryRun = isDryRun
+	version = actualVersion
+	displayName = displayVersion
+	changelog = versionChangelog
+	type = when (required("mod.version_type").lowercase()) {
+		"alpha" -> ALPHA; "beta" -> BETA; "release" -> STABLE
+		else -> throw Exception("Invalid version type")
+	}
+
+	val modrinthToken = localProperties.getProperty("publish.modrinth.token", "")
+	val curseforgeToken = localProperties.getProperty("publish.curseforge.token", "")
+	val githubToken = localProperties.getProperty("publish.github.token", "")
+	val discordWebhook = localProperties.getProperty("publish.discord.webhook${if (dryRun.get()) "_dry" else ""}", "")
+
+	fun filterFormat(str: String) = str.replace("{{version}}", versionNumbers).replace("{{changelog}}", versionChangelog)
+
+	if (dryRun.get() || !modrinthToken.isNullOrBlank()) modrinth {
+		projectId = required("publish.modrinth.id")
+		accessToken = modrinthToken
+		actualTargets.forEach(minecraftVersions::add)
+
+		// Relations
+		requires("cloth-config")
+		if (loader == "fabric") {
+			optional("modmenu")
+		}
+	}
+	if (isDryRun || !curseforgeToken.isNullOrBlank()) curseforge {
+		projectId = required("publish.curseforge.id")
+		accessToken = curseforgeToken
+		actualTargets.forEach(minecraftVersions::add)
+
+		// Relations
+		requires("cloth-config")
+		if (loader == "fabric") {
+			optional("modmenu")
+		}
+	}
+	if (isDryRun || !githubToken.isNullOrBlank()) github {
+		repository = required("publish.github.repository")
+		accessToken = githubToken
+		commitish = required("publish.github.branch")
+		tagName = versionNumbers
+		changelog = filterFormat(required("publish.github.format"))
+	}
+	// Only ran once even when chiseled.
+	if (isPrimaryBuild) {
+		if (isDryRun || !discordWebhook.isNullOrBlank()) discord {
+			webhookUrl = discordWebhook
+			dryRunWebhookUrl = discordWebhook
+			username = required("publish.discord.username")
+			avatarUrl = required("publish.discord.avatar")
+			content = filterFormat(required("publish.discord.format")).replace("\r\n\r\n", "\r\n").replace("\n\n", "\n")
+			setPlatforms(*emptyArray<me.modmuss50.mpp.Platform>())
+		}
+	}
+}
+
+// Hide the build task.
 tasks.build {
 	group = "hidden"
 	description = "Run 'buildAllVersions' instead!"
