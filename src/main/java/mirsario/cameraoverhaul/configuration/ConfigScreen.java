@@ -25,11 +25,11 @@ public final class ConfigScreen {
 
 		var builder = (ConfigBuilder.create()
 			.setParentScreen(parentScreen)
-			.setTitle(TextAbstractions.getText("cameraoverhaul.config.title"))
+			.setTitle(getText("cameraoverhaul.config.title"))
 			.transparentBackground()
 			.setSavingRunnable(Configuration::saveConfig)
 		);
-		var general = builder.getOrCreateCategory(TextAbstractions.getText("cameraoverhaul.config.category.general"));
+		var general = builder.getOrCreateCategory(getText("cameraoverhaul.config.category.general"));
 
 		try { addEntriesFromObject(builder, general, Configuration.get(), Configuration.getDefault()); }
 		catch (Exception e) { CameraOverhaul.LOGGER.trace(e); }
@@ -43,12 +43,12 @@ public final class ConfigScreen {
 		for (var field : objCurrent.getClass().getFields()) {
 			var fieldName = field.getName();
 			var fieldType = field.getType();
-			var name = TextAbstractions.getText(Configuration.getNameKey(fieldName));
-			var desc = TextAbstractions.getText(Configuration.getDescKey(fieldName));
+			var name = getText(Configuration.getNameKey(fieldName));
+			var desc = getText(Configuration.getDescKey(fieldName));
 			AbstractConfigListEntry<?> entry = null;
 
 			if (!fieldType.isPrimitive()) {
-				var thisCategory = builder.getOrCreateCategory(TextAbstractions.getText("cameraoverhaul.config.category." + field.getName()));
+				var thisCategory = builder.getOrCreateCategory(getText("cameraoverhaul.config.category." + field.getName()));
 				addEntriesFromObject(builder, thisCategory, field.get(objCurrent), field.get(objDefault));
 				continue;
 			}
@@ -76,4 +76,9 @@ public final class ConfigScreen {
 		try { field.set(obj, value); }
 		catch (Exception e) { CameraOverhaul.LOGGER.trace(e); }
 	}
+
+	//? if >=1.16 {
+	public static net.minecraft.network.chat.Component getText(String key) { return TextAbstractions.getText(key); }
+	 //?} else
+	/*public static String getText(String key) { return TextAbstractions.getTextValue(key); }*/
 }

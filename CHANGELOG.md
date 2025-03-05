@@ -20,6 +20,7 @@
 # Work In Progress
 
 **Fixes:**
+- Fixed configuration screen not working on 1.16.x versions.
 - Made the Fabric-specific `ModMenu` dependency just a suggestion instead.
 
 **Localization:**
