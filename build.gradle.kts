@@ -198,8 +198,10 @@ tasks.processResources {
 
 // Copy produced jars into /out/
 val copyJars = tasks.register<Copy>("copyJars") {
+	val dir = "../../out/"
+	project.delete(fileTree(mapOf("dir" to dir, "include" to listOf("${required("archives_base_name")}-v${versionNumbers}*.jar"))))
 	from(tasks.getByName("remapJar"))
-	into("../../out/")
+	into(dir)
 }
 tasks.getByName("build").finalizedBy(copyJars)
 
