@@ -4,6 +4,7 @@
 | Version                               | Release Date |
 |---------------------------------------|--------------|
 | [Work In Progress](#work-in-progress) | `n/a`        |
+| [2.0.2](#202)                         | `2025-03-05` |
 | [2.0.1](#201)                         | `2025-01-29` |
 | [2.0.0](#200)                         | `2025-01-27` |
 | [1.4.1](#141)                         | `2024-06-18` |
@@ -18,6 +19,8 @@
 | [1.0.0](#100)                         | `2020-11-30` |
 
 # Work In Progress
+
+# 2.0.2
 
 **Fixes:**
 - Fixed configuration screen not working on 1.16.x versions.
