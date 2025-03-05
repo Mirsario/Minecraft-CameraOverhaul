@@ -46,8 +46,10 @@ val versionNumbers = required("mod.version")
 val targetsLatest = optional("mc.latest") == "true"
 val actualTargets = required("mc.targets").trim().split(' ')
 val displayTargets = actualTargets.map { if (it.count { c -> c == '.' } == 1) "${it}.0" else it }
-val actualVersion = "${versionNumbers}-${loader}+mc.${displayTargets.first()}-${if (targetsLatest) "plus" else displayTargets.last()}"
-val displayVersion = "v${versionNumbers}-${loader}+mc[${displayTargets.first()}-${if (targetsLatest) "plus" else displayTargets.last()}]"
+val multipleVersions = displayTargets.count() > 1 || targetsLatest
+val displayedLatest = if (targetsLatest) "plus" else displayTargets.last()
+val actualVersion = "${versionNumbers}-${loader}+mc.${displayTargets.first()}${if (multipleVersions) "-${displayedLatest}" else ""}"
+val displayVersion = "v${versionNumbers}-${loader}+mc[${displayTargets.first()}${if (multipleVersions) "-${displayedLatest}" else ""}]"
 val targetsRange = ">=${actualTargets.first()}" + (if (targetsLatest) "" else " <=${actualTargets.last()}")
 // Changelog
 fun parseChangelog(full: String, version: String)

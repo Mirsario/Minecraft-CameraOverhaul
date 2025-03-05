@@ -30,16 +30,15 @@ stonecutter {
 		vers("fabric-1.15.0", "1.15")
 		vers("fabric-1.16.0", "1.16")
 		vers("fabric-1.17.0", "1.17")
-		vers("fabric-1.19.0", "1.19")
-		vers("fabric-1.19.3", "1.19.3")
-		vers("fabric-1.20.6", "1.20.6")
-		vers("fabric-1.21.2", "1.21.2")
+		vers("fabric-1.18.0", "1.18")
+		vers("fabric-1.19.0", "1.19");		vers("fabric-1.19.3", "1.19.3")
+		vers("fabric-1.20.0", "1.20");		vers("fabric-1.20.6", "1.20.6")
+		vers("fabric-1.21.0", "1.21");		vers("fabric-1.21.2", "1.21.2")
 		vers("forge-1.17.1", "1.17")
 		vers("forge-1.18.0", "1.18")
-		vers("forge-1.19.0", "1.19")
-		vers("forge-1.19.3", "1.19.3")
-		vers("neoforge-1.20.6", "1.20.6")
-		vers("neoforge-1.21.2", "1.21.2")
+		vers("forge-1.19.0", "1.19");		vers("forge-1.19.3", "1.19.3")
+		vers("forge-1.20.0", "1.20");		vers("neoforge-1.20.6", "1.20.6")
+		vers("neoforge-1.21.0", "1.21");	vers("neoforge-1.21.2", "1.21.2");
 
 		vcsVersion = "fabric-1.21.2"
 	}
