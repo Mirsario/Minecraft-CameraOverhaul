@@ -251,6 +251,7 @@ publishMods {
 		projectId = required("publish.curseforge.id")
 		accessToken = curseforgeToken
 		actualTargets.forEach(minecraftVersions::add)
+		changelogType = "markdown"
 
 		// Relations
 		requires("cloth-config")
@@ -258,15 +259,15 @@ publishMods {
 			optional("modmenu")
 		}
 	}
-	if (isDryRun || !githubToken.isNullOrBlank()) github {
-		repository = required("publish.github.repository")
-		accessToken = githubToken
-		commitish = required("publish.github.branch")
-		tagName = versionNumbers
-		changelog = filterFormat(required("publish.github.format"))
-	}
 	// Only ran once even when chiseled.
 	if (isPrimaryBuild) {
+		if (isDryRun || !githubToken.isNullOrBlank()) github {
+			repository = required("publish.github.repository")
+			accessToken = githubToken
+			commitish = required("publish.github.branch")
+			tagName = versionNumbers
+			changelog = filterFormat(required("publish.github.format"))
+		}
 		if (isDryRun || !discordWebhook.isNullOrBlank()) discord {
 			webhookUrl = discordWebhook
 			dryRunWebhookUrl = discordWebhook
