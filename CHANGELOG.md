@@ -4,6 +4,7 @@
 | Version                               | Release Date |
 |---------------------------------------|--------------|
 | [Work In Progress](#work-in-progress) | `n/a`        |
+| [2.0.3](#203)                         | `2025-03-06` |
 | [2.0.2](#202)                         | `2025-03-05` |
 | [2.0.1](#201)                         | `2025-01-29` |
 | [2.0.0](#200)                         | `2025-01-27` |
@@ -19,6 +20,9 @@
 | [1.0.0](#100)                         | `2020-11-30` |
 
 # Work In Progress
+
+# 2.0.3
+Fixed issue [#84](https://github.com/Mirsario/Minecraft-CameraOverhaul/issues/84) (Fabric [1.20.0-1.20.5] asking for wrong cloth-config version)
 
 # 2.0.2
 
