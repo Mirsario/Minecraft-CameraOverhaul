@@ -21,8 +21,12 @@
 
 # Work In Progress
 
+**Localization:**
+- Japanese localization by `@stabery` ([PR #86](<https://github.com/Mirsario/Minecraft-CameraOverhaul/pull/86>)).
+
 # 2.0.3
-Fixed issue [#84](https://github.com/Mirsario/Minecraft-CameraOverhaul/issues/84) (Fabric [1.20.0-1.20.5] asking for wrong cloth-config version)
+
+Fixed issue [#84](<https://github.com/Mirsario/Minecraft-CameraOverhaul/issues/84>) (Fabric [1.20.0-1.20.5] asking for wrong cloth-config version)
 
 # 2.0.2
 
