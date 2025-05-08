@@ -11,12 +11,14 @@ pluginManagement {
 		maven("https://maven.wagyourtail.xyz/snapshots")
 		// Architectury
 		maven("https://maven.architectury.dev")
+		maven("https://maven.cassian.cc") // Temporary?
 		// Fabric
 		maven("https://maven.fabricmc.net")
 		// Forge
 		maven("https://maven.minecraftforge.net")
 		// NeoForge
 		maven("https://maven.neoforged.net/releases")
+		maven("https://maven.neoforged.net/snapshots")
 	}
 }
 
@@ -36,14 +38,14 @@ stonecutter {
 		vers("fabric-1.18.0", "1.18")
 		vers("fabric-1.19.0", "1.19");		vers("fabric-1.19.3", "1.19.3")
 		vers("fabric-1.20.0", "1.20");		vers("fabric-1.20.6", "1.20.6")
-		vers("fabric-1.21.0", "1.21");		vers("fabric-1.21.2", "1.21.2")
+		vers("fabric-1.21.0", "1.21");		vers("fabric-1.21.2", "1.21.2");		vers("fabric-1.21.5", "1.21.5")
 		vers("forge-1.17.1", "1.17")
 		vers("forge-1.18.0", "1.18")
 		vers("forge-1.19.0", "1.19");		vers("forge-1.19.3", "1.19.3")
 		vers("forge-1.20.0", "1.20");		vers("neoforge-1.20.6", "1.20.6")
-		vers("neoforge-1.21.0", "1.21");	vers("neoforge-1.21.2", "1.21.2");
+		vers("neoforge-1.21.0", "1.21");	vers("neoforge-1.21.2", "1.21.2");		vers("neoforge-1.21.5", "1.21.5")
 
-		vcsVersion = "fabric-1.21.2"
+		vcsVersion = "fabric-1.21.5"
 	}
 
 	create(rootProject)
