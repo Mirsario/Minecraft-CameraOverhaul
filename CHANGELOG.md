@@ -4,6 +4,7 @@
 | Version                               | Release Date |
 |---------------------------------------|--------------|
 | [Work In Progress](#work-in-progress) | `n/a`        |
+| [2.0.4](#204)                         | `2025-05-08` |
 | [2.0.3](#203)                         | `2025-03-06` |
 | [2.0.2](#202)                         | `2025-03-05` |
 | [2.0.1](#201)                         | `2025-01-29` |
@@ -20,6 +21,10 @@
 | [1.0.0](#100)                         | `2020-11-30` |
 
 # Work In Progress
+
+Nothing yet!
+
+# 2.0.4
 
 - Minecraft 1.21.5+ support.
 - Fixed issue [#79](https://github.com/Mirsario/Minecraft-CameraOverhaul/issues/79) (Mod uses wrong Java targets on MC <1.20.5)
