@@ -24,6 +24,7 @@
 - Minecraft 1.21.5+ support.
 - Fixed issue [#79](https://github.com/Mirsario/Minecraft-CameraOverhaul/issues/79) (Mod uses wrong Java targets on MC <1.20.5)
 - Japanese localization by `@stabery` ([PR #86](<https://github.com/Mirsario/Minecraft-CameraOverhaul/pull/86>)).
+- Mitigated potential conflicts with other mods that utilize the Shadow Gradle plugin.
 
 # 2.0.3
 
