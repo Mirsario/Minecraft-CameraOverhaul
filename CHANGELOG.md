@@ -21,7 +21,7 @@
 
 # Work In Progress
 
-**Localization:**
+- Fixed issue [#79](https://github.com/Mirsario/Minecraft-CameraOverhaul/issues/79) (Mod uses wrong Java targets on MC <1.20.5)
 - Japanese localization by `@stabery` ([PR #86](<https://github.com/Mirsario/Minecraft-CameraOverhaul/pull/86>)).
 
 # 2.0.3

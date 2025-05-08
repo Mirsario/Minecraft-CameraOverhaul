@@ -8,7 +8,8 @@ import java.util.*
 plugins {
 	id("dev.architectury.loom")
 	id("architectury-plugin")
-	id("com.github.johnrengelman.shadow")
+	id("xyz.wagyourtail.jvmdowngrader")
+	id("com.gradleup.shadow")
 	id("me.modmuss50.mod-publish-plugin")
 }
 
@@ -39,8 +40,15 @@ val isFabric = loader == "fabric"
 val isForge = loader == "forge"
 val isNeoForge = loader == "neoforge"
 val isForgeLike = isForge || isNeoForge
-val shadowLibs = isForge && stonecutter.eval(mcVersion, "<1.19")
+// Java
+val javaSrcVersion = JavaVersion.VERSION_21
+val javaDstVersion = if (stonecutter.eval(mcVersion, ">=1.20.5")) JavaVersion.VERSION_21
+	else if (stonecutter.eval(mcVersion, ">=1.18")) JavaVersion.VERSION_17
+	else if (stonecutter.eval(mcVersion, ">=1.17")) JavaVersion.VERSION_16
+	else JavaVersion.VERSION_1_8
+// Build Behavior
 val isPrimaryBuild = isFabric && optional("mc.latest") == "true" // Dumb. Better somehow ask Stonecutter if we're in a chiseled context.
+val shadowLibs = (javaSrcVersion != javaDstVersion) || (isForge && stonecutter.eval(mcVersion, "<1.19"))
 // Versions & Targets
 val versionNumbers = required("mod.version")
 val targetsLatest = optional("mc.latest") == "true"
@@ -63,12 +71,38 @@ base {
 	archivesName.set(required("archives_base_name"))
 }
 
-// Configure Java.
+// Configure Java & Java Downgrader constants.
 tasks.withType<JavaCompile> { options.encoding = "UTF-8" }
 java {
-	val java = if (stonecutter.eval(mcVersion, ">=1.20.5")) JavaVersion.VERSION_21 else JavaVersion.VERSION_17
-	sourceCompatibility = java
-	targetCompatibility = java
+	sourceCompatibility = javaSrcVersion
+	targetCompatibility = javaSrcVersion
+}
+jvmdg {
+	downgradeTo = javaDstVersion
+}
+// Prepare Shadow to inline libraries right into our JAR on legacy Forge.
+val shade: Configuration by project.configurations.creating {
+	isCanBeConsumed = false
+	isCanBeResolved = true
+	isTransitive = false
+}
+tasks.shadowJar {
+	archiveClassifier = if (this != lastTask) "shadow" else null
+	configurations = listOf(shade)
+	minimize()
+}
+// Downgrade classes for older JVM versions.
+tasks.downgradeJar {
+	archiveClassifier = if (this != lastTask) "downgrade" else null
+	inputFile = tasks.shadowJar.get().archiveFile
+	dependsOn(tasks.shadowJar)
+}
+// Remapping is the last step.
+val lastTask = tasks.remapJar.get()
+tasks.remapJar {
+	archiveClassifier = if (this != lastTask) "remap" else null
+	input = tasks.downgradeJar.get().archiveFile
+	dependsOn(tasks.downgradeJar)
 }
 
 // Setup preprocessor.
@@ -82,25 +116,6 @@ stonecutter {
 	const("MC_BETA", mcType == "beta")
 	const("MC_ALPHA", mcType == "alpha")
 	const("false", false)
-}
-
-// Prepare Shadow to inline libraries right into our JAR on legacy Forge.
-val shade: Configuration by configurations.creating {
-	isCanBeConsumed = false
-	isCanBeResolved = true
-	isTransitive = false
-}
-if (shadowLibs) {
-	tasks.shadowJar {
-		configurations = listOf(shade)
-		archiveClassifier = "dev-shadow"
-		minimize()
-	}
-	tasks.remapJar {
-		input = tasks.shadowJar.get().archiveFile
-		archiveClassifier = null
-		dependsOn(tasks.shadowJar)
-	}
 }
 
 // To change any versions see the gradle.properties files under root and "/versions/*/"
@@ -202,7 +217,7 @@ tasks.processResources {
 val copyJars = tasks.register<Copy>("copyJars") {
 	val dir = "../../out/"
 	project.delete(fileTree(mapOf("dir" to dir, "include" to listOf("${required("archives_base_name")}-v${versionNumbers}*.jar"))))
-	from(tasks.getByName("remapJar"))
+	from(lastTask)
 	into(dir)
 }
 tasks.getByName("build").finalizedBy(copyJars)

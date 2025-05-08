@@ -6,6 +6,9 @@ pluginManagement {
 		// Stonecutter
 		maven("https://maven.kikugie.dev/releases")
 		maven("https://maven.kikugie.dev/snapshots")
+		// JvmDowngrader
+		maven("https://maven.wagyourtail.xyz/releases")
+		maven("https://maven.wagyourtail.xyz/snapshots")
 		// Architectury
 		maven("https://maven.architectury.dev")
 		// Fabric
