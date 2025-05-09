@@ -90,17 +90,9 @@ tasks.shadowJar {
 	archiveClassifier = if (this != lastTask) "shadow" else null
 	configurations = listOf(shade)
 	minimize()
-
-	// Relocate dependencies to avoid conflicts.
-	//TODO: Is there a way to get root package paths such as "org.joml" in 'shade.forEach { it }', minimizing repetition?
-	if (shadowLibs) {
-        listOfNotNull(
-            "com.moandjiezana.toml",
-            (if (stonecutter.eval(mcVersion, "<1.19.3")) "org.joml" else null),
-        ).forEach {
-			relocate(it, "${required("root_package")}.shadow." + it)
-		}
-	}
+	// Relocate shadowed dependencies to avoid conflicts.
+	enableRelocation = true
+	relocationPrefix = "${required("root_package")}.shadow"
 }
 // Downgrade classes for older JVM versions.
 tasks.downgradeJar {
