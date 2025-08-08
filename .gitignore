@@ -22,6 +22,10 @@
 **/.classpath
 **/.project
 
+# zed
+
+**/.zed/
+
 # Modding
 .architectury-transformer/
 */run/

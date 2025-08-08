@@ -50,4 +50,20 @@ public final class MathUtils {
 
 		return current;
 	}
+
+	// Unwrap a single angular step into (-180, 180) so seam crossings don't spike by 360
+	public static double unwrapStep(double d) {
+		d = d % 360.0;
+		if (d <= -180.0) d += 360.0;
+		else if (d > 180.0) d -= 360.0;
+		return d;
+	}
+
+	// Wrap any angle difference to (-180, 180) for stable per-frame offsets
+	public static double wrapDiff(double d) {
+		d = d % 360.0;
+		if (d <= -180.0) d += 360.0;
+		else if (d > 180.0) d -= 360.0;
+		return d;
+	}
 }

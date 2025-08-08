@@ -46,14 +46,15 @@ public final class CameraSystem {
 		if (!context.velocity.equals(prevEntityVelocity) || !context.transform.eulerRot.equals(prevCameraEulerRot))
 			notifyOfPlayerAction();
 
+		// XY
+		mouseSmoothingOffset(context, offsetTransform, deltaTime);
+		noiseOffset(context, offsetTransform, deltaTime);
 		// X
 		verticalVelocityPitchOffset(context, offsetTransform, deltaTime);
 		forwardVelocityPitchOffset(context, offsetTransform, deltaTime);
 		// Z
 		turningRollOffset(context, offsetTransform, deltaTime);
 		strafingRollOffset(context, offsetTransform, deltaTime);
-		// XY
-		noiseOffset(context, offsetTransform, deltaTime);
 
 		prevEntityVelocity.set(context.velocity);
 		prevCameraEulerRot.set(context.transform.eulerRot);
@@ -74,7 +75,7 @@ public final class CameraSystem {
 
 		double targetOffset = context.velocity.y * multiplier;
 		double currentOffset = MathUtils.damp(prevVerticalVelocityPitchOffset, targetOffset, smoothing, deltaTime);
-		
+
 		outputTransform.eulerRot.x += currentOffset;
 		prevVerticalVelocityPitchOffset = currentOffset;
 	}
@@ -87,7 +88,7 @@ public final class CameraSystem {
 
 		double targetOffset = context.getForwardRelativeVelocity().z * multiplier;
 		double currentOffset = MathUtils.damp(prevForwardVelocityPitchOffset, targetOffset, smoothing, deltaTime);
-		
+
 		outputTransform.eulerRot.x += currentOffset;
 		prevForwardVelocityPitchOffset = currentOffset;
 	}
@@ -160,5 +161,63 @@ public final class CameraSystem {
 		);
 
 		outputTransform.eulerRot.add(noise.mul(target));
+	}
+
+	private boolean msInit = false;
+	private double prevYawNorm, prevPitchNorm; // last frame's normalized (vanilla) angles
+	private double contYaw, contPitch; // continuous, unwrapped stream
+	private double smYaw, smPitch; // actual angle
+
+	private static final double BASE_MOUSE_SMOOTHING = 16.0;
+
+	private void mouseSmoothingOffset(
+		CameraContext context,
+		Transform outputTransform,
+		double deltaTime
+	) {
+		if (ctxCfg.mouseSmoothing <= 0.0) return;
+
+		// Real camera angles in degrees
+		final double yawNow = context.transform.eulerRot.y;
+		final double pitchNow = context.transform.eulerRot.x;
+
+		// Don't spazz out
+		if (!msInit || context.perspective != prevCameraPerspective) {
+			prevYawNorm = yawNow;
+			prevPitchNorm = pitchNow;
+			contYaw = yawNow;
+			contPitch = pitchNow;
+			smYaw = yawNow;
+			smPitch = pitchNow;
+			msInit = true;
+			return;
+		}
+
+		// Preserve real mouse movement
+		final double stepYaw = MathUtils.unwrapStep(yawNow - prevYawNorm);
+		final double stepPitch = MathUtils.unwrapStep(pitchNow - prevPitchNorm);
+		prevYawNorm = yawNow;
+		prevPitchNorm = pitchNow;
+
+		// Integrate to continuous target (can exceed 360 degrees)
+		contYaw += stepYaw;
+		contPitch += stepPitch;
+
+		// Smooth in 2D towards target
+		final double k = BASE_MOUSE_SMOOTHING * ctxCfg.mouseSmoothing;
+		final double step = 1.0 - Math.exp(-k * Math.max(0.0, deltaTime));
+
+		final double dYaw = contYaw - smYaw;
+		final double dPitch = contPitch - smPitch;
+
+		smYaw += dYaw * step;
+		smPitch += dPitch * step;
+
+		// Apply an offset so base + offset == smoothed angles this frame
+		final double yawOffset = MathUtils.wrapDiff(smYaw - yawNow);
+		final double pitchOffset = MathUtils.wrapDiff(smPitch - pitchNow);
+
+		outputTransform.eulerRot.y += yawOffset;
+		outputTransform.eulerRot.x += pitchOffset;
 	}
 }
