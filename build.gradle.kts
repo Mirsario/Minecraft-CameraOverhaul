@@ -6,6 +6,7 @@ import org.gradle.internal.declarativedsl.parsing.parse
 import java.util.*
 
 plugins {
+	id("dev.kikugie.stonecutter")
 	id("dev.architectury.loom")
 	id("architectury-plugin")
 	id("xyz.wagyourtail.jvmdowngrader")
@@ -297,8 +298,7 @@ publishMods {
 	}
 }
 
-// Hide the build task.
-tasks.build {
-	group = "hidden"
-	description = "Run 'buildAllVersions' instead!"
+// Pull up relevant tasks.
+listOf(tasks.build, tasks.clean, tasks.publishMods).forEach {
+	it.get().group = "_project"
 }

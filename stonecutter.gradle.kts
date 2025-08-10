@@ -8,16 +8,3 @@ plugins {
 }
 
 stonecutter active "fabric-1.21.5" /* [SC] DO NOT EDIT */
-
-stonecutter registerChiseled tasks.register("buildAll", stonecutter.chiseled) {
-	group = "_project"
-	ofTask("build")
-}
-stonecutter registerChiseled tasks.register("cleanAll", stonecutter.chiseled) {
-	group = "_project"
-	ofTask("clean")
-}
-stonecutter registerChiseled tasks.register("publishAll", stonecutter.chiseled) {
-	group = "_project"
-	ofTask("publishMods")
-}

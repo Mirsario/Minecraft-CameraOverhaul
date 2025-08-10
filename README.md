@@ -28,8 +28,9 @@ Copyright (c) 2020-2025 Mirsario & Contributors.
 This project uses the [Stonecutter](https://stonecutter.kikugie.dev) comment-macro preprocessor for multi-version support.
 - The IntelliJ [Stonecutter Dev](https://plugins.jetbrains.com/plugin/25044-stonecutter-dev) plugin is highly recommended. Manually install it in zip form if you see complaints about your IDE version not being supported.
 - After getting the repository's source code, use `gradlew tasks` to list available Gradle tasks.
-- Use the `buildAll` Gradle task to properly build all targets of the mod.
+- Use the `build` Gradle task to properly build all targets of the mod.
 - Use tasks under the `Stonecutter` group to "checkout" specific versions, running the preprocessor on the source code and updating all comment blocks.
+- Run the "Reset active project" task before you make commits, thus making sure that the default version is checked out.
 
 Thank you to the following contributors for helping improve the mod for everyone!
 
