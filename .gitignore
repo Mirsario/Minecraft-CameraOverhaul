@@ -7,6 +7,7 @@
 
 # Eclipse
 **/*.launch
+**/.factorypath
 
 # Idea
 **/.idea/
@@ -15,13 +16,15 @@
 **/*.iws
 
 # vscode
-
 **/.settings/
 **/.vscode/
 **/bin/
 **/.classpath
 **/.project
 
+# zed
+**/.zed/
+
 # Modding
-.architectury-transformer/
-*/run/
+**/.architectury-transformer/
+**/run/
