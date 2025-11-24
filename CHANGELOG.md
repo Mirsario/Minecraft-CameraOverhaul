@@ -22,7 +22,7 @@
 
 # Work In Progress
 
-Nothing yet!
+- Minecraft 1.21.9 and 1.21.10+ support.
 
 # 2.0.4
 

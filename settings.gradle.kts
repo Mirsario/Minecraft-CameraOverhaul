@@ -34,6 +34,8 @@ stonecutter {
 		// Declared in preferred publishing order.
 
 		// 1.21
+		vers("fabric-1.21.9", "1.21.9")
+		vers("neoforge-1.21.9", "1.21.9")
 		vers("fabric-1.21.5", "1.21.5")
 		vers("neoforge-1.21.5", "1.21.5")
 		vers("fabric-1.21.2", "1.21.2")
