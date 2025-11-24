@@ -23,6 +23,7 @@
 # Work In Progress
 
 - Minecraft 1.21.9 and 1.21.10+ support.
+- Chinese localization by `@Xinyang-Gao` ([PR #104](<https://github.com/Mirsario/Minecraft-CameraOverhaul/pull/104>)).
 
 # 2.0.4
 
