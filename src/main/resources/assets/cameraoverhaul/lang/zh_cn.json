@@ -55,5 +55,5 @@
 	"cameraoverhaul.config.handSwingTrauma.name": "手臂摆动屏幕晃动强度",
 	"cameraoverhaul.config.handSwingTrauma.desc": "一个 [0..1] 的值，与任何摆动玩家手臂的动作引起的屏幕晃动强度相关。最好保持非常低的值。",
 
-	"modmenu.descriptionTranslation.cameraoverhaul": "Cameradoverhaul 是一款高度可配置的 Minecraft 客户端模组，旨在通过引入多种相机旋转效果来提升游戏的整体体验满意度，着重强调玩家的移动并增强视觉反馈。\n侧向移动和转身会使相机侧向倾斜。跳跃、坠落以及前后移动将影响相机的俯仰角度。\n附近的爆炸会使屏幕晃动，而停止移动足够长时间后，相机会在等待输入时轻柔地摇摆。\n\n可通过图形用户界面（GUIs）及 'minecraft/config/cameradoverhaul.toml' 文件进行配置。"
+	"modmenu.descriptionTranslation.cameraoverhaul": "CameraOverhaul 是一款高度可配置的 Minecraft 客户端模组，旨在通过引入多种相机旋转效果来提升游戏的整体体验满意度，着重强调玩家的移动并增强视觉反馈。\n侧向移动和转身会使相机侧向倾斜。跳跃、坠落以及前后移动将影响相机的俯仰角度。\n附近的爆炸会使屏幕晃动，而停止移动足够长时间后，相机会在等待输入时轻柔地摇摆。\n\n可通过图形用户界面（GUIs）及 'minecraft/config/cameradoverhaul.toml' 文件进行配置。"
 }
