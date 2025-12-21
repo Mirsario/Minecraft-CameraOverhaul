@@ -24,8 +24,13 @@ public abstract class GameRendererMixin {
 	@Inject(method = "bobHurt", at = @At("HEAD"))
 	private void postCameraUpdate(PoseStack matrices, float f, CallbackInfo ci) {
 		Transform cameraTransform = new Transform(
-			VectorUtils.toJoml(mainCamera.getPosition()),
+			//? if >=1.21.11 {
+			VectorUtils.toJoml(mainCamera.position()),
+			new Vector3d(mainCamera.xRot(), mainCamera.yRot(), 0)
+			//?} else {
+			/*VectorUtils.toJoml(mainCamera.getPosition()),
 			new Vector3d(mainCamera.getXRot(), mainCamera.getYRot(), 0)
+			*///?}
 		);
 
 		CameraOverhaul.camera.modifyCameraTransform(cameraTransform);
