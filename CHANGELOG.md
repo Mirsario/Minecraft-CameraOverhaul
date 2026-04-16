@@ -4,6 +4,8 @@
 | Version                               | Release Date |
 |---------------------------------------|--------------|
 | [Work In Progress](#work-in-progress) | `n/a`        |
+| [2.0.6](#206)                         | `2025-12-22` |
+| [2.0.5](#205)                         | `2025-11-24` |
 | [2.0.4](#204)                         | `2025-05-08` |
 | [2.0.3](#203)                         | `2025-03-06` |
 | [2.0.2](#202)                         | `2025-03-05` |
@@ -23,6 +25,15 @@
 # Work In Progress
 
 Nothing yet!
+
+# 2.0.6
+
+- Minecraft 1.21.11+ support.
+
+# 2.0.5
+
+- Minecraft 1.21.9 and 1.21.10+ support.
+- Chinese localization by `@Xinyang-Gao` ([PR #104](<https://github.com/Mirsario/Minecraft-CameraOverhaul/pull/104>)).
 
 # 2.0.4
 

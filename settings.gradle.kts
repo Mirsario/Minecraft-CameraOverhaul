@@ -11,7 +11,8 @@ pluginManagement {
 		maven("https://maven.wagyourtail.xyz/snapshots")
 		// Architectury
 		maven("https://maven.architectury.dev")
-		maven("https://maven.cassian.cc") // Temporary?
+		// ClothConfig
+		maven("https://maven.shedaniel.me")
 		// Fabric
 		maven("https://maven.fabricmc.net")
 		// Forge
@@ -34,36 +35,40 @@ stonecutter {
 		// Declared in preferred publishing order.
 
 		// 1.21
-		vers("fabric-1.21.5", "1.21.5")
-		vers("neoforge-1.21.5", "1.21.5")
-		vers("fabric-1.21.2", "1.21.2")
-		vers("neoforge-1.21.2", "1.21.2")
-		vers("fabric-1.21.0", "1.21")
-		vers("neoforge-1.21.0", "1.21")
+		version("fabric-1.21.11", "1.21.11")
+		version("neoforge-1.21.11", "1.21.11")
+		version("fabric-1.21.9", "1.21.9")
+		version("neoforge-1.21.9", "1.21.9")
+		version("fabric-1.21.5", "1.21.5")
+		version("neoforge-1.21.5", "1.21.5")
+		version("fabric-1.21.2", "1.21.2")
+		version("neoforge-1.21.2", "1.21.2")
+		version("fabric-1.21.0", "1.21")
+		version("neoforge-1.21.0", "1.21")
 		// 1.20
-		vers("fabric-1.20.6", "1.20.6")
-		vers("neoforge-1.20.6", "1.20.6")
-		vers("fabric-1.20.0", "1.20")
-		vers("forge-1.20.0", "1.20")
+		version("fabric-1.20.6", "1.20.6")
+		version("neoforge-1.20.6", "1.20.6")
+		version("fabric-1.20.0", "1.20")
+		version("forge-1.20.0", "1.20")
 		// 1.19
-		vers("fabric-1.19.3", "1.19.3")
-		vers("forge-1.19.3", "1.19.3")
-		vers("fabric-1.19.0", "1.19")
-		vers("forge-1.19.0", "1.19")
+		version("fabric-1.19.3", "1.19.3")
+		version("forge-1.19.3", "1.19.3")
+		version("fabric-1.19.0", "1.19")
+		version("forge-1.19.0", "1.19")
 		// 1.18
-		vers("fabric-1.18.0", "1.18")
-		vers("forge-1.18.0", "1.18")
+		version("fabric-1.18.0", "1.18")
+		version("forge-1.18.0", "1.18")
 		// 1.17
-		vers("fabric-1.17.0", "1.17")
-		vers("forge-1.17.1", "1.17")
+		version("fabric-1.17.0", "1.17")
+		version("forge-1.17.1", "1.17")
 		// 1.16
-		vers("fabric-1.16.0", "1.16")
+		version("fabric-1.16.0", "1.16")
 		// 1.15
-		vers("fabric-1.15.0", "1.15")
+		version("fabric-1.15.0", "1.15")
 		// 1.14
-		vers("fabric-1.14.4", "1.14.4")
+		version("fabric-1.14.4", "1.14.4")
 
-		vcsVersion = "fabric-1.21.5"
+		vcsVersion = "fabric-1.21.11"
 	}
 
 	create(rootProject)

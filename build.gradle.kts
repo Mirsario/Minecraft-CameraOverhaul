@@ -111,15 +111,15 @@ tasks.remapJar {
 
 // Setup preprocessor.
 stonecutter {
-	const("FABRIC", isFabric)
-	const("FORGE", isForge)
-	const("NEOFORGE", isNeoForge)
-	const("FORGE_LIKE", isForgeLike)
+	constants["FABRIC"] = isFabric
+	constants["FORGE"] = isForge
+	constants["NEOFORGE"] = isNeoForge
+	constants["FORGE_LIKE"] = isForgeLike
 
-	const("MC_RELEASE", mcType == "release")
-	const("MC_BETA", mcType == "beta")
-	const("MC_ALPHA", mcType == "alpha")
-	const("false", false)
+	constants["MC_RELEASE"] = mcType == "release"
+	constants["MC_BETA"] = mcType == "beta"
+	constants["MC_ALPHA"] = mcType == "alpha"
+	constants["false"] = false
 }
 
 // To change any versions see the gradle.properties files under root and "/versions/*/"

@@ -22,13 +22,26 @@ import net.minecraft.world.phys.*;
 @Mixin(Camera.class)
 @SuppressWarnings("UnusedMixin")
 public abstract class CameraMixin {
-	@Shadow public abstract float getXRot();
+	//? if >=1.21.11 {
+	@Shadow public abstract float xRot();
+	@Shadow public abstract float yRot();
+	@Shadow public abstract Vec3 position();
+	//?} else {
+	/*@Shadow public abstract float getXRot();
 	@Shadow public abstract float getYRot();
 	@Shadow public abstract Vec3 getPosition();
+	*///?}
 	@Shadow protected abstract void setRotation(float yaw, float pitch);
 
 	@Inject(method = "setup", at = @At("RETURN"))
-	private void onCameraUpdate(BlockGetter area, Entity entity, boolean thirdPerson, boolean inverseView, float tickDelta, CallbackInfo ci) {
+	private void onCameraUpdate(
+		//? if >=1.21.11 {
+		Level area,
+		//?} else {
+		/*BlockGetter area,
+		*///?}
+		Entity entity, boolean thirdPerson, boolean inverseView, float tickDelta, CallbackInfo ci
+	) {
 		var system = CameraOverhaul.camera;
 		var vehicle = entity.getVehicle();
 		var controlledEntity = vehicle != null ? vehicle : entity;
@@ -43,8 +56,13 @@ public abstract class CameraMixin {
 
 		context.velocity = VectorUtils.toJoml(controlledEntity.getDeltaMovement());
 		context.transform = new Transform(
-			VectorUtils.toJoml(getPosition()),
+			//? if >=1.21.11 {
+			VectorUtils.toJoml(position()),
+			new Vector3d(xRot(), yRot(), 0)
+			//?} else {
+			/*VectorUtils.toJoml(getPosition()),
 			new Vector3d(getXRot(), getYRot(), 0)
+			*///?}
 		);
 		context.perspective = (thirdPerson
 			? (inverseView ? CameraContext.Perspective.THIRD_PERSON_REVERSE : CameraContext.Perspective.THIRD_PERSON)
