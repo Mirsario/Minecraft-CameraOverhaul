@@ -32,7 +32,7 @@ public final class ConfigData {
 		public double horizontalVelocitySmoothingFactor = 1.0;
 		public double verticalVelocitySmoothingFactor = 1.0;
 		// Mouse smoothing
-		public double mouseSmoothing = 8;
+		public double mouseSmoothing = 0.0;
 	}
 
 	public static final int CONFIG_VERSION = 2;
@@ -61,8 +61,9 @@ public final class ConfigData {
 		vehicles.forwardVelocityPitchFactor *= 0.5;
 		vehicles.verticalVelocityPitchFactor *= 2.0;
 		// Mouse smoothing
-        flying.mouseSmoothing *= 0.25;
-        swimming.mouseSmoothing *= 0.25;
-        vehicles.mouseSmoothing *= 0.75;
+		sprinting.mouseSmoothing = 1.0;
+		swimming.mouseSmoothing = 1.0;
+		vehicles.mouseSmoothing = 1.0;
+		mounts.mouseSmoothing = 1.0;
 	}
 }
