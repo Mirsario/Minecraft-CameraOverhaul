@@ -31,6 +31,7 @@ public final class CameraSystem {
 		else if (context.isRidingMount) ctxCfg = cfg.mounts;
 		else if (context.isSwimming) ctxCfg = cfg.swimming;
 		else if (context.isFlying) ctxCfg = cfg.flying;
+		else if (context.isSprinting) ctxCfg = cfg.sprinting;
 		else ctxCfg = cfg.walking;
 
 		// Reset the offset transform

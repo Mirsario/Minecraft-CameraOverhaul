@@ -40,6 +40,7 @@ public final class ConfigData {
 	public int configVersion;
 	public General general = new General();
 	public Contextual walking = new Contextual();
+	public Contextual sprinting = new Contextual();
 	public Contextual swimming = new Contextual();
 	public Contextual flying = new Contextual();
 	public Contextual mounts = new Contextual();
