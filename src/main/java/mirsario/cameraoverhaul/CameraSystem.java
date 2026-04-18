@@ -177,7 +177,6 @@ public final class CameraSystem {
 		double deltaTime
 	) {
 		if (ctxCfg.mouseSmoothing <= 0.0) return;
-		if (context.perspective != CameraContext.Perspective.FIRST_PERSON) return;
 
 		// Real camera angles in degrees
 		final double yawNow = context.transform.eulerRot.y;

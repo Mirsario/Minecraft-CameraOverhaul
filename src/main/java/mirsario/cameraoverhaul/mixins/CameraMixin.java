@@ -33,6 +33,24 @@ public abstract class CameraMixin {
 	*///?}
 	@Shadow protected abstract void setRotation(float yaw, float pitch);
 
+	@Inject(
+		method = "setup",
+		at = @At(
+			value = "INVOKE",
+			target = "Lnet/minecraft/client/Camera;getMaxZoom(F)F"
+		)
+	)
+	private void onDetachedCameraSetup(
+		//? if >=1.21.11 {
+		Level area,
+		//?} else {
+		/*BlockGetter area,
+		*///?}
+		Entity entity, boolean thirdPerson, boolean inverseView, float tickDelta, CallbackInfo ci
+	) {
+		applyCameraEffects(entity, thirdPerson, inverseView);
+	}
+
 	@Inject(method = "setup", at = @At("RETURN"))
 	private void onCameraUpdate(
 		//? if >=1.21.11 {
@@ -42,6 +60,12 @@ public abstract class CameraMixin {
 		*///?}
 		Entity entity, boolean thirdPerson, boolean inverseView, float tickDelta, CallbackInfo ci
 	) {
+		if (thirdPerson) return;
+
+		applyCameraEffects(entity, thirdPerson, inverseView);
+	}
+
+	private void applyCameraEffects(Entity entity, boolean thirdPerson, boolean inverseView) {
 		var system = CameraOverhaul.camera;
 		var vehicle = entity.getVehicle();
 		var controlledEntity = vehicle != null ? vehicle : entity;
