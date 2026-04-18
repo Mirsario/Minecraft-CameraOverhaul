@@ -37,7 +37,11 @@ public abstract class CameraMixin {
 		method = "setup",
 		at = @At(
 			value = "INVOKE",
+			//? if >=1.21.11 {
 			target = "Lnet/minecraft/client/Camera;getMaxZoom(F)F"
+			//?} else {
+			/*target = "Lnet/minecraft/client/Camera;getMaxZoom(D)D"
+			*///?}
 		)
 	)
 	private void onDetachedCameraSetup(
@@ -62,10 +66,12 @@ public abstract class CameraMixin {
 	) {
 		if (thirdPerson) return;
 
-		applyCameraEffects(entity, thirdPerson, inverseView);
+		applyLegacyCameraRotations();
+		var transform = applyCameraEffects(entity, thirdPerson, inverseView);
+		restoreLegacyCameraRotations(transform);
 	}
 
-	private void applyCameraEffects(Entity entity, boolean thirdPerson, boolean inverseView) {
+	private Transform applyCameraEffects(Entity entity, boolean thirdPerson, boolean inverseView) {
 		var system = CameraOverhaul.camera;
 		var vehicle = entity.getVehicle();
 		var controlledEntity = vehicle != null ? vehicle : entity;
@@ -99,23 +105,29 @@ public abstract class CameraMixin {
 			context.isSprinting = entity.isSprinting();
 		}
 
-//? if <1.15 {
-		/*// Undo multiplications.
-		GL11.glRotatef((float)context.transform.eulerRot.y + 180.0f, 0f, -1f, 0f);
-		GL11.glRotatef((float)context.transform.eulerRot.x, -1f, 0f, 0f);
-*///?}
-
 		TimeSystem.update();
 		system.onCameraUpdate(context, TimeSystem.getDeltaTime());
 		system.modifyCameraTransform(context.transform);
 
 		setRotation((float)context.transform.eulerRot.y, (float)context.transform.eulerRot.x);
+		return context.transform;
+	}
 
+	private void applyLegacyCameraRotations() {
 //? if <1.15 {
-		/*// And now redo them.
-		GL11.glRotatef((float)context.transform.eulerRot.z, 0f, 0f, 1f);
-		GL11.glRotatef((float)context.transform.eulerRot.x, 1f, 0f, 0f);
-		GL11.glRotatef((float)context.transform.eulerRot.y + 180f, 0f, 1f, 0f);
+		/*// In 1.14.x the camera rotates GL state directly before this mixin returns.
+		// Undo vanilla pitch/yaw so first-person effects can replace them cleanly.
+		GL11.glRotatef(getYRot() + 180.0f, 0f, -1f, 0f);
+		GL11.glRotatef(getXRot(), -1f, 0f, 0f);
+*///?}
+	}
+
+	private void restoreLegacyCameraRotations(Transform transform) {
+//? if <1.15 {
+		/*// Reapply vanilla pitch/yaw plus our roll after updating the camera transform.
+		GL11.glRotatef((float)transform.eulerRot.z, 0f, 0f, 1f);
+		GL11.glRotatef((float)transform.eulerRot.x, 1f, 0f, 0f);
+		GL11.glRotatef((float)transform.eulerRot.y + 180f, 0f, 1f, 0f);
 *///?}
 	}
 }
