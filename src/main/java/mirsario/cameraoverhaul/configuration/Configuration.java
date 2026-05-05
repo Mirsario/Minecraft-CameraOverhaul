@@ -1,4 +1,4 @@
-// Copyright 2020-2025 Mirsario & Contributors.
+// Copyright 2020-2026 Mirsario & Contributors.
 // Released under the GNU General Public License 3.0.
 // See LICENSE.md for details.
 
@@ -49,7 +49,7 @@ public final class Configuration {
 
 		saveConfig();
 	}
-	
+
 	public static void saveConfig() {
 		configCurrent.configVersion = ConfigData.CONFIG_VERSION;
 

@@ -22,7 +22,7 @@ Negative numbers are also usually legal, allowing inverting effects, if that's y
 ## 📖 License
 Released under the [GNU General Public License 3.0](https://github.com/Mirsario/Minecraft-CameraOverhaul/blob/dev/LICENSE.md).
 <br/>
-Copyright (c) 2020-2025 Mirsario & Contributors.
+Copyright (c) 2020-2026 Mirsario & Contributors.
 
 ## ❤️ Contributing
 This project uses the [Stonecutter](https://stonecutter.kikugie.dev) comment-macro preprocessor for multi-version support.
