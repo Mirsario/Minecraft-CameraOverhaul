@@ -23,24 +23,16 @@ import org.spongepowered.asm.mixin.injection.callback.*;
 @Mixin(Camera.class)
 @SuppressWarnings("UnusedMixin")
 public abstract class CameraMixin {
-
 	//? if >=1.21.11 {
-	@Shadow
-	public abstract float xRot();
-
-	@Shadow
-	public abstract float yRot();
-
-	@Shadow
-	public abstract Vec3 position();
-
+	@Shadow public abstract float xRot();
+	@Shadow public abstract float yRot();
+	@Shadow public abstract Vec3 position();
 	//?} else {
 	/*@Shadow public abstract float getXRot();
 	@Shadow public abstract float getYRot();
 	@Shadow public abstract Vec3 getPosition();
 	*/ //?}
-	@Shadow
-	protected abstract void setRotation(float yaw, float pitch);
+	@Shadow protected abstract void setRotation(float yaw, float pitch);
 
 	@Inject(
 		method = "setup",
@@ -50,7 +42,7 @@ public abstract class CameraMixin {
 			target = "Lnet/minecraft/client/Camera;getMaxZoom(F)F"
 			//?} else {
 			/*target = "Lnet/minecraft/client/Camera;getMaxZoom(D)D"
-			 */ //?}
+			*/ //?}
 		)
 	)
 	private void onDetachedCameraSetup(
@@ -58,7 +50,7 @@ public abstract class CameraMixin {
 		Level area,
 		//?} else {
 		/*BlockGetter area,
-		 */ //?}
+		*/ //?}
 		Entity entity,
 		boolean thirdPerson,
 		boolean inverseView,
@@ -74,7 +66,7 @@ public abstract class CameraMixin {
 		Level area,
 		//?} else {
 		/*BlockGetter area,
-		 */ //?}
+		*/ //?}
 		Entity entity,
 		boolean thirdPerson,
 		boolean inverseView,
@@ -123,14 +115,12 @@ public abstract class CameraMixin {
 			new Vector3d(getXRot(), getYRot(), 0)
 			*/ //?}
 		);
-		context.perspective = (thirdPerson
-			? (inverseView
-					? CameraContext.Perspective.THIRD_PERSON_REVERSE
-					: CameraContext.Perspective.THIRD_PERSON)
-			: CameraContext.Perspective.FIRST_PERSON);
+		context.perspective = thirdPerson
+			? (inverseView ? CameraContext.Perspective.THIRD_PERSON_REVERSE : CameraContext.Perspective.THIRD_PERSON)
+			: CameraContext.Perspective.FIRST_PERSON;
 
 		if (entity instanceof LivingEntity) {
-			context.isFlying = ((LivingEntity) entity).isFallFlying();
+			context.isFlying = ((LivingEntity)entity).isFallFlying();
 			context.isSwimming = entity.isSwimming();
 			context.isSprinting = entity.isSprinting();
 		}
@@ -139,7 +129,7 @@ public abstract class CameraMixin {
 		system.onCameraUpdate(context, TimeSystem.getDeltaTime());
 		system.modifyCameraTransform(context.transform);
 
-		setRotation((float) context.transform.eulerRot.y, (float) context.transform.eulerRot.x);
+		setRotation((float)context.transform.eulerRot.y, (float)context.transform.eulerRot.x);
 		return context.transform;
 	}
 }

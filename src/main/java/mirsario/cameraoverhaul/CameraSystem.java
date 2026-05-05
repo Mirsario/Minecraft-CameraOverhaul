@@ -11,7 +11,6 @@ import org.joml.Vector3d;
 
 @SuppressWarnings("unused")
 public final class CameraSystem {
-
 	private ConfigData cfg;
 	private ConfigData.Contextual ctxCfg;
 	private final Vector3d prevCameraEulerRot = new Vector3d();
@@ -39,20 +38,17 @@ public final class CameraSystem {
 		offsetTransform.position = new Vector3d(0, 0, 0);
 		offsetTransform.eulerRot = new Vector3d(0, 0, 0);
 
-		if (
-			!cfg.general.enabled ||
-			(!cfg.general.enableInThirdPerson &&
-				context.perspective != CameraContext.Perspective.FIRST_PERSON)
-		) {
+		if (!cfg.general.enabled
+		|| (!cfg.general.enableInThirdPerson && context.perspective != CameraContext.Perspective.FIRST_PERSON)) {
 			return;
 		}
 
 		ScreenShakes.onCameraUpdate(context, deltaTime);
 
-		if (
-			!context.velocity.equals(prevEntityVelocity) ||
-			!context.transform.eulerRot.equals(prevCameraEulerRot)
-		) notifyOfPlayerAction();
+		if (!context.velocity.equals(prevEntityVelocity)
+		|| !context.transform.eulerRot.equals(prevCameraEulerRot)) {
+			notifyOfPlayerAction();
+		}
 
 		// XY
 		mouseSmoothingOffset(context, offsetTransform, deltaTime);
@@ -190,7 +186,7 @@ public final class CameraSystem {
 
 	private void noiseOffset(CameraContext context, Transform outputTransform, double deltaTime) {
 		double time = TimeSystem.getTime();
-		float noiseX = (float) (time * cfg.general.cameraSwayFrequency);
+		float noiseX = (float)(time * cfg.general.cameraSwayFrequency);
 
 		// Fade out if the player turns, moves, or does an interaction.
 		if ((time - lastActionTime) < cfg.general.cameraSwayFadeInDelay) {
