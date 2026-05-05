@@ -7,15 +7,16 @@ package mirsario.cameraoverhaul.mixins;
 import mirsario.cameraoverhaul.*;
 import mirsario.cameraoverhaul.utilities.*;
 import net.minecraft.client.*;
+import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.animal.*;
 import net.minecraft.world.entity.vehicle.*;
+import net.minecraft.world.level.*;
+import net.minecraft.world.phys.*;
 import org.joml.*;
 import org.spongepowered.asm.mixin.*;
 import org.spongepowered.asm.mixin.injection.*;
 import org.spongepowered.asm.mixin.injection.callback.*;
-import net.minecraft.world.entity.*;
-import net.minecraft.world.level.*;
-import net.minecraft.world.phys.*;
+
 //? if <1.15
 /*import org.lwjgl.opengl.*;*/
 
@@ -30,8 +31,34 @@ public abstract class CameraMixin {
 	/*@Shadow public abstract float getXRot();
 	@Shadow public abstract float getYRot();
 	@Shadow public abstract Vec3 getPosition();
-	*///?}
+	*/ //?}
 	@Shadow protected abstract void setRotation(float yaw, float pitch);
+
+	@Inject(
+		method = "setup",
+		at = @At(
+			value = "INVOKE",
+			//? if >=1.21.11 {
+			target = "Lnet/minecraft/client/Camera;getMaxZoom(F)F"
+			//?} else {
+			/*target = "Lnet/minecraft/client/Camera;getMaxZoom(D)D"
+			*/ //?}
+		)
+	)
+	private void onDetachedCameraSetup(
+		//? if >=1.21.11 {
+		Level area,
+		//?} else {
+		/*BlockGetter area,
+		*/ //?}
+		Entity entity,
+		boolean thirdPerson,
+		boolean inverseView,
+		float tickDelta,
+		CallbackInfo ci
+	) {
+		applyCameraEffects(entity, thirdPerson, inverseView);
+	}
 
 	@Inject(method = "setup", at = @At("RETURN"))
 	private void onCameraUpdate(
@@ -39,9 +66,33 @@ public abstract class CameraMixin {
 		Level area,
 		//?} else {
 		/*BlockGetter area,
-		*///?}
-		Entity entity, boolean thirdPerson, boolean inverseView, float tickDelta, CallbackInfo ci
+		*/ //?}
+		Entity entity,
+		boolean thirdPerson,
+		boolean inverseView,
+		float tickDelta,
+		CallbackInfo ci
 	) {
+		if (thirdPerson) return;
+
+		//? if <1.15 {
+		/*// In 1.14.x the camera rotates GL state directly before this mixin returns.
+		// Undo vanilla pitch/yaw so first-person effects can replace them cleanly.
+		GL11.glRotatef(getYRot() + 180.0f, 0f, -1f, 0f);
+		GL11.glRotatef(getXRot(), -1f, 0f, 0f);
+		var transform = applyCameraEffects(entity, thirdPerson, inverseView);
+		*/ //?}
+		//? if >=1.15
+		applyCameraEffects(entity, thirdPerson, inverseView);
+		//? if <1.15 {
+		/*// Reapply vanilla pitch/yaw plus our roll after updating the camera transform.
+		GL11.glRotatef((float)transform.eulerRot.z, 0f, 0f, 1f);
+		GL11.glRotatef((float)transform.eulerRot.x, 1f, 0f, 0f);
+		GL11.glRotatef((float)transform.eulerRot.y + 180f, 0f, 1f, 0f);
+		*/ //?}
+	}
+
+	private Transform applyCameraEffects(Entity entity, boolean thirdPerson, boolean inverseView) {
 		var system = CameraOverhaul.camera;
 		var vehicle = entity.getVehicle();
 		var controlledEntity = vehicle != null ? vehicle : entity;
@@ -62,12 +113,11 @@ public abstract class CameraMixin {
 			//?} else {
 			/*VectorUtils.toJoml(getPosition()),
 			new Vector3d(getXRot(), getYRot(), 0)
-			*///?}
+			*/ //?}
 		);
-		context.perspective = (thirdPerson
+		context.perspective = thirdPerson
 			? (inverseView ? CameraContext.Perspective.THIRD_PERSON_REVERSE : CameraContext.Perspective.THIRD_PERSON)
-			: CameraContext.Perspective.FIRST_PERSON
-		);
+			: CameraContext.Perspective.FIRST_PERSON;
 
 		if (entity instanceof LivingEntity) {
 			context.isFlying = ((LivingEntity)entity).isFallFlying();
@@ -75,23 +125,11 @@ public abstract class CameraMixin {
 			context.isSprinting = entity.isSprinting();
 		}
 
-//? if <1.15 {
-		/*// Undo multiplications.
-		GL11.glRotatef((float)context.transform.eulerRot.y + 180.0f, 0f, -1f, 0f);
-		GL11.glRotatef((float)context.transform.eulerRot.x, -1f, 0f, 0f);
-*///?}
-
 		TimeSystem.update();
 		system.onCameraUpdate(context, TimeSystem.getDeltaTime());
 		system.modifyCameraTransform(context.transform);
 
 		setRotation((float)context.transform.eulerRot.y, (float)context.transform.eulerRot.x);
-
-//? if <1.15 {
-		/*// And now redo them.
-		GL11.glRotatef((float)context.transform.eulerRot.z, 0f, 0f, 1f);
-		GL11.glRotatef((float)context.transform.eulerRot.x, 1f, 0f, 0f);
-		GL11.glRotatef((float)context.transform.eulerRot.y + 180f, 0f, 1f, 0f);
-*///?}
+		return context.transform;
 	}
 }

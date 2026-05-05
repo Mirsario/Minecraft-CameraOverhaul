@@ -31,6 +31,8 @@ public final class ConfigData {
 		public double verticalVelocityPitchFactor = 2.5;
 		public double horizontalVelocitySmoothingFactor = 1.0;
 		public double verticalVelocitySmoothingFactor = 1.0;
+		// Mouse smoothing
+		public double mouseSmoothing = 0.0;
 	}
 
 	public static final int CONFIG_VERSION = 2;
@@ -38,6 +40,7 @@ public final class ConfigData {
 	public int configVersion;
 	public General general = new General();
 	public Contextual walking = new Contextual();
+	public Contextual sprinting = new Contextual();
 	public Contextual swimming = new Contextual();
 	public Contextual flying = new Contextual();
 	public Contextual mounts = new Contextual();
@@ -57,5 +60,10 @@ public final class ConfigData {
 		vehicles.strafingRollFactor *= 0.5;
 		vehicles.forwardVelocityPitchFactor *= 0.5;
 		vehicles.verticalVelocityPitchFactor *= 2.0;
+		// Mouse smoothing
+		sprinting.mouseSmoothing = 1.0;
+		swimming.mouseSmoothing = 1.0;
+		vehicles.mouseSmoothing = 1.0;
+		mounts.mouseSmoothing = 1.0;
 	}
 }

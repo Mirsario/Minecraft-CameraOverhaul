@@ -24,7 +24,9 @@
 
 # Work In Progress
 
-Nothing yet!
+- Added a dynamic mouse smoothing feature. (Thanks, `@archiso86`!) ([PR #100](<https://github.com/Mirsario/Minecraft-CameraOverhaul/pull/100>))
+  Fully configurable. On default settings, this will only be active during sprinting, flying, and underwater swimming.
+- Added 'Sprinting' configuration context.
 
 # 2.0.6
 
