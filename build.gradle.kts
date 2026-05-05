@@ -57,8 +57,10 @@ val actualTargets = required("mc.targets").trim().split(' ')
 val displayTargets = actualTargets.map { if (it.count { c -> c == '.' } == 1) "${it}.0" else it }
 val multipleVersions = displayTargets.count() > 1 || targetsLatest
 val displayedLatest = if (targetsLatest) "plus" else displayTargets.last()
-val actualVersion = "${versionNumbers}-${loader}+mc.${displayTargets.first()}${if (multipleVersions) "-${displayedLatest}" else ""}"
-val displayVersion = "v${versionNumbers}-${loader}+mc[${displayTargets.first()}${if (multipleVersions) "-${displayedLatest}" else ""}]"
+val actualTarget = "${loader}+mc.${displayTargets.first()}${if (multipleVersions) "-${displayedLatest}" else ""}"
+val displayTarget = "${loader}+mc[${displayTargets.first()}${if (multipleVersions) "-${displayedLatest}" else ""}]"
+val actualVersion = "${versionNumbers}-${actualTarget}"
+val displayVersion = "v${versionNumbers}-${displayTarget}"
 val targetsRange = ">=${actualTargets.first()}" + (if (targetsLatest) "" else " <=${actualTargets.last()}")
 // Changelog
 fun parseChangelog(full: String, version: String)
@@ -220,11 +222,20 @@ tasks.processResources {
 // Copy produced jars into /out/
 val copyJars = tasks.register<Copy>("copyJars") {
 	val dir = "../../out/v${versionNumbers}/"
-	project.delete(fileTree(mapOf("dir" to dir, "include" to listOf("${required("archives_base_name")}-v${versionNumbers}*.jar"))))
+	project.delete(fileTree(mapOf("dir" to dir, "include" to listOf("${required("archives_base_name")}-*.jar"))))
 	from(lastTask)
 	into(dir)
 }
 tasks.getByName("build").finalizedBy(copyJars)
+// Also maintain /out/latest/
+val copyLatest = tasks.register<Copy>("copyLatest") {
+	val dir = "../../out/latest/"
+	project.delete(fileTree(mapOf("dir" to dir, "include" to listOf("${required("archives_base_name")}-*.jar"))))
+	from(lastTask)
+	into(dir)
+	rename { "${required("archives_base_name")}-${displayTarget}.jar" }
+}
+tasks.getByName("build").finalizedBy(copyLatest)
 
 // Publishing
 val localProperties = Properties()
