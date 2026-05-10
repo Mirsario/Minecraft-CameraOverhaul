@@ -1,0 +1,3 @@
+loomx.loom_version = "1.14.471"
+loomx.loom_remap_plugin = "dev.architectury.loom"
+loomx.loom_unobf_plugin = "dev.architectury.loom-no-remap"

@@ -1,6 +1,7 @@
 pluginManagement {
 	repositories {
 		// Shared
+		mavenLocal()
 		mavenCentral()
 		gradlePluginPortal()
 		// Stonecutter
@@ -24,7 +25,11 @@ pluginManagement {
 }
 
 plugins {
-	id("dev.kikugie.stonecutter") version "0.9.1"
+    id("dev.kikugie.stonecutter") version "0.9.1"
+    id("org.gradle.toolchains.foojay-resolver-convention") version "1.0.0"
+	// This plugin will choose the necessary loom plugin conditionally.
+	// Must exist in both settings.gradle.kts as well as build.gradle.kts.
+    id("dev.kikugie.loom-back-compat") version "0.3"
 }
 
 stonecutter {
@@ -35,6 +40,7 @@ stonecutter {
 		// Declared in preferred publishing order.
 
 		// 1.21
+		version("fabric-26.1", "26.1")
 		version("fabric-1.21.11", "1.21.11")
 		version("neoforge-1.21.11", "1.21.11")
 		version("fabric-1.21.9", "1.21.9")
@@ -60,7 +66,7 @@ stonecutter {
 		version("forge-1.18.0", "1.18")
 		// 1.17
 		version("fabric-1.17.0", "1.17")
-		version("forge-1.17.1", "1.17")
+		// version("forge-1.17.1", "1.17")
 		// 1.16
 		version("fabric-1.16.0", "1.16")
 		// 1.15
