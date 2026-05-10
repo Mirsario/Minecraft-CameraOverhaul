@@ -40,7 +40,7 @@ stonecutter {
 		// Declared in preferred publishing order.
 
 		// 1.21
-		version("fabric-26.1", "26.1")
+		version("fabric-26.1.0", "26.1")
 		version("fabric-1.21.11", "1.21.11")
 		version("neoforge-1.21.11", "1.21.11")
 		version("fabric-1.21.9", "1.21.9")
