@@ -16,6 +16,7 @@ import org.spongepowered.asm.mixin.injection.callback.*;
 import com.mojang.blaze3d.vertex.*;
 import org.joml.*;
 
+/// Applies roll (Z-axis) rotations.
 @Mixin(GameRenderer.class)
 @SuppressWarnings("UnusedMixin")
 public abstract class GameRendererMixin {

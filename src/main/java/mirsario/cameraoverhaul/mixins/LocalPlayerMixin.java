@@ -12,7 +12,7 @@ import org.spongepowered.asm.mixin.*;
 import org.spongepowered.asm.mixin.injection.*;
 import org.spongepowered.asm.mixin.injection.callback.*;
 
-// Adds screenshakes to hand swings.
+/// Adds screenshakes to hand swings.
 @Mixin(LocalPlayer.class)
 @SuppressWarnings("UnusedMixin")
 public abstract class LocalPlayerMixin {

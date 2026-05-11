@@ -9,6 +9,7 @@ import org.spongepowered.asm.mixin.extensibility.*;
 import mirsario.cameraoverhaul.*;
 import java.util.*;
 
+/// Applies mixins without erroring if they are missing.
 public class MixinPlugin implements IMixinConfigPlugin {
     private static final String MIXINS_PACKAGE = "mirsario.cameraoverhaul.mixins";
     private static final String[] MIXINS = new String[] {

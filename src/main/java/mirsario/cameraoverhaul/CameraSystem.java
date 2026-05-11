@@ -75,11 +75,7 @@ public final class CameraSystem {
 	private static final double BASE_VERTICAL_PITCH_SMOOTHING = 0.00004;
 	private double prevVerticalVelocityPitchOffset;
 
-	private void verticalVelocityPitchOffset(
-		CameraContext context,
-		Transform outputTransform,
-		double deltaTime
-	) {
+	private void verticalVelocityPitchOffset(CameraContext context, Transform outputTransform, double deltaTime) {
 		double multiplier = ctxCfg.verticalVelocityPitchFactor;
 		double smoothing = BASE_VERTICAL_PITCH_SMOOTHING * ctxCfg.verticalVelocitySmoothingFactor;
 
@@ -98,11 +94,7 @@ public final class CameraSystem {
 	private static final double BASE_FORWARD_PITCH_SMOOTHING = 0.008;
 	private double prevForwardVelocityPitchOffset;
 
-	private void forwardVelocityPitchOffset(
-		CameraContext context,
-		Transform outputTransform,
-		double deltaTime
-	) {
+	private void forwardVelocityPitchOffset(CameraContext context, Transform outputTransform, double deltaTime) {
 		double multiplier = ctxCfg.forwardVelocityPitchFactor;
 		double smoothing = BASE_FORWARD_PITCH_SMOOTHING * ctxCfg.horizontalVelocitySmoothingFactor;
 
@@ -123,11 +115,7 @@ public final class CameraSystem {
 	private static final double BASE_TURNING_ROLL_SMOOTHING = 0.0825;
 	private double turningRollTargetOffset;
 
-	private void turningRollOffset(
-		CameraContext context,
-		Transform outputTransform,
-		double deltaTime
-	) {
+	private void turningRollOffset(CameraContext context, Transform outputTransform, double deltaTime) {
 		double decaySmoothing = BASE_TURNING_ROLL_SMOOTHING * cfg.general.turningRollSmoothing;
 		double intensity = BASE_TURNING_ROLL_INTENSITY * cfg.general.turningRollIntensity;
 		double accumulation = BASE_TURNING_ROLL_ACCUMULATION * cfg.general.turningRollAccumulation;
@@ -165,11 +153,7 @@ public final class CameraSystem {
 	private static final double BASE_STRAFING_ROLL_SMOOTHING = 0.008;
 	private double prevStrafingRollOffset;
 
-	private void strafingRollOffset(
-		CameraContext context,
-		Transform outputTransform,
-		double deltaTime
-	) {
+	private void strafingRollOffset(CameraContext context, Transform outputTransform, double deltaTime) {
 		double multiplier = ctxCfg.strafingRollFactor;
 		double smoothing = BASE_STRAFING_ROLL_SMOOTHING * ctxCfg.horizontalVelocitySmoothingFactor;
 
@@ -232,11 +216,7 @@ public final class CameraSystem {
 	private static final double MOUSE_SMOOTHING_INCREASE_SMOOTHING = 0.35;
 	private static final double MOUSE_SMOOTHING_DECREASE_SMOOTHING = 0.08;
 
-	private void mouseSmoothingOffset(
-		CameraContext context,
-		Transform outputTransform,
-		double deltaTime
-	) {
+	private void mouseSmoothingOffset(CameraContext context, Transform outputTransform, double deltaTime) {
 		final double mouseSmoothingTarget = Math.max(0.0, ctxCfg.mouseSmoothing);
 
 		final double yawNow = context.transform.eulerRot.y;

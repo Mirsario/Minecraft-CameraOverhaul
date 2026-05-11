@@ -16,7 +16,7 @@ import net.minecraft.world.entity.LightningBolt;
 /*import net.minecraft.world.entity.global.LightningBolt;
 *///?}
 
-// Adds screenshakes to lightning bolt strikes.
+/// Adds screenshakes to lightning bolt strikes.
 @Mixin(LightningBolt.class)
 @SuppressWarnings("UnusedMixin")
 public abstract class LightningBoltMixin {
