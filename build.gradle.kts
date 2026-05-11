@@ -54,7 +54,7 @@ val shadowLibs = true; //(javaSrcVersion != javaDstVersion) || (isForge && stone
 val versionNumbers = required("mod.version")
 val targetsLatest = optional("mc.latest") == "true"
 val actualTargets = required("mc.targets").trim().split(' ')
-val displayTargets = actualTargets.map { if (it.count { c -> c == '.' } == 1) "${it}.0" else it }
+val displayTargets = actualTargets; //.map { if (it.count { c -> c == '.' } == 1) "${it}.0" else it }
 val multipleVersions = displayTargets.count() > 1 || targetsLatest
 val displayedLatest = if (targetsLatest) "plus" else displayTargets.last()
 val actualTarget = "${loader}+mc.${displayTargets.first()}${if (multipleVersions) "-${displayedLatest}" else ""}"

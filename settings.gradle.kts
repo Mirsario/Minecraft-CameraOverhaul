@@ -39,8 +39,8 @@ stonecutter {
 		// Declared in preferred publishing order.
 
 		// 1.21
-		version("fabric-26.1.0", "26.1")
-		version("neoforge-26.1.0", "26.1")
+		version("fabric-26.1", "26.1")
+		version("neoforge-26.1", "26.1")
 		version("fabric-1.21.11", "1.21.11")
 		version("neoforge-1.21.11", "1.21.11")
 		version("fabric-1.21.9", "1.21.9")
@@ -49,32 +49,32 @@ stonecutter {
 		version("neoforge-1.21.5", "1.21.5")
 		version("fabric-1.21.2", "1.21.2")
 		version("neoforge-1.21.2", "1.21.2")
-		version("fabric-1.21.0", "1.21")
-		version("neoforge-1.21.0", "1.21")
+		version("fabric-1.21", "1.21")
+		version("neoforge-1.21", "1.21")
 		// 1.20
 		version("fabric-1.20.6", "1.20.6")
 		version("neoforge-1.20.6", "1.20.6")
-		version("fabric-1.20.0", "1.20")
-		version("forge-1.20.0", "1.20")
+		version("fabric-1.20", "1.20")
+		version("forge-1.20", "1.20")
 		// 1.19
 		version("fabric-1.19.3", "1.19.3")
 		version("forge-1.19.3", "1.19.3")
-		version("fabric-1.19.0", "1.19")
-		version("forge-1.19.0", "1.19")
+		version("fabric-1.19", "1.19")
+		version("forge-1.19", "1.19")
 		// 1.18
-		version("fabric-1.18.0", "1.18")
-		version("forge-1.18.0", "1.18")
+		version("fabric-1.18", "1.18")
+		version("forge-1.18", "1.18")
 		// 1.17
-		version("fabric-1.17.0", "1.17")
+		version("fabric-1.17", "1.17")
 		// version("forge-1.17.1", "1.17")
 		// 1.16
-		version("fabric-1.16.0", "1.16")
+		version("fabric-1.16", "1.16")
 		// 1.15
-		version("fabric-1.15.0", "1.15")
+		version("fabric-1.15", "1.15")
 		// 1.14
 		version("fabric-1.14.4", "1.14.4")
 
-		vcsVersion = "fabric-26.1.0"
+		vcsVersion = "fabric-26.1"
 	}
 
 	create(rootProject)
