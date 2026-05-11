@@ -24,6 +24,8 @@ import org.spongepowered.asm.mixin.injection.callback.*;
 @Mixin(Camera.class)
 @SuppressWarnings("UnusedMixin")
 public abstract class CameraMixin {
+	//? if >=26.1
+	@Shadow public abstract Entity entity();
 	//? if >=1.21.11 {
 	@Shadow public abstract float xRot();
 	@Shadow public abstract float yRot();
@@ -36,32 +38,44 @@ public abstract class CameraMixin {
 	@Shadow protected abstract void setRotation(float yaw, float pitch);
 
 	//? if >=26.1 {
-	@Shadow public abstract Entity entity();
-	@Inject(method = "alignWithEntity", at = @At("RETURN"))
-	private void callCameraEffects_26_1(float tickDelta, CallbackInfo ci) {
-		applyCameraEffects(entity(), false, false);
-	}
-	//?}
-
-	//? if <26.1 {
-	/*//? if >=1.21.11 {
-	@Inject(method = "setup", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/Camera;getMaxZoom(F)F"))
-	private void onDetachedCameraSetup(Level area, Entity entity, boolean thirdPerson, boolean inverseView, float tickDelta, CallbackInfo ci)
-	//?} else {
-	/^@Inject(method = "setup", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/Camera;getMaxZoom(D)D"))
-	private void onDetachedCameraSetup(BlockGetter area, Entity entity, boolean thirdPerson, boolean inverseView, float tickDelta, CallbackInfo ci)
-	^///?}
+	@Inject(method = "alignWithEntity", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/Camera;getMaxZoom(F)F"))
+	private void thirdPersonUpdate(float tickDelta, CallbackInfo ci)
+	//?} else if >=1.21.11 {
+	/*@Inject(method = "setup", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/Camera;getMaxZoom(F)F"))
+	private void thirdPersonUpdate(Level area, Entity entity, boolean thirdPerson, boolean inverseView, float tickDelta, CallbackInfo ci)
+	*///?} else {
+	/*@Inject(method = "setup", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/Camera;getMaxZoom(D)D"))
+	private void thirdPersonUpdate(BlockGetter area, Entity entity, boolean thirdPerson, boolean inverseView, float tickDelta, CallbackInfo ci)
+	*///?}
 	{
+		//? if >=26.1 {
+		var entity = entity();
+		var thirdPerson = !Minecraft.getInstance().options.getCameraType().isFirstPerson();
+		var inverseView = Minecraft.getInstance().options.getCameraType().isMirrored();
+		//?}
+
+		if (!thirdPerson) return;
+
 		applyCameraEffects(entity, thirdPerson, inverseView);
 	}
-	*///?}
 
-	@Inject(method = "setup", at = @At("RETURN"))
-	//? if >=1.21.11 {
-	private void onCameraUpdate(Level area, Entity entity, boolean thirdPerson, boolean inverseView, float tickDelta, CallbackInfo ci)
-	//?} else
-	/*private void onCameraUpdate(BlockGetter area, Entity entity, boolean thirdPerson, boolean inverseView, float tickDelta, CallbackInfo ci)*/
+	//? if >=26.1 {
+	@Inject(method = "alignWithEntity", at = @At("RETURN"))
+	private void firstPersonUpdate(float tickDelta, CallbackInfo ci)
+	//?} else if >=1.21.11 {
+	/*@Inject(method = "setup", at = @At("RETURN"))
+	private void firstPersonUpdate(Level area, Entity entity, boolean thirdPerson, boolean inverseView, float tickDelta, CallbackInfo ci)
+	*///?} else {
+	/*@Inject(method = "setup", at = @At("RETURN"))
+	private void firstPersonUpdate(BlockGetter area, Entity entity, boolean thirdPerson, boolean inverseView, float tickDelta, CallbackInfo ci)
+	*///?}
 	{
+		//? if >=26.1 {
+		var entity = entity();
+		var thirdPerson = !Minecraft.getInstance().options.getCameraType().isFirstPerson();
+		var inverseView = Minecraft.getInstance().options.getCameraType().isMirrored();
+		//?}
+
 		if (thirdPerson) return;
 
 		// In 1.14.x the camera rotates GL state directly before this mixin returns.
