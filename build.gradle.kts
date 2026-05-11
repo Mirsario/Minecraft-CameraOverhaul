@@ -9,12 +9,9 @@ import java.util.*
 
 plugins {
 	id("dev.kikugie.stonecutter")
-	// id("dev.architectury.loom-no-remap")
-	id("architectury-plugin")
 	id("xyz.wagyourtail.jvmdowngrader")
 	id("com.gradleup.shadow")
 	id("me.modmuss50.mod-publish-plugin")
-
 	// This plugin will choose the necessary loom plugin conditionally.
 	// Must exist in both settings.gradle.kts as well as build.gradle.kts.
     id("dev.kikugie.loom-back-compat")
@@ -32,11 +29,6 @@ repositories {
 	maven("https://maven.terraformersmc.com") // ModMenu
 	maven("https://maven.nucleoid.xyz") // Placeholder API (ModMenu dependency)
 }
-
-// Set architectury platforms.
-architectury.common(stonecutter.tree.branches.mapNotNull {
-	if (stonecutter.current.project in it) it.project.optional("loom.platform") else null
-})
 
 // Common
 val minecraft = stonecutter.current.version
@@ -270,7 +262,7 @@ publishMods {
 	if (loader == "forge" && stonecutter.eval(actualTargets.max(), ">=1.20.2")) modLoaders.add("neoforge")
 
 	val isDryRun = optional("publish.enabled")?.trim()?.lowercase() == "false"
-	
+
 	val lastArchive = (lastTask as AbstractArchiveTask).archiveFile
 	file.set(lastArchive)
 
