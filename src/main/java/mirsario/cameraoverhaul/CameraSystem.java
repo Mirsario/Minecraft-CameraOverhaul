@@ -80,12 +80,7 @@ public final class CameraSystem {
 		double smoothing = BASE_VERTICAL_PITCH_SMOOTHING * ctxCfg.verticalVelocitySmoothingFactor;
 
 		double targetOffset = context.velocity.y * multiplier;
-		double currentOffset = MathUtils.damp(
-			prevVerticalVelocityPitchOffset,
-			targetOffset,
-			smoothing,
-			deltaTime
-		);
+		double currentOffset = MathUtils.damp(prevVerticalVelocityPitchOffset, targetOffset, smoothing, deltaTime);
 
 		outputTransform.eulerRot.x += currentOffset;
 		prevVerticalVelocityPitchOffset = currentOffset;
@@ -99,12 +94,7 @@ public final class CameraSystem {
 		double smoothing = BASE_FORWARD_PITCH_SMOOTHING * ctxCfg.horizontalVelocitySmoothingFactor;
 
 		double targetOffset = context.getForwardRelativeVelocity().z * multiplier;
-		double currentOffset = MathUtils.damp(
-			prevForwardVelocityPitchOffset,
-			targetOffset,
-			smoothing,
-			deltaTime
-		);
+		double currentOffset = MathUtils.damp(prevForwardVelocityPitchOffset, targetOffset, smoothing, deltaTime);
 
 		outputTransform.eulerRot.x += currentOffset;
 		prevForwardVelocityPitchOffset = currentOffset;
@@ -125,23 +115,11 @@ public final class CameraSystem {
 		if (context.perspective != prevCameraPerspective) yawDelta = 0.0;
 
 		// Decay
-		turningRollTargetOffset = MathUtils.damp(
-			turningRollTargetOffset,
-			0,
-			decaySmoothing,
-			deltaTime
-		);
+		turningRollTargetOffset = MathUtils.damp(turningRollTargetOffset, 0, decaySmoothing, deltaTime);
 		// Accumulation
-		turningRollTargetOffset = MathUtils.clamp(
-			turningRollTargetOffset + (yawDelta * accumulation),
-			-1.0,
-			1.0
-		);
+		turningRollTargetOffset = MathUtils.clamp(turningRollTargetOffset + (yawDelta * accumulation), -1.0, 1.0);
 		// Apply
-		var turningRollOffset =
-			MathUtils.clamp01(turningEasing(Math.abs(turningRollTargetOffset))) *
-			intensity *
-			Math.signum(turningRollTargetOffset);
+		var turningRollOffset = MathUtils.clamp01(turningEasing(Math.abs(turningRollTargetOffset))) * intensity * Math.signum(turningRollTargetOffset);
 		outputTransform.eulerRot.z += turningRollOffset;
 	}
 
@@ -181,17 +159,9 @@ public final class CameraSystem {
 			cameraSwayFactorTarget = 1; // Fade-in
 		}
 
-		var cameraSwayFactorFadeLength =
-			cameraSwayFactorTarget > 0
-				? cfg.general.cameraSwayFadeInLength
-				: cfg.general.cameraSwayFadeOutLength;
-		var cameraSwayFactorFadeStep =
-			cameraSwayFactorFadeLength > 0.0 ? deltaTime / cameraSwayFactorFadeLength : 1.0;
-		cameraSwayFactor = MathUtils.stepTowards(
-			cameraSwayFactor,
-			cameraSwayFactorTarget,
-			cameraSwayFactorFadeStep
-		);
+		var cameraSwayFactorFadeLength = cameraSwayFactorTarget > 0 ? cfg.general.cameraSwayFadeInLength : cfg.general.cameraSwayFadeOutLength;
+		var cameraSwayFactorFadeStep = cameraSwayFactorFadeLength > 0.0 ? deltaTime / cameraSwayFactorFadeLength : 1.0;
+		cameraSwayFactor = MathUtils.stepTowards(cameraSwayFactor, cameraSwayFactorTarget, cameraSwayFactorFadeStep);
 
 		var scaledIntensity =
 			cfg.general.cameraSwayIntensity *
@@ -244,16 +214,10 @@ public final class CameraSystem {
 		contYaw += stepYaw;
 		contPitch += stepPitch;
 
-		final double smoothing =
-			mouseSmoothingTarget > smoothedMouseSmoothing
-				? MOUSE_SMOOTHING_INCREASE_SMOOTHING
-				: MOUSE_SMOOTHING_DECREASE_SMOOTHING;
-		smoothedMouseSmoothing = MathUtils.damp(
-			smoothedMouseSmoothing,
-			mouseSmoothingTarget,
-			smoothing,
-			deltaTime
-		);
+		final double smoothing = mouseSmoothingTarget > smoothedMouseSmoothing
+			? MOUSE_SMOOTHING_INCREASE_SMOOTHING
+			: MOUSE_SMOOTHING_DECREASE_SMOOTHING;
+		smoothedMouseSmoothing = MathUtils.damp(smoothedMouseSmoothing, mouseSmoothingTarget, smoothing, deltaTime);
 
 		if (smoothedMouseSmoothing <= 0.0) {
 			smYaw = contYaw;
