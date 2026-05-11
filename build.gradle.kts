@@ -111,7 +111,7 @@ if (isRemapped) {
 	// Convoluted setters that avoid compilation errors.
 	tasks.matching { it.name == "remapJar" }.configureEach {
 		(this as AbstractArchiveTask).archiveClassifier.set(if (this != lastTask) "remap" else null)
-		(this as Any).setProperty("input", tasks.downgradeJar.get().archiveFile)
+		setProperty("input", tasks.downgradeJar.get().archiveFile)
 		dependsOn(tasks.downgradeJar)
 	}
 }
