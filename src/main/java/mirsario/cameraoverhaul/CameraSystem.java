@@ -185,6 +185,7 @@ public final class CameraSystem {
 	private static final double BASE_MOUSE_SMOOTHING = 16.0;
 	private static final double MOUSE_SMOOTHING_INCREASE_SMOOTHING = 0.35;
 	private static final double MOUSE_SMOOTHING_DECREASE_SMOOTHING = 0.08;
+	private static final double MOUSE_SMOOTHING_THRESHOLD = 0.001;
 
 	private void mouseSmoothingOffset(CameraContext context, Transform outputTransform, double deltaTime) {
 		final double mouseSmoothingTarget = Math.max(0.0, ctxCfg.mouseSmoothing);
@@ -219,7 +220,7 @@ public final class CameraSystem {
 			: MOUSE_SMOOTHING_DECREASE_SMOOTHING;
 		smoothedMouseSmoothing = MathUtils.damp(smoothedMouseSmoothing, mouseSmoothingTarget, smoothing, deltaTime);
 
-		if (smoothedMouseSmoothing <= 0.0) {
+		if (Math.max(mouseSmoothingTarget, smoothedMouseSmoothing) <= MOUSE_SMOOTHING_THRESHOLD) {
 			smYaw = contYaw;
 			smPitch = contPitch;
 			return;
