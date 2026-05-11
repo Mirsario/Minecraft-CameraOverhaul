@@ -69,7 +69,7 @@ val fullChangelog = rootProject.file("CHANGELOG.md").readText()
 val versionChangelog = parseChangelog(fullChangelog, versionNumbers) ?: parseChangelog(fullChangelog, "work in progress") ?: ""
 
 base {
-	// group = required("maven_group")
+	group = required("maven_group")
 	version = displayVersion
 	archivesName.set(required("archives_base_name"))
 }
@@ -77,10 +77,6 @@ base {
 // Configure Java & Java Downgrader constants.
 tasks.withType<JavaCompile> {
 	options.encoding = "UTF-8"
-	// Disable complaints about unnecessary suppressions.
-	// options.compilerArgs.addAll(listOf(
-	// 	"-Xlint:-unnecessary-suppression",
-	// ))
 }
 java {
 	sourceCompatibility = javaSrcVersion
@@ -115,10 +111,7 @@ if (isRemapped) {
 	// Convoluted setters that avoid compilation errors.
 	tasks.matching { it.name == "remapJar" }.configureEach {
 		(this as AbstractArchiveTask).archiveClassifier.set(if (this != lastTask) "remap" else null)
-		(this as Any).apply {
-			// setProperty("archiveClassifier", if (this != lastTask) "remap" else null)
-			setProperty("input", tasks.downgradeJar.get().archiveFile)
-		}
+		(this as Any).setProperty("input", tasks.downgradeJar.get().archiveFile)
 		dependsOn(tasks.downgradeJar)
 	}
 }
@@ -263,8 +256,7 @@ publishMods {
 
 	val isDryRun = optional("publish.enabled")?.trim()?.lowercase() == "false"
 
-	val lastArchive = (lastTask as AbstractArchiveTask).archiveFile
-	file.set(lastArchive)
+	file.set((lastTask as AbstractArchiveTask).archiveFile)
 
 	dryRun = isDryRun
 	version = actualVersion
