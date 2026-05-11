@@ -35,16 +35,26 @@ public abstract class CameraMixin {
 	*/ //?}
 	@Shadow protected abstract void setRotation(float yaw, float pitch);
 
-	//? if >=1.21.11 {
+	//? if >=26.1 {
+	@Shadow public abstract Entity entity();
+	@Inject(method = "alignWithEntity", at = @At("RETURN"))
+	private void callCameraEffects_26_1(float tickDelta, CallbackInfo ci) {
+		applyCameraEffects(entity(), false, false);
+	}
+	//?}
+
+	//? if <26.1 {
+	/*//? if >=1.21.11 {
 	@Inject(method = "setup", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/Camera;getMaxZoom(F)F"))
 	private void onDetachedCameraSetup(Level area, Entity entity, boolean thirdPerson, boolean inverseView, float tickDelta, CallbackInfo ci)
 	//?} else {
-	/*@Inject(method = "setup", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/Camera;getMaxZoom(D)D"))
+	/^@Inject(method = "setup", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/Camera;getMaxZoom(D)D"))
 	private void onDetachedCameraSetup(BlockGetter area, Entity entity, boolean thirdPerson, boolean inverseView, float tickDelta, CallbackInfo ci)
-	*///?}
+	^///?}
 	{
 		applyCameraEffects(entity, thirdPerson, inverseView);
 	}
+	*///?}
 
 	@Inject(method = "setup", at = @At("RETURN"))
 	//? if >=1.21.11 {

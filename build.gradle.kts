@@ -49,7 +49,7 @@ val javaDstVersion = if (stonecutter.eval(mcVersion, ">=26")) JavaVersion.VERSIO
 	else JavaVersion.VERSION_1_8
 // Build Behavior
 val isPrimaryBuild = isFabric && optional("mc.latest") == "true" // Dumb. Better somehow ask Stonecutter if we're in a chiseled context.
-val shadowLibs = (javaSrcVersion != javaDstVersion) || (isForge && stonecutter.eval(mcVersion, "<1.19"))
+val shadowLibs = true; //(javaSrcVersion != javaDstVersion) || (isForge && stonecutter.eval(mcVersion, "<1.19"))
 // Versions & Targets
 val versionNumbers = required("mod.version")
 val targetsLatest = optional("mc.latest") == "true"

@@ -322,7 +322,6 @@ mods.modmenu.range = ">=17.0.0"
 mc.type = "release"
 mc.version = "1.21.11"
 mc.targets = "1.21.11"
-mc.latest = true
 loom.platform = "neoforge"
 mods.clothconfig.ref = "21.11.151"
 mods.clothconfig.range = ">=21.11.151"
@@ -339,3 +338,12 @@ mods.clothconfig.range = ">=26.1.154"
 mods.modmenu.ref = "18.0.0-alpha.8"
 mods.modmenu.range = ">=18.0.0"
 
+["neoforge-26.1.0"]
+mc.type = "release"
+mc.version = "26.1"
+mc.targets = "26.1 26.1.1 26.1.2"
+mc.latest = true
+loom.platform = "neoforge"
+mods.clothconfig.ref = "26.1.154"
+mods.clothconfig.range = ">=26.1.154"
+deps.neoforge_loader = "26.1.0.19-beta"
