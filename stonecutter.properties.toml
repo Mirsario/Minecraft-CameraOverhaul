@@ -1,0 +1,349 @@
+# General
+maven_group = "mirsario"
+root_package = "mirsario.cameraoverhaul"
+archives_base_name = "CameraOverhaul"
+
+# Mod Properties
+mod.id = "cameraoverhaul"
+mod.name = "CameraOverhaul"
+mod.version = "2.0.6"
+mod.version_type = "release"
+mod.description = """
+CameraOverhaul is a highly configurable clientside Minecraft mod that attempts to improve overall satisfaction of the game through the introduction of various camera rotations, emphasizing on the player's movement and improving visual feedback.
+Strafing and turning around will tilt the camera sideways. Jumping, falling, and moving forward or backwards will affect the camera's pitch.
+Nearby explosions will shake the screen, and ceasing movement for enough time will cause the camera to gently sway around while waiting for your input.
+
+Configurable through GUIs as well as the '.minecraft/config/cameraoverhaul.toml' file.
+"""
+mod.authors = """
+Mirsario
+"""
+mod.contributors = """
+archiso86
+altrisi
+sam-mccarthy
+IMS212
+TheMrEngMan
+Lucanoria
+mpustovoi
+TheLegendofSaram
+stabery
+czfortythree
+Xinyang-Gao
+"""
+mod.forgeupdatecheckurl = "https://github.com/Mirsario/Minecraft-CameraOverhaul/blob/dev/meta/ForgeUpdateCheck.json?raw=true"
+
+# Contact (Mod)
+contact.homepage = "https://modrinth.com/mod/cameraoverhaul"
+contact.sources = "https://github.com/Mirsario/Minecraft-CameraOverhaul"
+contact.issues = "https://github.com/Mirsario/Minecraft-CameraOverhaul/issues"
+contact.modrinth = "https://modrinth.com/mod/cameraoverhaul"
+contact.curseforge = "https://curseforge.com/minecraft/mc-mods/cameraoverhaul"
+# Contact (Author)
+contact.email = "me@mirsar.io"
+contact.discord = "https://discord.gg/RNGq9N8"
+contact.patreon = "https://patreon.com/Mirsario"
+contact.youtube = "https://youtube.com/@Mirsario"
+
+# Game
+mc.type = "[VERSIONED]"
+mc.version = "[VERSIONED]"
+mc.version_range = "[VERSIONED]"
+mc.displayed_range = "[VERSIONED]"
+
+# Loom
+loomx.loom_version = "1.14.471"
+loomx.loom_remap_plugin = "dev.architectury.loom"
+loomx.loom_unobf_plugin = "dev.architectury.loom-no-remap"
+
+# Dependency Ranges
+deps.fabric_loader = "0.15.11"
+deps.cloth_config = "[VERSIONED]"
+deps.modmenu = "[VERSIONED]"
+deps.mixin_extras = "0.5.0-beta.5"
+
+# Publishing
+publish.enabled = true
+publish.modrinth.id = "m0oRwcZx"
+publish.curseforge.id = "423602"
+publish.github.repository = "Mirsario/Minecraft-CameraOverhaul"
+publish.github.branch = "dev"
+publish.github.format = """
+{{changelog}}
+
+## Links:
+- [Download from **Modrinth**](https://modrinth.com/mod/cameraoverhaul/versions)
+- [Download from **CurseForge**](https://curseforge.com/minecraft/mc-mods/cameraoverhaul/files)
+- [Chat & ask questions on **Discord**](https://discord.gg/RNGq9n8)
+- [Support me on **Patreon**](https://patreon.com/Mirsario)
+"""
+publish.discord.username = "mirsar.io"
+publish.discord.avatar = "https://2.gravatar.com/avatar/0d01535c027cc9d613a03f4d6eb77dd00abae05b9a756c9bb02a4a926d3107af"
+publish.discord.format = """
+# :camera: Minecraft - Camera Overhaul v{{version}}
+{{changelog}}
+**Download:**
+<:modrinth:1334248141024923811> [**Modrinth**](https://modrinth.com/mod/cameraoverhaul) \
+<:curseforge:1334248138214477985> [**Curseforge**](<https://curseforge.com/minecraft/mc-mods/cameraoverhaul>) \
+<:github:1334248135651885119> [**GitHub**](<https://github.com/Mirsario/Minecraft-CameraOverhaul>)
+"""
+
+["fabric-1.14.4"]
+mc.type = "release"
+mc.version = "1.14.4"
+mc.targets = "1.14 1.14.1 1.14.2 1.14.3 1.14.4"
+loom.platform = "fabric"
+mods.clothconfig.ref = "1.8"
+mods.clothconfig.range = ">=1.8"
+mods.modmenu.ref = "1.10.5"
+mods.modmenu.range = ">=1.5"
+
+["fabric-1.15"]
+mc.type = "release"
+mc.version = "1.15"
+mc.targets = "1.15 1.15.1 1.15.2"
+loom.platform = "fabric"
+mods.clothconfig.ref = "2.14.2"
+mods.clothconfig.range = ">=2.14.2"
+mods.modmenu.ref = "1.10.5"
+mods.modmenu.range = ">=1.10.5"
+
+["fabric-1.16"]
+mc.type = "release"
+mc.version = "1.16"
+mc.targets = "1.16 1.16.1 1.16.2 1.16.3 1.16.4 1.16.5"
+loom.platform = "fabric"
+mods.clothconfig.ref = "4.10.11"
+mods.clothconfig.range = ">=4.6.0"
+mods.modmenu.ref = "1.10.5"
+mods.modmenu.range = ">=1.10.5"
+
+["fabric-1.17"]
+mc.type = "release"
+mc.version = "1.17"
+mc.targets = "1.17 1.17.1"
+loom.platform = "fabric"
+mods.clothconfig.ref = "5.3.63"
+mods.clothconfig.range = ">=5.3.63"
+mods.modmenu.ref = "2.0.1"
+mods.modmenu.range = ">=2.0.1"
+
+["forge-1.17.1"]
+mc.type = "release"
+mc.version = "1.17.1"
+mc.targets = "1.17 1.17.1"
+loom.platform = "forge"
+mods.clothconfig.ref = "5.3.63"
+mods.clothconfig.range = ">=5.0.0"
+deps.forge_loader = "1.17.1-37.1.1"
+
+["fabric-1.18"]
+mc.type = "release"
+mc.version = "1.18"
+mc.targets = "1.18 1.18.1 1.18.2"
+loom.platform = "fabric"
+mods.clothconfig.ref = "6.2.57"
+mods.clothconfig.range = ">=6.2.57"
+mods.modmenu.ref = "3.0.0"
+mods.modmenu.range = ">=3.0.0"
+
+["forge-1.18"]
+mc.type = "release"
+mc.version = "1.18"
+mc.targets = "1.18 1.18.1 1.18.2"
+loom.platform = "forge"
+mods.clothconfig.ref = "6.5.102"
+mods.clothconfig.range = ">=6.0.0"
+deps.forge_loader = "1.18-38.0.17"
+
+["fabric-1.19"]
+mc.type = "release"
+mc.version = "1.19"
+mc.targets = "1.19 1.19.1 1.19.2"
+loom.platform = "fabric"
+mods.clothconfig.ref = "7.0.69"
+mods.clothconfig.range = ">=7.0.69"
+mods.modmenu.ref = "4.0.0"
+mods.modmenu.range = ">=4.0.0"
+
+["forge-1.19"]
+mc.type = "release"
+mc.version = "1.19"
+mc.targets = "1.19 1.19.1 1.19.2"
+loom.platform = "forge"
+mods.clothconfig.ref = "8.0.75"
+mods.clothconfig.range = ">=8.0.0"
+deps.forge_loader = "1.19-41.1.0"
+
+["fabric-1.19.3"]
+mc.type = "release"
+mc.version = "1.19.3"
+mc.targets = "1.19.3 1.19.4"
+loom.platform = "fabric"
+mods.clothconfig.ref = "9.0.94"
+mods.clothconfig.range = ">=9.0.94"
+mods.modmenu.ref = "5.0.0"
+mods.modmenu.range = ">=5.0.0"
+
+["forge-1.19.3"]
+mc.type = "release"
+mc.version = "1.19.3"
+mc.targets = "1.19.3 1.19.4"
+loom.platform = "forge"
+mods.clothconfig.ref = "9.0.94"
+mods.clothconfig.range = ">=9.0.0"
+deps.forge_loader = "1.19.3-44.1.0"
+
+["fabric-1.20"]
+mc.type = "release"
+mc.version = "1.20"
+mc.targets = "1.20 1.20.1 1.20.2 1.20.3 1.20.4 1.20.5"
+loom.platform = "fabric"
+mods.clothconfig.ref = "11.0.99"
+mods.clothconfig.range = ">=11.0.99"
+mods.modmenu.ref = "7.0.0"
+mods.modmenu.range = ">=7.0.0"
+
+["forge-1.20"]
+mc.type = "release"
+mc.version = "1.20"
+mc.targets = "1.20 1.20.1 1.20.2 1.20.3 1.20.4 1.20.5"
+loom.platform = "forge"
+mods.clothconfig.ref = "11.0.99"
+mods.clothconfig.range = ">=11.0.99"
+deps.forge_loader = "1.20-46.0.14"
+
+["fabric-1.20.6"]
+mc.type = "release"
+mc.version = "1.20.6"
+mc.targets = "1.20.6"
+loom.platform = "fabric"
+mods.clothconfig.ref = "14.0.126"
+mods.clothconfig.range = ">=14.0.126"
+mods.modmenu.ref = "10.0.0"
+mods.modmenu.range = ">=10.0.0"
+
+["neoforge-1.20.6"]
+mc.type = "release"
+mc.version = "1.20.6"
+mc.targets = "1.20.6"
+loom.platform = "neoforge"
+mods.clothconfig.ref = "14.0.126"
+mods.clothconfig.range = ">=14.0.0"
+deps.neoforge_loader = "20.6.115"
+
+["fabric-1.21"]
+mc.type = "release"
+mc.version = "1.21"
+mc.targets = "1.21 1.21.1 1.21.2"
+loom.platform = "fabric"
+mods.clothconfig.ref = "15.0.127"
+mods.clothconfig.range = ">=15.0.127"
+mods.modmenu.ref = "11.0.0"
+mods.modmenu.range = ">=11.0.0"
+
+["neoforge-1.21"]
+mc.type = "release"
+mc.version = "1.21"
+mc.targets = "1.21 1.21.1"
+loom.platform = "neoforge"
+mods.clothconfig.ref = "16.0.141"
+mods.clothconfig.range = ">=16.0.0"
+deps.neoforge_loader = "21.0.167"
+
+["fabric-1.21.2"]
+mc.type = "release"
+mc.version = "1.21.2"
+mc.targets = "1.21.2 1.21.3 1.21.4"
+loom.platform = "fabric"
+mods.clothconfig.ref = "16.0.141"
+mods.clothconfig.range = ">=16.0.141"
+mods.modmenu.ref = "12.0.0"
+mods.modmenu.range = ">=12.0.0"
+
+["neoforge-1.21.2"]
+mc.type = "release"
+mc.version = "1.21.2"
+mc.targets = "1.21.2 1.21.3 1.21.4"
+loom.platform = "neoforge"
+mods.clothconfig.ref = "16.0.141"
+mods.clothconfig.range = ">=16.0.0"
+deps.neoforge_loader = "21.2.0-beta"
+
+["fabric-1.21.5"]
+mc.type = "release"
+mc.version = "1.21.5"
+mc.targets = "1.21.5 1.21.6 1.21.7 1.21.8"
+loom.platform = "fabric"
+mods.clothconfig.ref = "18.0.145"
+mods.clothconfig.range = ">=18.0.141"
+mods.modmenu.ref = "14.0.0-rc.2"
+mods.modmenu.range = ">=14.0.0"
+
+["neoforge-1.21.5"]
+mc.type = "release"
+mc.version = "1.21.5"
+mc.targets = "1.21.5 1.21.6 1.21.7 1.21.8"
+loom.platform = "neoforge"
+mods.clothconfig.ref = "18.0.145"
+mods.clothconfig.range = ">=18.0.141"
+deps.neoforge_loader = "21.5.65-beta"
+
+["fabric-1.21.9"]
+mc.type = "release"
+mc.version = "1.21.9"
+mc.targets = "1.21.9 1.21.10"
+loom.platform = "fabric"
+mods.clothconfig.ref = "20.0.148"
+mods.clothconfig.range = ">=20.0.148"
+mods.modmenu.ref = "16.0.0-rc.1"
+mods.modmenu.range = ">=16.0.0"
+
+["neoforge-1.21.9"]
+mc.type = "release"
+mc.version = "1.21.9"
+mc.targets = "1.21.9 1.21.10"
+loom.platform = "neoforge"
+mods.clothconfig.ref = "20.0.148"
+mods.clothconfig.range = ">=20.0.148"
+deps.neoforge_loader = "21.9.0-beta"
+
+["fabric-1.21.11"]
+mc.type = "release"
+mc.version = "1.21.11"
+mc.targets = "1.21.11"
+loom.platform = "fabric"
+mods.clothconfig.ref = "21.11.151"
+mods.clothconfig.range = ">=21.11.151"
+mods.modmenu.ref = "17.0.0-alpha.1"
+mods.modmenu.range = ">=17.0.0"
+
+["neoforge-1.21.11"]
+mc.type = "release"
+mc.version = "1.21.11"
+mc.targets = "1.21.11"
+loom.platform = "neoforge"
+mods.clothconfig.ref = "21.11.151"
+mods.clothconfig.range = ">=21.11.151"
+deps.neoforge_loader = "21.11.0-beta"
+
+["fabric-26.1"]
+mc.type = "release"
+mc.version = "26.1"
+mc.targets = "26.1 26.1.1 26.1.2"
+mc.latest = true
+loom.platform = "fabric"
+mods.clothconfig.ref = "26.1.154"
+mods.clothconfig.range = ">=26.1.154"
+mods.modmenu.ref = "18.0.0-alpha.8"
+mods.modmenu.range = ">=18.0.0"
+
+["neoforge-26.1"]
+mc.type = "release"
+mc.version = "26.1"
+mc.targets = "26.1 26.1.1 26.1.2"
+mc.latest = true
+loom.platform = "neoforge"
+mods.clothconfig.ref = "26.1.154"
+mods.clothconfig.range = ">=26.1.154"
+deps.neoforge_loader = "26.1.0.19-beta"

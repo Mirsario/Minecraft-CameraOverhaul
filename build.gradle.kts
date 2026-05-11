@@ -2,16 +2,19 @@
 // Released under the GNU General Public License 3.0
 // See LICENSE.md for details.
 
+@file:OptIn(StonecutterExperimentalAPI::class)
 import org.gradle.internal.declarativedsl.parsing.parse
+import dev.kikugie.stonecutter.StonecutterExperimentalAPI
 import java.util.*
 
 plugins {
 	id("dev.kikugie.stonecutter")
-	id("dev.architectury.loom")
-	id("architectury-plugin")
 	id("xyz.wagyourtail.jvmdowngrader")
 	id("com.gradleup.shadow")
 	id("me.modmuss50.mod-publish-plugin")
+	// This plugin will choose the necessary loom plugin conditionally.
+	// Must exist in both settings.gradle.kts as well as build.gradle.kts.
+    id("dev.kikugie.loom-back-compat")
 }
 
 // Utilities.
@@ -27,11 +30,6 @@ repositories {
 	maven("https://maven.nucleoid.xyz") // Placeholder API (ModMenu dependency)
 }
 
-// Set architectury platforms.
-architectury.common(stonecutter.tree.branches.mapNotNull {
-	if (stonecutter.current.project in it) it.project.optional("loom.platform") else null
-})
-
 // Common
 val minecraft = stonecutter.current.version
 val loader = loom.platform.get().name.lowercase()
@@ -41,20 +39,22 @@ val isFabric = loader == "fabric"
 val isForge = loader == "forge"
 val isNeoForge = loader == "neoforge"
 val isForgeLike = isForge || isNeoForge
+val isRemapped = stonecutter.eval(mcVersion, "<26")
 // Java
-val javaSrcVersion = JavaVersion.VERSION_21
-val javaDstVersion = if (stonecutter.eval(mcVersion, ">=1.20.5")) JavaVersion.VERSION_21
+val javaSrcVersion = JavaVersion.VERSION_25
+val javaDstVersion = if (stonecutter.eval(mcVersion, ">=26")) JavaVersion.VERSION_25
+	else if (stonecutter.eval(mcVersion, ">=1.20.5")) JavaVersion.VERSION_21
 	else if (stonecutter.eval(mcVersion, ">=1.18")) JavaVersion.VERSION_17
 	else if (stonecutter.eval(mcVersion, ">=1.17")) JavaVersion.VERSION_16
 	else JavaVersion.VERSION_1_8
 // Build Behavior
 val isPrimaryBuild = isFabric && optional("mc.latest") == "true" // Dumb. Better somehow ask Stonecutter if we're in a chiseled context.
-val shadowLibs = (javaSrcVersion != javaDstVersion) || (isForge && stonecutter.eval(mcVersion, "<1.19"))
+val shadowLibs = true; //(javaSrcVersion != javaDstVersion) || (isForge && stonecutter.eval(mcVersion, "<1.19"))
 // Versions & Targets
 val versionNumbers = required("mod.version")
 val targetsLatest = optional("mc.latest") == "true"
 val actualTargets = required("mc.targets").trim().split(' ')
-val displayTargets = actualTargets.map { if (it.count { c -> c == '.' } == 1) "${it}.0" else it }
+val displayTargets = actualTargets; //.map { if (it.count { c -> c == '.' } == 1) "${it}.0" else it }
 val multipleVersions = displayTargets.count() > 1 || targetsLatest
 val displayedLatest = if (targetsLatest) "plus" else displayTargets.last()
 val actualTarget = "${loader}+mc.${displayTargets.first()}${if (multipleVersions) "-${displayedLatest}" else ""}"
@@ -75,7 +75,9 @@ base {
 }
 
 // Configure Java & Java Downgrader constants.
-tasks.withType<JavaCompile> { options.encoding = "UTF-8" }
+tasks.withType<JavaCompile> {
+	options.encoding = "UTF-8"
+}
 java {
 	sourceCompatibility = javaSrcVersion
 	targetCompatibility = javaSrcVersion
@@ -90,25 +92,28 @@ val shade: Configuration by project.configurations.creating {
 	isTransitive = false
 }
 tasks.shadowJar {
-	archiveClassifier = if (this != lastTask) "shadow" else null
+	archiveClassifier.set(if (this != lastTask) "shadow" else null)
 	configurations = listOf(shade)
 	minimize()
 	// Relocate shadowed dependencies to avoid conflicts.
-	enableRelocation = true
+	enableAutoRelocation = true
 	relocationPrefix = "${required("root_package")}.shadow"
 }
 // Downgrade classes for older JVM versions.
 tasks.downgradeJar {
-	archiveClassifier = if (this != lastTask) "downgrade" else null
+	archiveClassifier.set(if (this != lastTask) "downgrade" else null)
 	inputFile = tasks.shadowJar.get().archiveFile
 	dependsOn(tasks.shadowJar)
 }
-// Remapping is the last step.
-val lastTask = tasks.remapJar.get()
-tasks.remapJar {
-	archiveClassifier = if (this != lastTask) "remap" else null
-	input = tasks.downgradeJar.get().archiveFile
-	dependsOn(tasks.downgradeJar)
+// Remapping is the last step, if done at all.
+val lastTask: Task = (if (isRemapped) tasks.named<Task>("remapJar") else tasks.downgradeJar).get()
+if (isRemapped) {
+	// Convoluted setters that avoid compilation errors.
+	tasks.matching { it.name == "remapJar" }.configureEach {
+		(this as AbstractArchiveTask).archiveClassifier.set(if (this != lastTask) "remap" else null)
+		(this as Any).setProperty("input", tasks.downgradeJar.get().archiveFile)
+		dependsOn(tasks.downgradeJar)
+	}
 }
 
 // Setup preprocessor.
@@ -127,7 +132,8 @@ stonecutter {
 // To change any versions see the gradle.properties files under root and "/versions/*/"
 dependencies {
 	minecraft("com.mojang:minecraft:${mcVersion}")
-	mappings(loom.officialMojangMappings())
+    // Apply Mojang Mappings on obfuscated versions
+    loomx.applyMojangMappings()
 
 	// Common libraries
 	implementation("io.hotmoka:toml4j:0.7.3") { if (shadowLibs) shade(this) else include(this) }
@@ -136,7 +142,7 @@ dependencies {
 	}
 
 	// Cloth Config
-	val clothConfigVersion: String = required("mods.clothconfig.ref").toString()
+	val clothConfigVersion: String = required("mods.clothconfig.ref")
 	val clothConfigMajor: Int = if (clothConfigVersion != "[VERSIONED]") clothConfigVersion.split(".")[0].toInt() else 0
 	modApi("me.shedaniel.cloth:${if (clothConfigMajor <= 2) "config-2" else "cloth-config-${loader}"}:${clothConfigVersion}") {
 		// Prevent preparing two loader versions in cache. Not needed.
@@ -249,7 +255,9 @@ publishMods {
 	if (loader == "forge" && stonecutter.eval(actualTargets.max(), ">=1.20.2")) modLoaders.add("neoforge")
 
 	val isDryRun = optional("publish.enabled")?.trim()?.lowercase() == "false"
-	file = project.tasks.remapJar.get().archiveFile
+
+	file.set((lastTask as AbstractArchiveTask).archiveFile)
+
 	dryRun = isDryRun
 	version = actualVersion
 	displayName = displayVersion
