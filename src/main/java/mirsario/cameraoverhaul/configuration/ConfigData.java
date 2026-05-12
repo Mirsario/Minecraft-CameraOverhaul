@@ -58,7 +58,7 @@ public final class ConfigData {
 		swimming.verticalVelocityPitchFactor *= 3.0;
 		// Mounts
 		mounts.strafingRollFactor *= 2.0;
-		vehicles.forwardVelocityPitchFactor *= 0.5;
+		mounts.forwardVelocityPitchFactor *= 0.5;
 		// Vehicles
 		vehicles.strafingRollFactor *= 0.5;
 		vehicles.forwardVelocityPitchFactor *= 0.5;
