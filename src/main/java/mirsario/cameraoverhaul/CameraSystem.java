@@ -73,6 +73,7 @@ public final class CameraSystem {
 	}
 
 	private static final double BASE_VERTICAL_PITCH_SMOOTHING = 0.00004;
+	private static final double VERTICAL_PITCH_THRESHOLD = 0.4;
 	private double prevVerticalVelocityPitchOffset;
 
 	private void verticalVelocityPitchOffset(CameraContext context, Transform outputTransform, double deltaTime) {
@@ -80,6 +81,8 @@ public final class CameraSystem {
 		double smoothing = BASE_VERTICAL_PITCH_SMOOTHING * ctxCfg.verticalVelocitySmoothingFactor;
 
 		double targetOffset = context.velocity.y * multiplier;
+		// Apply threshold on target, in order to fix slime block shake.
+		if (Math.abs(targetOffset) < VERTICAL_PITCH_THRESHOLD) { targetOffset = 0; }
 		double currentOffset = MathUtils.damp(prevVerticalVelocityPitchOffset, targetOffset, smoothing, deltaTime);
 
 		outputTransform.eulerRot.x += currentOffset;
