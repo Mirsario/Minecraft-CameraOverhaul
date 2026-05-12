@@ -39,7 +39,6 @@ public abstract class GameRendererMixin {
 
 		CameraOverhaul.camera.modifyCameraTransform(cameraTransform);
 
-		//matrix.multiply(Vec3f.POSITIVE_Z.getDegreesQuaternion((float)cameraTransform.eulerRot.z));
 		MathAbstractions.rotateMatrixByAxis(matrices, 0f, 0f, 1f, cameraTransform.eulerRot.z);
 	}
 }

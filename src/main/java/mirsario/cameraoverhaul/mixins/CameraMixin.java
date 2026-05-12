@@ -7,6 +7,7 @@ package mirsario.cameraoverhaul.mixins;
 import mirsario.cameraoverhaul.*;
 import mirsario.cameraoverhaul.utilities.*;
 import net.minecraft.client.*;
+import net.minecraft.util.*;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.animal.*;
 import net.minecraft.world.entity.vehicle.*;
@@ -35,7 +36,11 @@ public abstract class CameraMixin {
 	@Shadow public abstract float getYRot();
 	@Shadow public abstract Vec3 getPosition();
 	*/ //?}
-	@Shadow protected abstract void setRotation(float yaw, float pitch);
+
+	//? if >=1.15 {
+	@Shadow public abstract Quaternionf rotation();
+	//?} else
+	/*@Shadow protected abstract void setRotation(float yaw, float pitch);*/
 
 	//? if >=26.1 {
 	@Inject(method = "alignWithEntity", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/Camera;getMaxZoom(F)F"))
@@ -112,9 +117,15 @@ public abstract class CameraMixin {
 
 		context.velocity = VectorUtils.toJoml(controlledEntity.getDeltaMovement());
 		//? if >=1.21.11 {
-		context.transform = new Transform(VectorUtils.toJoml(position()), new Vector3d(xRot(), yRot(), 0));
-		//?} else
-		/*context.transform = new Transform(VectorUtils.toJoml(getPosition()), new Vector3d(getXRot(), getYRot(), 0));*/
+		var oldXRot = xRot();
+		var oldYRot = yRot();
+		var oldPos = position();
+		//?} else {
+		/*var oldXRot = getXRot();
+		var oldYRot = getYRot();
+		var oldPos = getPosition();
+		*///?}
+		context.transform = new Transform(VectorUtils.toJoml(oldPos), new Vector3d(oldXRot, oldYRot, 0));
 
 		context.perspective = thirdPerson
 			? (inverseView ? CameraContext.Perspective.THIRD_PERSON_REVERSE : CameraContext.Perspective.THIRD_PERSON)
@@ -130,7 +141,21 @@ public abstract class CameraMixin {
 		system.onCameraUpdate(context, TimeSystem.getDeltaTime());
 		system.modifyCameraTransform(context.transform);
 
-		setRotation((float)context.transform.eulerRot.y, (float)context.transform.eulerRot.x);
+		// If possible, do not use setRotation, as doing so for some reason messes up other mods' camera behaviors.
+		// e.g.: Create Aeronatics' vehicle seats' camera movements used to break even from setRotation(currentYaw, currentPitch).
+		//? if >=1.15 {
+		addRotation((float)context.transform.eulerRot.x - oldXRot, (float)context.transform.eulerRot.y - oldYRot);
+		//?} else
+		/*setRotation((float)context.transform.eulerRot.y, (float)context.transform.eulerRot.x);*/
+
 		return context.transform;
 	}
+
+	//? if >=1.15 {
+	private void addRotation(float pitch, float yaw) {
+		var quat = rotation();
+		quat.rotateAxis(pitch * MathUtils.DEG_TO_RAD, -1, 0, 0);
+		quat.rotateAxis(yaw * MathUtils.DEG_TO_RAD, 0, -1, 0);
+	}
+	//?}
 }

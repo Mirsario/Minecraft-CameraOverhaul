@@ -5,6 +5,8 @@
 package mirsario.cameraoverhaul.utilities;
 
 public final class MathUtils {
+	public static final float DEG_TO_RAD = (float)(Math.PI / 180f);
+	public static final float RAD_TO_DEG = 180f / (float)Math.PI;
 	// Clamp
 
 	public static float clamp(float value, float min, float max) {
