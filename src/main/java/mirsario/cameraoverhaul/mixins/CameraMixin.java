@@ -13,10 +13,14 @@ import net.minecraft.world.entity.animal.*;
 import net.minecraft.world.entity.vehicle.*;
 import net.minecraft.world.level.*;
 import net.minecraft.world.phys.*;
-import org.joml.*;
 import org.spongepowered.asm.mixin.*;
 import org.spongepowered.asm.mixin.injection.*;
 import org.spongepowered.asm.mixin.injection.callback.*;
+//? if >=1.19.3 {
+import org.joml.*;
+//?} else {
+/*import com.mojang.math.*;
+*///?}
 
 //? if <1.15
 /*import org.lwjgl.opengl.*;*/
@@ -25,6 +29,20 @@ import org.spongepowered.asm.mixin.injection.callback.*;
 @Mixin(Camera.class)
 @SuppressWarnings("UnusedMixin")
 public abstract class CameraMixin {
+	private static final Vector3f FORWARDS = new Vector3f(0, 0, -1);
+	private static final Vector3f UP = new Vector3f(0, 1, 0);
+	private static final Vector3f LEFT = new Vector3f(-1, 0, 0);
+
+	@Shadow private float xRot;
+	@Shadow private float yRot;
+	//? if >=1.15 {
+	@Shadow private Vector3f forwards;
+	@Shadow private Vector3f up;
+	@Shadow private Vector3f left;
+	//?}
+	//? if >=26.1
+	@Shadow private int matrixPropertiesDirty;
+
 	//? if >=26.1
 	@Shadow public abstract Entity entity();
 	//? if >=1.21.11 {
@@ -35,10 +53,12 @@ public abstract class CameraMixin {
 	/*@Shadow public abstract float getXRot();
 	@Shadow public abstract float getYRot();
 	@Shadow public abstract Vec3 getPosition();
-	*/ //?}
+	 *///?}
 
-	//? if >=1.15 {
+	//? if >=1.19.3 {
 	@Shadow public abstract Quaternionf rotation();
+	//?} else if >=1.15 {
+	/*@Shadow public abstract Quaternion rotation();*/
 	//?} else
 	/*@Shadow protected abstract void setRotation(float yaw, float pitch);*/
 
@@ -113,7 +133,7 @@ public abstract class CameraMixin {
 		//? if >=1.20.3 {
 		context.isRidingVehicle = vehicle instanceof VehicleEntity;
 		//?} else
-		/*context.isRidingVehicle = vehicle instanceof Boat || vehicle instanceof AbstractMinecart;*/
+		//context.isRidingVehicle = vehicle instanceof Boat || vehicle instanceof AbstractMinecart;
 
 		context.velocity = VectorUtils.toJoml(controlledEntity.getDeltaMovement());
 		//? if >=1.21.11 {
@@ -125,7 +145,7 @@ public abstract class CameraMixin {
 		var oldYRot = getYRot();
 		var oldPos = getPosition();
 		*///?}
-		context.transform = new Transform(VectorUtils.toJoml(oldPos), new Vector3d(oldXRot, oldYRot, 0));
+		context.transform = new Transform(VectorUtils.toJoml(oldPos), new org.joml.Vector3d(oldXRot, oldYRot, 0));
 
 		context.perspective = thirdPerson
 			? (inverseView ? CameraContext.Perspective.THIRD_PERSON_REVERSE : CameraContext.Perspective.THIRD_PERSON)
@@ -142,7 +162,7 @@ public abstract class CameraMixin {
 		system.modifyCameraTransform(context.transform);
 
 		// If possible, do not use setRotation, as doing so for some reason messes up other mods' camera behaviors.
-		// e.g.: Create Aeronatics' vehicle seats' camera movements used to break even from setRotation(currentYaw, currentPitch).
+		// e.g.: Create Aeronautics' vehicle seats' camera movements used to break even from setRotation(currentYaw, currentPitch).
 		//? if >=1.15 {
 		addRotation((float)context.transform.eulerRot.x - oldXRot, (float)context.transform.eulerRot.y - oldYRot);
 		//?} else
@@ -153,9 +173,29 @@ public abstract class CameraMixin {
 
 	//? if >=1.15 {
 	private void addRotation(float pitch, float yaw) {
+		xRot += pitch;
+		yRot += yaw;
+
 		var quat = rotation();
-		quat.rotateAxis(pitch * MathUtils.DEG_TO_RAD, -1, 0, 0);
+		//? if >=1.19.3 {
 		quat.rotateAxis(yaw * MathUtils.DEG_TO_RAD, 0, -1, 0);
+		quat.rotateAxis(pitch * MathUtils.DEG_TO_RAD, -1, 0, 0);
+		FORWARDS.rotate(quat, forwards);
+		UP.rotate(quat, up);
+		LEFT.rotate(quat, left);
+		//?} else {
+		/*quat.mul(com.mojang.math.Vector3f.YP.rotationDegrees(-yaw));
+		quat.mul(com.mojang.math.Vector3f.XP.rotationDegrees(-pitch));
+		forwards.set(0, 0, 1);
+        forwards.transform(quat);
+        up.set(0, 1, 0);
+        up.transform(quat);
+        left.set(1, 0, 0);
+        left.transform(quat);
+		*///?}
+
+		//? if >=26.1
+		matrixPropertiesDirty |= 3;
 	}
 	//?}
 }

@@ -35,7 +35,7 @@ public abstract class GameRendererMixin {
 		//?} else if >=1.21.11 {
 		/*Transform cameraTransform = new Transform(VectorUtils.toJoml(mainCamera.position()), new Vector3d(mainCamera.xRot(), mainCamera.yRot(), 0));
 		*///?} else
-		/*Transform cameraTransform = new Transform(VectorUtils.toJoml(mainCamera.getPosition()), new Vector3d(mainCamera.getXRot(), mainCamera.getYRot(), 0));*/
+		//Transform cameraTransform = new Transform(VectorUtils.toJoml(mainCamera.getPosition()), new Vector3d(mainCamera.getXRot(), mainCamera.getYRot(), 0));
 
 		CameraOverhaul.camera.modifyCameraTransform(cameraTransform);
 
