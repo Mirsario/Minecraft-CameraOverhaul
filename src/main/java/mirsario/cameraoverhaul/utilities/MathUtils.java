@@ -35,10 +35,16 @@ public final class MathUtils {
 	// https://www.rorydriscoll.com/2016/03/07/frame-rate-independent-damping-using-lerp
 
 	public static float damp(float source, float destination, float smoothing, float dt) {
-		return lerp(source, destination, 1f - (float)Math.pow(smoothing * smoothing, dt));
+		return lerp(source, destination, dampStep(smoothing, dt));
 	}
 	public static double damp(double source, double destination, double smoothing, double dt) {
-		return lerp(source, destination, 1d - Math.pow(smoothing * smoothing, dt));
+		return lerp(source, destination, dampStep(smoothing, dt));
+	}
+	public static float dampStep(float smoothing, float dt) {
+		return 1f - (float)Math.pow(smoothing * smoothing, dt);
+	}
+	public static double dampStep(double smoothing, double dt) {
+		return 1d - Math.pow(smoothing * smoothing, dt);
 	}
 
 	// Step towards

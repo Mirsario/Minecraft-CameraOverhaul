@@ -4,10 +4,13 @@
 
 package mirsario.cameraoverhaul.configuration;
 
+import mirsario.cameraoverhaul.utilities.*;
+
 public final class ConfigData {
 	public static final class General {
 		public boolean enabled = true;
 		public boolean enableInThirdPerson = true;
+		public double contextTransitionSmoothing = 0.1;
 		// Turning Roll
 		public double turningRollAccumulation = 1.0;
 		public double turningRollIntensity = 1.25;
@@ -25,7 +28,7 @@ public final class ConfigData {
 		public double thunderTrauma = 0.05;
 		public double handSwingTrauma = 0.03;
 	}
-	public static final class Contextual {
+	public static final class Contextual implements Cloneable {
 		public double strafingRollFactor = 10.0;
 		public double forwardVelocityPitchFactor = 7.0;
 		public double verticalVelocityPitchFactor = 2.5;
@@ -33,6 +36,20 @@ public final class ConfigData {
 		public double verticalVelocitySmoothingFactor = 1.0;
 		// Mouse smoothing
 		public double mouseSmoothing = 0.0;
+
+		public void lerp(Contextual a, Contextual b, double step) {
+			strafingRollFactor = MathUtils.lerp(a.strafingRollFactor, b.strafingRollFactor, step);
+			forwardVelocityPitchFactor = MathUtils.lerp(a.forwardVelocityPitchFactor, b.forwardVelocityPitchFactor, step);
+			verticalVelocityPitchFactor = MathUtils.lerp(a.verticalVelocityPitchFactor, b.verticalVelocityPitchFactor, step);
+			horizontalVelocitySmoothingFactor = MathUtils.lerp(a.horizontalVelocitySmoothingFactor, b.horizontalVelocitySmoothingFactor, step);
+			verticalVelocitySmoothingFactor = MathUtils.lerp(a.verticalVelocitySmoothingFactor, b.verticalVelocitySmoothingFactor, step);
+			mouseSmoothing = MathUtils.lerp(a.mouseSmoothing, b.mouseSmoothing, step);
+		}
+
+		public Contextual clone() {
+			try { return (Contextual)super.clone(); }
+			catch (CloneNotSupportedException _) { return null; }
+		}
 	}
 
 	public static final int CONFIG_VERSION = 2;
@@ -64,7 +81,7 @@ public final class ConfigData {
 		vehicles.forwardVelocityPitchFactor *= 0.5;
 		vehicles.verticalVelocityPitchFactor *= 2.0;
 		// Mouse smoothing
-		sprinting.mouseSmoothing = 0.8;
+		sprinting.mouseSmoothing = 0.6;
 		swimming.mouseSmoothing = 1.5;
 		flying.mouseSmoothing = 1.0;
 		mounts.mouseSmoothing = 1.0;

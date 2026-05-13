@@ -27,12 +27,7 @@ public final class CameraSystem {
 		var time = TimeSystem.getTime();
 		cfg = Configuration.get();
 
-		if (context.isRidingVehicle) ctxCfg = cfg.vehicles;
-		else if (context.isRidingMount) ctxCfg = cfg.mounts;
-		else if (context.isSwimming) ctxCfg = cfg.swimming;
-		else if (context.isFlying) ctxCfg = cfg.flying;
-		else if (context.isSprinting) ctxCfg = cfg.sprinting;
-		else ctxCfg = cfg.walking;
+		updateContext(context, deltaTime);
 
 		// Reset the offset transform
 		offsetTransform.position = new Vector3d(0, 0, 0);
@@ -63,6 +58,21 @@ public final class CameraSystem {
 		prevEntityVelocity.set(context.velocity);
 		prevCameraEulerRot.set(context.transform.eulerRot);
 		prevCameraPerspective = context.perspective;
+	}
+
+	void updateContext(CameraContext context, double deltaTime) {
+		if (ctxCfg == null) ctxCfg = cfg.walking.clone();
+
+		ConfigData.Contextual target;
+		if (context.isRidingVehicle) target = cfg.vehicles;
+		else if (context.isRidingMount) target = cfg.mounts;
+		else if (context.isSwimming) target = cfg.swimming;
+		else if (context.isFlying) target = cfg.flying;
+		else if (context.isSprinting) target = cfg.sprinting;
+		else target = cfg.walking;
+
+		double smoothing = cfg.general.contextTransitionSmoothing > 0 ? MathUtils.dampStep(cfg.general.contextTransitionSmoothing, deltaTime) : 1;
+		ctxCfg.lerp(ctxCfg, target, MathUtils.dampStep(smoothing, deltaTime));
 	}
 
 	public void modifyCameraTransform(Transform transform) {
@@ -183,15 +193,12 @@ public final class CameraSystem {
 	private double prevYawNorm, prevPitchNorm; // last frame's normalized (vanilla) angles
 	private double contYaw, contPitch; // continuous, unwrapped stream
 	private double smYaw, smPitch; // actual angle
-	private double smoothedMouseSmoothing;
 
 	private static final double BASE_MOUSE_SMOOTHING = 16.0;
-	private static final double MOUSE_SMOOTHING_INCREASE_SMOOTHING = 0.35;
-	private static final double MOUSE_SMOOTHING_DECREASE_SMOOTHING = 0.08;
 	private static final double MOUSE_SMOOTHING_THRESHOLD = 0.001;
 
 	private void mouseSmoothingOffset(CameraContext context, Transform outputTransform, double deltaTime) {
-		final double mouseSmoothingTarget = Math.max(0.0, ctxCfg.mouseSmoothing);
+		final double mouseSmoothingValue = Math.max(0.0, ctxCfg.mouseSmoothing);
 
 		final double yawNow = context.transform.eulerRot.y;
 		final double pitchNow = context.transform.eulerRot.x;
@@ -204,7 +211,6 @@ public final class CameraSystem {
 			contPitch = pitchNow;
 			smYaw = yawNow;
 			smPitch = pitchNow;
-			smoothedMouseSmoothing = mouseSmoothingTarget;
 			msInit = true;
 			return;
 		}
@@ -218,18 +224,13 @@ public final class CameraSystem {
 		contYaw += stepYaw;
 		contPitch += stepPitch;
 
-		final double smoothing = mouseSmoothingTarget > smoothedMouseSmoothing
-			? MOUSE_SMOOTHING_INCREASE_SMOOTHING
-			: MOUSE_SMOOTHING_DECREASE_SMOOTHING;
-		smoothedMouseSmoothing = MathUtils.damp(smoothedMouseSmoothing, mouseSmoothingTarget, smoothing, deltaTime);
-
-		if (Math.max(mouseSmoothingTarget, smoothedMouseSmoothing) <= MOUSE_SMOOTHING_THRESHOLD) {
+		if (mouseSmoothingValue <= MOUSE_SMOOTHING_THRESHOLD) {
 			smYaw = contYaw;
 			smPitch = contPitch;
 			return;
 		}
 
-		final double k = BASE_MOUSE_SMOOTHING / smoothedMouseSmoothing;
+		final double k = BASE_MOUSE_SMOOTHING / mouseSmoothingValue;
 		final double step = 1.0 - Math.exp(-k * Math.max(0.0, deltaTime));
 
 		final double dYaw = contYaw - smYaw;
