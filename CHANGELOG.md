@@ -30,6 +30,7 @@
 - Added 'Sprinting' configuration context.
 - Configuration contexts will now be smoothly blended between, preventing sudden snaps upon elytra/swimming/sprinting activation.
   Configurable via `contextTransitionSmoothing`.
+- Fixed issue [#87](https://github.com/Mirsario/Minecraft-CameraOverhaul/issues/87) (Incompatibility with Do a Barrel Roll in NeoForge).
 - Fixed issue [#110](https://github.com/Mirsario/Minecraft-CameraOverhaul/issues/110) (Conflict with Create Aeronautics).
 - Fixed issue [#14](https://github.com/Mirsario/Minecraft-CameraOverhaul/issues/14) (Constant vertical camera shake on slime blocks).
 - Fixed issue [#108](https://github.com/Mirsario/Minecraft-CameraOverhaul/issues/108) (Incorrect default on vehicles' forward velocity pitch factor).
