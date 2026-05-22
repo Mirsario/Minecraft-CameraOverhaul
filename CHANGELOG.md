@@ -4,6 +4,7 @@
 | Version                               | Release Date |
 |---------------------------------------|--------------|
 | [Work In Progress](#work-in-progress) | `n/a`        |
+| [2.1.0](#210)                         | `2026-05-22` |
 | [2.0.6](#206)                         | `2025-12-22` |
 | [2.0.5](#205)                         | `2025-11-24` |
 | [2.0.4](#204)                         | `2025-05-08` |
@@ -22,7 +23,7 @@
 | [1.0.1](#101)                         | `2020-12-06` |
 | [1.0.0](#100)                         | `2020-11-30` |
 
-# Work In Progress
+# 2.1.0
 
 - Minecraft 26.1+ support.
 - Added a dynamic global camera smoothing feature. (Thanks, `@archiso86`!) ([PR #100](<https://github.com/Mirsario/Minecraft-CameraOverhaul/pull/100>))
