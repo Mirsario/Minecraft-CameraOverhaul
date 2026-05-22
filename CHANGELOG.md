@@ -32,6 +32,7 @@
   Configurable via `contextTransitionSmoothing`.
 - Fixed issue [#87](https://github.com/Mirsario/Minecraft-CameraOverhaul/issues/87) (Incompatibility with Do a Barrel Roll in NeoForge).
 - Fixed issue [#110](https://github.com/Mirsario/Minecraft-CameraOverhaul/issues/110) (Conflict with Create Aeronautics).
+- Fixed issue [#105](https://github.com/Mirsario/Minecraft-CameraOverhaul/issues/105) (Camera can move when the game is paused).
 - Fixed issue [#14](https://github.com/Mirsario/Minecraft-CameraOverhaul/issues/14) (Constant vertical camera shake on slime blocks).
 - Fixed issue [#108](https://github.com/Mirsario/Minecraft-CameraOverhaul/issues/108) (Incorrect default on vehicles' forward velocity pitch factor).
 

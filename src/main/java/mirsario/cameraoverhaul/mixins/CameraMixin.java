@@ -157,8 +157,11 @@ public abstract class CameraMixin {
 			context.isSprinting = entity.isSprinting();
 		}
 
-		TimeSystem.update();
-		system.onCameraUpdate(context, TimeSystem.getDeltaTime());
+		if (!Minecraft.getInstance().isPaused()) {
+			TimeSystem.update();
+			system.onCameraUpdate(context, TimeSystem.getDeltaTime());
+		}
+
 		system.modifyCameraTransform(context.transform);
 
 		// If possible, do not use setRotation, as doing so for some reason messes up other mods' camera behaviors.
