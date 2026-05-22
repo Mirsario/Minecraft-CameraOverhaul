@@ -27,8 +27,8 @@
 	"cameraoverhaul.config.horizontalVelocitySmoothingFactor.desc": "Smoothness of camera pitch & roll rotations caused by moving horizontally.",
 	"cameraoverhaul.config.verticalVelocitySmoothingFactor.name": "Vertical Velocity Smoothing Factor",
 	"cameraoverhaul.config.verticalVelocitySmoothingFactor.desc": "Smoothness of camera pitch rotations caused by moving vertically.",
-	"cameraoverhaul.config.mouseSmoothing.name": "Mouse Smoothing Factor",
-	"cameraoverhaul.config.mouseSmoothing.desc": "Smoothness of pitch & yaw controlled by player input.",
+	"cameraoverhaul.config.cameraSmoothing.name": "Camera Smoothing Factor",
+	"cameraoverhaul.config.cameraSmoothing.desc": "Controls global interpolation of the camera's pitch & yaw. Does not affect gameplay (aim).",
 
 	"cameraoverhaul.config.turningRollAccumulation.name": "Mouselook Roll Accumulation",
 	"cameraoverhaul.config.turningRollAccumulation.desc": "Sensitivity of the camera roll rotation caused by turning around horizontally.",

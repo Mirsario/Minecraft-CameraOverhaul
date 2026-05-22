@@ -34,8 +34,8 @@ public final class ConfigData {
 		public double verticalVelocityPitchFactor = 2.5;
 		public double horizontalVelocitySmoothingFactor = 1.0;
 		public double verticalVelocitySmoothingFactor = 1.0;
-		// Mouse smoothing
-		public double mouseSmoothing = 0.0;
+		// Camera smoothing
+		public double cameraSmoothing = 0.0;
 
 		public void lerp(Contextual a, Contextual b, double step) {
 			strafingRollFactor = MathUtils.lerp(a.strafingRollFactor, b.strafingRollFactor, step);
@@ -43,7 +43,7 @@ public final class ConfigData {
 			verticalVelocityPitchFactor = MathUtils.lerp(a.verticalVelocityPitchFactor, b.verticalVelocityPitchFactor, step);
 			horizontalVelocitySmoothingFactor = MathUtils.lerp(a.horizontalVelocitySmoothingFactor, b.horizontalVelocitySmoothingFactor, step);
 			verticalVelocitySmoothingFactor = MathUtils.lerp(a.verticalVelocitySmoothingFactor, b.verticalVelocitySmoothingFactor, step);
-			mouseSmoothing = MathUtils.lerp(a.mouseSmoothing, b.mouseSmoothing, step);
+			cameraSmoothing = MathUtils.lerp(a.cameraSmoothing, b.cameraSmoothing, step);
 		}
 
 		public Contextual clone() {
@@ -81,10 +81,10 @@ public final class ConfigData {
 		vehicles.forwardVelocityPitchFactor *= 0.5;
 		vehicles.verticalVelocityPitchFactor *= 2.0;
 		// Mouse smoothing
-		sprinting.mouseSmoothing = 0.6;
-		swimming.mouseSmoothing = 1.5;
-		flying.mouseSmoothing = 1.0;
-		mounts.mouseSmoothing = 1.0;
-		vehicles.mouseSmoothing = 0.0;
+		sprinting.cameraSmoothing = 0.6;
+		swimming.cameraSmoothing = 1.5;
+		flying.cameraSmoothing = 1.0;
+		mounts.cameraSmoothing = 1.0;
+		vehicles.cameraSmoothing = 0.0;
 	}
 }

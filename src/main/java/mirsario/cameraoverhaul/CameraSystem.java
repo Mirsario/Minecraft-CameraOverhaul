@@ -46,7 +46,7 @@ public final class CameraSystem {
 		}
 
 		// XY
-		mouseSmoothingOffset(context, offsetTransform, deltaTime);
+		cameraSmoothingOffset(context, offsetTransform, deltaTime);
 		noiseOffset(context, offsetTransform, deltaTime);
 		// X
 		verticalVelocityPitchOffset(context, offsetTransform, deltaTime);
@@ -197,8 +197,8 @@ public final class CameraSystem {
 	private static final double BASE_MOUSE_SMOOTHING = 16.0;
 	private static final double MOUSE_SMOOTHING_THRESHOLD = 0.001;
 
-	private void mouseSmoothingOffset(CameraContext context, Transform outputTransform, double deltaTime) {
-		final double mouseSmoothingValue = Math.max(0.0, ctxCfg.mouseSmoothing);
+	private void cameraSmoothingOffset(CameraContext context, Transform outputTransform, double deltaTime) {
+		final double cameraSmoothingValue = Math.max(0.0, ctxCfg.cameraSmoothing);
 
 		final double yawNow = context.transform.eulerRot.y;
 		final double pitchNow = context.transform.eulerRot.x;
@@ -224,13 +224,13 @@ public final class CameraSystem {
 		contYaw += stepYaw;
 		contPitch += stepPitch;
 
-		if (mouseSmoothingValue <= MOUSE_SMOOTHING_THRESHOLD) {
+		if (cameraSmoothingValue <= MOUSE_SMOOTHING_THRESHOLD) {
 			smYaw = contYaw;
 			smPitch = contPitch;
 			return;
 		}
 
-		final double k = BASE_MOUSE_SMOOTHING / mouseSmoothingValue;
+		final double k = BASE_MOUSE_SMOOTHING / cameraSmoothingValue;
 		final double step = 1.0 - Math.exp(-k * Math.max(0.0, deltaTime));
 
 		final double dYaw = contYaw - smYaw;
