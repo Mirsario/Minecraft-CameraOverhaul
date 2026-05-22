@@ -52,7 +52,7 @@ public final class ConfigData {
 		}
 	}
 
-	public static final int CONFIG_VERSION = 2;
+	public static final int CONFIG_VERSION = 3;
 
 	public int configVersion;
 	public General general = new General();

@@ -4,6 +4,7 @@
 
 package mirsario.cameraoverhaul.configuration;
 
+import com.google.gson.Gson;
 import com.moandjiezana.toml.*;
 import java.io.*;
 import java.lang.reflect.*;
@@ -39,6 +40,10 @@ public final class Configuration {
 
 			if (file.exists()) {
 				configCurrent = TOML.read(file).to(ConfigData.class);
+				if (configCurrent.configVersion < ConfigData.CONFIG_VERSION) {
+					CameraOverhaul.LOGGER.info("Resetting configuration due to version change.");
+					configCurrent = new ConfigData();
+				}
 			} else {
 				configCurrent = new ConfigData();
 			}
