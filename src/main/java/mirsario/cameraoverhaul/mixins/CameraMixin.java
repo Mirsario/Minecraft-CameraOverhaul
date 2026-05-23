@@ -29,9 +29,15 @@ import org.joml.*;
 @Mixin(Camera.class)
 @SuppressWarnings("UnusedMixin")
 public abstract class CameraMixin {
+	//? if >=1.21.11 {
 	private static final Vector3f FORWARDS = new Vector3f(0, 0, -1);
 	private static final Vector3f UP = new Vector3f(0, 1, 0);
 	private static final Vector3f LEFT = new Vector3f(-1, 0, 0);
+	//?} else {
+	/*private static final Vector3f FORWARDS = new Vector3f(0, 0, 1);
+	private static final Vector3f UP = new Vector3f(0, 1, 0);
+	private static final Vector3f LEFT = new Vector3f(1, 0, 0);
+	*///?}
 
 	@Shadow private float xRot;
 	@Shadow private float yRot;
@@ -181,13 +187,18 @@ public abstract class CameraMixin {
 
 		var quat = rotation();
 		//? if >=1.19.3 {
-		quat.rotateAxis(yaw * MathUtils.DEG_TO_RAD, 0, -1, 0);
+		quat.premul(new Quaternionf().rotationAxis(yaw * MathUtils.DEG_TO_RAD, 0, -1, 0));
+		//? if >=1.21.11
 		quat.rotateAxis(pitch * MathUtils.DEG_TO_RAD, -1, 0, 0);
+		//? if <1.21.11
+		/*quat.rotateAxis(pitch * MathUtils.DEG_TO_RAD, 1, 0, 0);*/
 		FORWARDS.rotate(quat, forwards);
 		UP.rotate(quat, up);
 		LEFT.rotate(quat, left);
 		//?} else {
-		/*quat.mul(com.mojang.math.Vector3f.YP.rotationDegrees(-yaw));
+		/*var yawQuat = com.mojang.math.Vector3f.YP.rotationDegrees(-yaw);
+		yawQuat.mul(quat);
+		quat.set(yawQuat.i(), yawQuat.j(), yawQuat.k(), yawQuat.r());
 		quat.mul(com.mojang.math.Vector3f.XP.rotationDegrees(-pitch));
 		forwards.set(0, 0, 1);
         forwards.transform(quat);
