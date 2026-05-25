@@ -24,9 +24,9 @@
 | [1.0.0](#100)                         | `2020-11-30` |
 
 # Work In Progress
-- Fixed issue [#115](https://github.com/Mirsario/Minecraft-CameraOverhaul/issues/115) (Audio is reversed)
+- Fixed issue [#115](<https://github.com/Mirsario/Minecraft-CameraOverhaul/issues/115>) (Audio is reversed)
   (Thanks, `@archiso86`!)
-- Fixed issue [#113](https://github.com/Mirsario/Minecraft-CameraOverhaul/issues/113) (Problems With On-Screen HUD Element Rendering)
+- Fixed issue [#113](<https://github.com/Mirsario/Minecraft-CameraOverhaul/issues/113>) (Problems With On-Screen HUD Element Rendering)
   (Thanks, `@archiso86`!)
 
 # 2.1.0
@@ -37,11 +37,11 @@
 - Added 'Sprinting' configuration context.
 - Configuration contexts will now be smoothly blended between, preventing sudden snaps upon elytra/swimming/sprinting activation.
   Configurable via `contextTransitionSmoothing`.
-- Fixed issue [#87](https://github.com/Mirsario/Minecraft-CameraOverhaul/issues/87) (Incompatibility with Do a Barrel Roll in NeoForge).
-- Fixed issue [#110](https://github.com/Mirsario/Minecraft-CameraOverhaul/issues/110) (Conflict with Create Aeronautics).
-- Fixed issue [#105](https://github.com/Mirsario/Minecraft-CameraOverhaul/issues/105) (Camera can move when the game is paused).
-- Fixed issue [#14](https://github.com/Mirsario/Minecraft-CameraOverhaul/issues/14) (Constant vertical camera shake on slime blocks).
-- Fixed issue [#108](https://github.com/Mirsario/Minecraft-CameraOverhaul/issues/108) (Incorrect default on vehicles' forward velocity pitch factor).
+- Fixed issue [#87](<https://github.com/Mirsario/Minecraft-CameraOverhaul/issues/87>) (Incompatibility with Do a Barrel Roll in NeoForge)
+- Fixed issue [#110](<https://github.com/Mirsario/Minecraft-CameraOverhaul/issues/110>) (Conflict with Create Aeronautics)
+- Fixed issue [#105](<https://github.com/Mirsario/Minecraft-CameraOverhaul/issues/105>) (Camera can move when the game is paused)
+- Fixed issue [#14](<https://github.com/Mirsario/Minecraft-CameraOverhaul/issues/14>) (Constant vertical camera shake on slime blocks)
+- Fixed issue [#108](<https://github.com/Mirsario/Minecraft-CameraOverhaul/issues/108>) (Incorrect default on vehicles' forward velocity pitch factor)
 
 # 2.0.6
 
@@ -50,13 +50,13 @@
 # 2.0.5
 
 - Minecraft 1.21.9 and 1.21.10+ support.
-- Chinese localization by `@Xinyang-Gao` ([PR #104](<https://github.com/Mirsario/Minecraft-CameraOverhaul/pull/104>)).
+- Chinese localization by `@Xinyang-Gao` ([PR #104](<https://github.com/Mirsario/Minecraft-CameraOverhaul/pull/104>))
 
 # 2.0.4
 
 - Minecraft 1.21.5+ support.
-- Fixed issue [#79](https://github.com/Mirsario/Minecraft-CameraOverhaul/issues/79) (Mod uses wrong Java targets on MC <1.20.5)
-- Japanese localization by `@stabery` ([PR #86](<https://github.com/Mirsario/Minecraft-CameraOverhaul/pull/86>)).
+- Fixed issue [#79](<https://github.com/Mirsario/Minecraft-CameraOverhaul/issues/79>) (Mod uses wrong Java targets on MC <1.20.5)
+- Japanese localization by `@stabery` ([PR #86](<https://github.com/Mirsario/Minecraft-CameraOverhaul/pull/86>))
 - Mitigated potential conflicts with other mods that utilize the Shadow Gradle plugin.
 
 # 2.0.3
@@ -70,9 +70,9 @@ Fixed issue [#84](<https://github.com/Mirsario/Minecraft-CameraOverhaul/issues/8
 - Made the Fabric-specific `ModMenu` dependency just a suggestion instead.
 
 **Localization:**
-- German localization by `@Lucanoria` ([PR #70](<https://github.com/Mirsario/Minecraft-CameraOverhaul/pull/70>)).
-- Mexican Spanish localization by `@TheLegendofSaram` ([PR #76](<https://github.com/Mirsario/Minecraft-CameraOverhaul/pull/76>)).
-- Russian localization updates by `@mpustovoi` ([PR #77](<https://github.com/Mirsario/Minecraft-CameraOverhaul/pull/77>)).
+- German localization by `@Lucanoria` ([PR #70](<https://github.com/Mirsario/Minecraft-CameraOverhaul/pull/70>))
+- Mexican Spanish localization by `@TheLegendofSaram` ([PR #76](<https://github.com/Mirsario/Minecraft-CameraOverhaul/pull/76>))
+- Russian localization updates by `@mpustovoi` ([PR #77](<https://github.com/Mirsario/Minecraft-CameraOverhaul/pull/77>))
 
 # 2.0.1
 Hotfix for a 'InvocationTargetException: null' 1.18.x Forge crash.
@@ -99,12 +99,12 @@ The mod has been rewritten for easier maintenance & scaling. Single-JAR version 
 
 **Fixes:**
 - Fixed the mod using incorrect values for time deltas, leading to less smooth interpolation. Oopsie doopsie!
-- Fixed issue [#16](https://github.com/Mirsario/Minecraft-CameraOverhaul/issues/16) (Strafing affects elytra in a very jiggery manner).
-- Fixed issue [#34](https://github.com/Mirsario/Minecraft-CameraOverhaul/issues/34) (The Configure button doesn't show up in Mod Menu).
-- Fixed issue [#36](https://github.com/Mirsario/Minecraft-CameraOverhaul/issues/36) (Cannot read field "enabled" because "config" is null).
-- Fixed issue [#40](https://github.com/Mirsario/Minecraft-CameraOverhaul/issues/40) (Better Third Person Incompatibility).
-- Fixed issue [#43](https://github.com/Mirsario/Minecraft-CameraOverhaul/issues/43) (Toggling perspective (F5) causes camera to shake).
-- Fixed issue [#57](https://github.com/Mirsario/Minecraft-CameraOverhaul/issues/57) (View rocks side to side when going across a ice block highway with boat).
+- Fixed issue [#16](<https://github.com/Mirsario/Minecraft-CameraOverhaul/issues/16>) (Strafing affects elytra in a very jiggery manner)
+- Fixed issue [#34](<https://github.com/Mirsario/Minecraft-CameraOverhaul/issues/34>) (The Configure button doesn't show up in Mod Menu)
+- Fixed issue [#36](<https://github.com/Mirsario/Minecraft-CameraOverhaul/issues/36>) (Cannot read field "enabled" because "config" is null)
+- Fixed issue [#40](<https://github.com/Mirsario/Minecraft-CameraOverhaul/issues/40>) (Better Third Person Incompatibility)
+- Fixed issue [#43](<https://github.com/Mirsario/Minecraft-CameraOverhaul/issues/43>) (Toggling perspective (F5) causes camera to shake)
+- Fixed issue [#57](<https://github.com/Mirsario/Minecraft-CameraOverhaul/issues/57>) (View rocks side to side when going across a ice block highway with boat)
 - Fixed the camera sometimes shaking when riding in the second seat of a boat in multiplayer.
 
 # 1.4.1
@@ -130,7 +130,7 @@ The mod has been rewritten for easier maintenance & scaling. Single-JAR version 
 - Compatibility with `1.17` and `1.18` Minecraft versions (Thanks, **IMS212**!)
 - Compatibility with Fabric Loader `0.12`+ (Thanks, **IMS212**!)
     Strafing Roll Factor setting is now separate for elytra flight and swimming (Thanks, **TheMrEngMan**!)
-- Elytra flight camera roll is now reversed by default (Thanks, **TheMrEngMan**!).
+- Elytra flight camera roll is now reversed by default (Thanks, **TheMrEngMan**!)
 - Made interpolation speeds for mouselook, horizontal and vertical movement-based rotations configurable. This means that you can now change how smooth all rotations are.
 - Lowered default interpolation speed of horizontal movement from `1.0` to `0.25`, of vertical movement from `1.0` to `0.75`. I find this to be way less nausea-inducing.
 
