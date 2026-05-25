@@ -23,6 +23,12 @@
 | [1.0.1](#101)                         | `2020-12-06` |
 | [1.0.0](#100)                         | `2020-11-30` |
 
+# Work In Progress
+- Fixed issue [#115](https://github.com/Mirsario/Minecraft-CameraOverhaul/issues/115) (Audio is reversed)
+  (Thanks, `@archiso86`!)
+- Fixed issue [#113](https://github.com/Mirsario/Minecraft-CameraOverhaul/issues/113) (Problems With On-Screen HUD Element Rendering)
+  (Thanks, `@archiso86`!)
+
 # 2.1.0
 
 - Minecraft 26.1+ support.
