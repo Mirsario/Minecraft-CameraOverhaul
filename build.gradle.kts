@@ -52,6 +52,7 @@ val isPrimaryBuild = isFabric && optional("mc.latest") == "true" // Dumb. Better
 val shadowLibs = true; //(javaSrcVersion != javaDstVersion) || (isForge && stonecutter.eval(mcVersion, "<1.19"))
 // Versions & Targets
 val versionNumbers = required("mod.version")
+val vVersionNumbers = "v${versionNumbers}"
 val targetsLatest = optional("mc.latest") == "true"
 val actualTargets = required("mc.targets").trim().split(' ')
 val displayTargets = actualTargets; //.map { if (it.count { c -> c == '.' } == 1) "${it}.0" else it }
@@ -254,7 +255,8 @@ publishMods {
 	if (loader == "fabric") modLoaders.add("quilt")
 	if (loader == "forge" && stonecutter.eval(actualTargets.max(), ">=1.20.2")) modLoaders.add("neoforge")
 
-	val isDryRun = optional("publish.enabled")?.trim()?.lowercase() == "false"
+	val isDryRun = optional("publish.enabled")?.trim()?.lowercase() != "true"
+	if (isDryRun) logger.info("publish.enabled is not set to true, dry run!")
 
 	file.set((lastTask as AbstractArchiveTask).archiveFile)
 
@@ -300,6 +302,7 @@ publishMods {
 	// Only ran once even when chiseled.
 	if (isPrimaryBuild) {
 		if (isDryRun || !githubToken.isNullOrBlank()) github {
+			displayName = vVersionNumbers
 			repository = required("publish.github.repository")
 			accessToken = githubToken
 			commitish = required("publish.github.branch")
