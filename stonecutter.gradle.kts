@@ -5,4 +5,4 @@ plugins {
 	id("me.modmuss50.mod-publish-plugin") version "0.8.4" apply false
 }
 
-stonecutter active "fabric-26.2" /* [SC] DO NOT EDIT */
+stonecutter active "fabric-26.3" /* [SC] DO NOT EDIT */

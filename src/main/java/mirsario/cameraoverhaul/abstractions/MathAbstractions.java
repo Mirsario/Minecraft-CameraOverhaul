@@ -7,8 +7,10 @@ package mirsario.cameraoverhaul.abstractions;
 public final class MathAbstractions {
 	//? if MC_RELEASE && >=1.15 {
 	public static void rotateMatrixByAxis(com.mojang.blaze3d.vertex.PoseStack matrix, double axisX, double axisY, double axisZ, double rotation) {
-		//? if >=1.19.3 {
-			matrix.mulPose(com.mojang.math.Axis.of(new org.joml.Vector3f((float)axisX, (float)axisY, (float)axisZ)).rotationDegrees((float)rotation));
+		//? if >=26.3 {
+			matrix.mulPose(new org.joml.Matrix4f().rotate(new org.joml.Quaternionf().fromAxisAngleDeg((float)axisX, (float)axisY, (float)axisZ, (float)rotation)));
+		//?} else if >=1.19.3 {
+			/*matrix.mulPose(com.mojang.math.Axis.of(new org.joml.Vector3f((float)axisX, (float)axisY, (float)axisZ)).rotationDegrees((float)rotation));*/
 		//?} else
 			/*matrix.mulPose(new com.mojang.math.Vector3f((float)axisX, (float)axisY, (float)axisZ).rotationDegrees((float)rotation));*/
 	}

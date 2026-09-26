@@ -25,7 +25,7 @@
 | [1.0.0](#100)                         | `2020-11-30` |
 
 # Work In Progress
-- Minecraft 26.2+ support.
+- Minecraft 26.2 and 26.3+ support.
 - Fixed issue [#121](<https://github.com/Mirsario/Minecraft-CameraOverhaul/issues/121>) (Configuration screen broken in 26.2 under Fabric)
 
 # 2.1.1

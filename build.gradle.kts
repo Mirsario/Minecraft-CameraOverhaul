@@ -155,7 +155,9 @@ dependencies {
 		modImplementation("net.fabricmc:fabric-loader:${required("deps.fabric_loader")}")
 
 		// ModMenu API
-		modImplementation("com.terraformersmc:modmenu:${required("mods.modmenu.ref")}")
+		modImplementation("com.terraformersmc:modmenu:${required("mods.modmenu.ref")}") {
+			exclude(group = "net.fabricmc.fabric-api")
+		}
 	}
 	// Note: String invocation means that the function resolution is delayed to the buildscript's runtime.
 	if (loader == "forge") {
