@@ -86,6 +86,8 @@ java {
 jvmdg {
 	downgradeTo = javaDstVersion
 }
+// Decide on the final task before it is (imperatively) used.
+val lastTask: Task = (if (isRemapped) tasks.named<Task>("remapJar") else tasks.downgradeJar).get()
 // Prepare Shadow to inline libraries right into our JAR on legacy Forge.
 val shade: Configuration by project.configurations.creating {
 	isCanBeConsumed = false
@@ -107,7 +109,6 @@ tasks.downgradeJar {
 	dependsOn(tasks.shadowJar)
 }
 // Remapping is the last step, if done at all.
-val lastTask: Task = (if (isRemapped) tasks.named<Task>("remapJar") else tasks.downgradeJar).get()
 if (isRemapped) {
 	// Convoluted setters that avoid compilation errors.
 	tasks.matching { it.name == "remapJar" }.configureEach {
