@@ -4,6 +4,7 @@
 | Version                               | Release Date |
 |---------------------------------------|--------------|
 | [Work In Progress](#work-in-progress) | `n/a`        |
+| [2.1.2](#212)                         | `2026-09-26` |
 | [2.1.1](#211)                         | `2026-05-25` |
 | [2.1.0](#210)                         | `2026-05-22` |
 | [2.0.6](#206)                         | `2025-12-22` |
@@ -24,7 +25,7 @@
 | [1.0.1](#101)                         | `2020-12-06` |
 | [1.0.0](#100)                         | `2020-11-30` |
 
-# Work In Progress
+# 2.1.2
 - Minecraft 26.2 and 26.3+ support.
 - Fixed issue [#121](<https://github.com/Mirsario/Minecraft-CameraOverhaul/issues/121>) (Configuration screen broken in 26.2 under Fabric)
 
