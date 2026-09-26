@@ -21,7 +21,11 @@ public final class ConfigScreen {
 		CameraOverhaul.LOGGER.info("Opening config screen.");
 
 		if (parentScreen == null)
-			parentScreen = Minecraft.getInstance().screen;
+			//? if >=26.2 {
+			parentScreen = Minecraft.getInstance().gui.screen();
+			//?} else {
+			/*parentScreen = Minecraft.getInstance().screen;
+			*///?}
 
 		var builder = (ConfigBuilder.create()
 			.setParentScreen(parentScreen)

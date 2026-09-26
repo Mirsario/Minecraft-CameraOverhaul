@@ -24,6 +24,10 @@
 | [1.0.1](#101)                         | `2020-12-06` |
 | [1.0.0](#100)                         | `2020-11-30` |
 
+# Work In Progress
+- Minecraft 26.2+ support.
+- Fixed issue [#121](<https://github.com/Mirsario/Minecraft-CameraOverhaul/issues/121>) (Configuration screen broken in 26.2 under Fabric)
+
 # 2.1.1
 - Fixed issue [#115](<https://github.com/Mirsario/Minecraft-CameraOverhaul/issues/115>) (Audio is reversed)
   (Thanks, `@archiso86`!)

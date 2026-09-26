@@ -39,6 +39,8 @@ stonecutter {
 		// Declared in preferred publishing order.
 
 		// 1.21
+		version("fabric-26.2", "26.2")
+		version("neoforge-26.2", "26.2")
 		version("fabric-26.1", "26.1")
 		version("neoforge-26.1", "26.1")
 		version("fabric-1.21.11", "1.21.11")
@@ -74,7 +76,7 @@ stonecutter {
 		// 1.14
 		version("fabric-1.14.4", "1.14.4")
 
-		vcsVersion = "fabric-26.1"
+		vcsVersion = "fabric-26.2"
 	}
 
 	create(rootProject)

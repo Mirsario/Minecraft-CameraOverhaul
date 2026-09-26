@@ -6,7 +6,7 @@ archives_base_name = "CameraOverhaul"
 # Mod Properties
 mod.id = "cameraoverhaul"
 mod.name = "CameraOverhaul"
-mod.version = "2.1.1"
+mod.version = "2.1.2"
 mod.version_type = "release"
 mod.description = """
 CameraOverhaul is a highly configurable clientside Minecraft mod that attempts to improve overall satisfaction of the game through the introduction of various camera rotations, emphasizing on the player's movement and improving visual feedback.
@@ -331,7 +331,6 @@ deps.neoforge_loader = "21.11.0-beta"
 mc.type = "release"
 mc.version = "26.1"
 mc.targets = "26.1 26.1.1 26.1.2"
-mc.latest = true
 loom.platform = "fabric"
 mods.clothconfig.ref = "26.1.154"
 mods.clothconfig.range = ">=26.1.154"
@@ -342,8 +341,28 @@ mods.modmenu.range = ">=18.0.0"
 mc.type = "release"
 mc.version = "26.1"
 mc.targets = "26.1 26.1.1 26.1.2"
-mc.latest = true
 loom.platform = "neoforge"
 mods.clothconfig.ref = "26.1.154"
 mods.clothconfig.range = ">=26.1.154"
 deps.neoforge_loader = "26.1.0.19-beta"
+
+["fabric-26.2"]
+mc.type = "release"
+mc.version = "26.2"
+mc.targets = "26.2"
+mc.latest = true
+loom.platform = "fabric"
+mods.clothconfig.ref = "26.2.155"
+mods.clothconfig.range = ">=26.2.155"
+mods.modmenu.ref = "20.0.1"
+mods.modmenu.range = ">=20.0.1"
+
+["neoforge-26.2"]
+mc.type = "release"
+mc.version = "26.2"
+mc.targets = "26.2"
+mc.latest = true
+loom.platform = "neoforge"
+mods.clothconfig.ref = "26.2.155"
+mods.clothconfig.range = ">=26.2.155"
+deps.neoforge_loader = "26.2.0.83"
