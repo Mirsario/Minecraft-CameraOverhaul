@@ -16,7 +16,7 @@ Created by ${mod_authors}
 Contributors:
 ${mod_contributors_list}
 """
-logoFile = "icon.png"
+"${neoforge_icon_field}" = "icon.png"
 logoBlur = false
 updateJSONURL = "${mod_forgeupdatecheckurl}"
 

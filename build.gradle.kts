@@ -198,6 +198,8 @@ tasks.processResources {
 		"mod_contributors_jarray" to jsonList(required("mod.contributors")),
 		"mod_forgeupdatecheckurl" to required("mod.forgeupdatecheckurl"),
 		"mc_version_range" to targetsRange,
+		// Loader-specific.
+		"neoforge_icon_field" to (if (stonecutter.eval(mcVersion, ">=26.2")) "iconFile" else "logoFile"),
 		// Contact (Mod)
 		"contact_homepage" to required("contact.homepage"),
 		"contact_sources" to required("contact.sources"),
