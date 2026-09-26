@@ -180,9 +180,9 @@ loom {
 }
 
 tasks.processResources {
-	fun plainList(str: String) = str.lines().joinToString(", ") { it.trim() }
-	fun fancyList(str: String) = str.lines().joinToString("\n") { "- ${it.trim()}" }
-	fun jsonList(str: String) = str.lines().joinToString(", ") { "\"${it.trim()}\"" }
+	fun plainList(str: String) = str.trim().lines().joinToString(", ") { it.trim() }
+	fun fancyList(str: String) = str.trim().lines().joinToString("\n") { "- ${it.trim()}" }
+	fun jsonList(str: String) = str.trim().lines().joinToString(", ") { "\"${it.trim()}\"" }
 
     var properties = mapOf(
 		"mod_id" to required("mod.id"),
